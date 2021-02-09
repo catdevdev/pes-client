@@ -1,7 +1,19 @@
+@font-face {
+  font-family: "ms_sans_serif";
+  src: url("/fonts/ms_sans_serif.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "ms_sans_serif";
+  font-weight: 700;
+  src: url("/fonts/ms_sans_serif_bold.woff2") format("woff2");
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
+  font-family: "ms_sans_serif";  
 }
 
 a {
