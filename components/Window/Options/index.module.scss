@@ -1,0 +1,29 @@
+.wrapper {
+}
+
+.optionsWrapper {
+  display: flex;
+  padding: 0;
+  margin: 4px 0 4px 10px;
+
+  margin-left: 10px;
+}
+
+.option {
+  list-style-type: none;
+  font-size: 13px;
+  margin-right: 10px;
+  cursor: pointer;
+
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -2px;
+    background: #000;
+    width: 7px;
+    height: 1px;
+  }
+}

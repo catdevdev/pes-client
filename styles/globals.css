@@ -11,9 +11,10 @@
 
 html,
 body {
-  padding: 0;
+  background: #008484;
+  padding: 100px;
   margin: 0;
-  font-family: "ms_sans_serif";  
+  font-family: "ms_sans_serif";
 }
 
 a {
