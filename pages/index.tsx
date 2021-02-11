@@ -2,9 +2,13 @@ import Window from "../components/Window";
 
 const Index = () => {
   return (
-    <div>
+    <>
       <Window></Window>
-    </div>
+      <Window></Window>
+      <Window></Window>
+      <Window></Window>
+      <Window></Window>
+    </>
   );
 };
 

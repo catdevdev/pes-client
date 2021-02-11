@@ -12,9 +12,13 @@
 html,
 body {
   background: #008484;
-  padding: 100px;
+  /* padding: 100px; */
   margin: 0;
   font-family: "ms_sans_serif";
+}
+body {
+  height: 100vh;
+  overflow: hidden;
 }
 
 a {

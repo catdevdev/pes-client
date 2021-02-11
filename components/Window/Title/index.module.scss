@@ -1,4 +1,14 @@
 .wrapper {
+  display: flex;
+  align-items: center;
   background: #06157f;
   height: 18px;
+
+  cursor: grab;
+}
+
+.titleText {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
 }
