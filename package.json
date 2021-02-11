@@ -12,6 +12,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-draggable": "^4.4.3",
+    "react-gesture-responder": "^2.1.0",
+    "react-grid-dnd": "^2.1.2",
     "react-rnd": "^10.2.4"
   },
   "devDependencies": {

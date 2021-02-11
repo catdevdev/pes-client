@@ -21,6 +21,7 @@ interface Props {
 const Window = () => {
   return (
     <Rnd
+      style={{ zIndex: 1 }}
       default={{
         x: 150,
         y: 205,
