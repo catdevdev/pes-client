@@ -2,18 +2,16 @@
 /* 0 */
 import { CreateWindow, CloseWindow } from "./types";
 /* 1 */
-import { Window } from "./types";
+import { Windows } from "./types";
 
 export interface CreateWindowAction {
   type: typeof CreateWindow;
-  payload: Window;
+  payload: Windows;
 }
 
-export const createWindow = (data: Window): CreateWindowAction => {
+export const createWindow = (data: Windows): CreateWindowAction => {
   return {
     type: CreateWindow,
     payload: data,
   };
 };
-
-

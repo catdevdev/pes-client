@@ -1,16 +1,20 @@
 /* imports */
 import c from "./index.module.scss";
 /* UI */
+import { CSSProperties } from "react";
 
 interface Props {
   folderName: string;
+  fontColor?: string;
 }
 
-const Folder = ({ folderName }: Props) => {
+const Folder = ({ folderName, fontColor }: Props) => {
   return (
     <div className={c.folderWrapper}>
       <img className={c.img} src="/images/folder.svg" alt="folder" />
-      <p className={c.label}>{folderName}</p>
+      <p style={{ color: fontColor }} className={c.label}>
+        {folderName}
+      </p>
     </div>
   );
 };

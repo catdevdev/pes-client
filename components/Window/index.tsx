@@ -26,6 +26,7 @@ interface Props extends OptionsProps {
   titleImage?: string;
   titleText: string;
   children: JSX.Element[] | JSX.Element;
+  active: boolean
 }
 
 const Window = ({
@@ -56,7 +57,7 @@ const Window = ({
       // bounds="window"
       // handle=".titleContainer"
     >
-      <div className={c.wrapper}>
+      <div onClick={()=>{}} className={c.wrapper}>
         <Title titleText={titleText} titleImage={titleImage} />
         <Options options={options} />
         <Seperator />
