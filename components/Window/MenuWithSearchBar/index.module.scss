@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftContainer {
+  flex: 1;
+  .menuContainer {
+    display: flex;
+    margin-bottom: 3px;
+  }
+  .searchContainer {
+    display: flex;
+    flex: 1;
+  }
+}
+
+.rightContainer {
+  // padding-right: 2px;
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

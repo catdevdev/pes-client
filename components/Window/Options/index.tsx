@@ -3,7 +3,7 @@ import c from "./index.module.scss";
 
 export interface OptionsProps {
   options?: {
-    title: string[];
+    title: string;
     onClick: () => void;
   }[];
 }

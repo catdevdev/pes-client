@@ -8,7 +8,7 @@ import Options from "./Options";
 import Seperator from "./Separator";
 import Footer from "./Footer";
 /* UI */
-import Block from "../UI/Block";
+import Block from "../UI/Frame";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 /* types */
@@ -25,7 +25,7 @@ interface Props extends OptionsProps {
   };
   titleImage?: string;
   titleText: string;
-  children: JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
 }
 
 const Window = ({

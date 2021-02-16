@@ -1,10 +1,26 @@
-.label {
-  margin: 0;
-
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-
+.wrapper {
+  box-shadow: rgb(255 255 255) 1px 1px 0px 1px inset,
+    rgb(134 138 142) 0px 0px 0px 1px inset, rgb(0 0 0) 1px 1px 0px 0px;
   font-size: 13px;
+  font-family: "ms_sans_serif";
+
+  background-color: rgb(195, 199, 203);
+  padding: 7px 0 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  &:focus {
+    outline: rgb(0, 0, 0) dotted 1px;
+    outline-offset: -5px;
+    box-shadow: rgb(255 255 255) 1px 1px 0px 1px inset, rgb(134 138 142) -0.5px -0.5px 0px 1px inset, rgb(0 0 0) 1px 1px 0px 1px;
+  }
+  &:active {
+    padding: 8px 0 5px;
+    border: none;
+    font-size: 13px;
+    outline: rgb(0, 0, 0) dotted 1px;
+    outline-offset: -5px;
+    box-shadow: rgb(134 138 142) 0px 0px 0px 1px inset, rgb(0 0 0) 0px 0px 0px 1px;
+  }
+
 }

@@ -1,7 +1,7 @@
 /* imports */
 import c from "./index.module.scss";
 /* UI */
-import Block from "../Block";
+import Block from "../Frame";
 import { CSSProperties } from "react";
 
 interface Props {
@@ -10,9 +10,7 @@ interface Props {
 }
 
 const Input = ({ style }: Props) => {
-  return (
-    <input className={c.wrapper} type="text"/>
-  );
+  return <input style={style} className={c.wrapper} type="text" />;
 };
 
 export default Input;

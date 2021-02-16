@@ -6,6 +6,8 @@ import Window from "../components/Window";
 /* layout */
 import TaskBar from "../components/Layout/TaskBar";
 import DesktopArea from "../components/Layout/DesktopArea";
+/* windows */
+import Chats from "../windows/Chats";
 
 const Index = () => {
   // function onChange(sourceId, sourceIndex, targetIndex, targetId) {
@@ -32,23 +34,9 @@ const Index = () => {
   return (
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
-        <Window
-          dimensions={{
-            width: 200,
-            height: 150,
-            minHeight: 100,
-            minWidth: 100,
-            maxWidth: 300,
-            maxHeight: 300,
-          }}
-          titleText="hello, it's test!"
-        >
-          <h1>123</h1>
-          <h2>123</h2>
-          <h3>123</h3>
-          <h4>123</h4>
-          <h5>123</h5>
-        </Window>
+        <Chats></Chats>
+        <Chats></Chats>
+        <Chats></Chats>
         <DesktopArea />
         <TaskBar />
       </div>
