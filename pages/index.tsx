@@ -87,11 +87,12 @@ const Index = () => {
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {/* windows */}
-        {windows.map(({ dimensions, title, options, body }) => {
+        {windows.map(({ dimensions, title, options, body, id }) => {
           const WindowJSX = windowsVariants[body.type];
 
           return (
             <WindowJSX
+              key={id}
               dimensions={dimensions}
               title={title}
               options={options}

@@ -7,7 +7,7 @@ import { CreateWindowAction } from "./index";
 export type WindowBodyType = "chats";
 /* type */
 export interface Window {
-  id: string;
+  id?: string;
   dimensions: {
     width: number | string;
     height: number | string;
