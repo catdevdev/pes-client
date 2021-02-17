@@ -1,4 +1,5 @@
 /* imports */
+import { useEffect } from "react";
 import c from "./index.module.scss";
 import { GridContextProvider, swap } from "react-grid-dnd";
 /* components */
@@ -8,35 +9,101 @@ import TaskBar from "../components/Layout/TaskBar";
 import DesktopArea from "../components/Layout/DesktopArea";
 /* windows */
 import Chats from "../windows/Chats";
+import { windowsVariants } from "../windows";
+/* redux */
+import { useSelector, useDispatch } from "react-redux";
+import { createWindow } from "../redux/actions/windowsManagement";
+/* redux-types */
+import { StoreState } from "../redux/reducers";
 
 const Index = () => {
-  // function onChange(sourceId, sourceIndex, targetIndex, targetId) {
-  //   if (targetId) {
-  //     const result = move(
-  //       items[sourceId],
-  //       items[targetId],
-  //       sourceIndex,
-  //       targetIndex
-  //     );
-  //     return setItems({
-  //       ...items,
-  //       [sourceId]: result[0],
-  //       [targetId]: result[1],
-  //     });
-  //   }
+  const windows = useSelector((state: StoreState) => state.windowsManagement);
+  const dispatch = useDispatch();
 
-  //   const result = swap(items[sourceId], sourceIndex, targetIndex);
-  //   return setItems({
-  //     ...items,
-  //     [sourceId]: result,
-  //   });
-  // }
+  const WindowJSX = windowsVariants["chats"];
+
+  // dimensions: {
+  //   width: number | string;
+  //   height: number | string;
+  //   minWidth?: number | string;
+  //   minHeight?: number | string;
+  //   maxWidth?: number | string;
+  //   maxHeight?: number | string;
+  // };
+  // title: {
+  //   label: string;
+  //   icon?: string;
+  // };
+  // options?: {
+  //   options: [{ name: string; callback: () => void }];
+  // };
+  // body?: {
+  //   type: WindowBodyType & string;
+  //   payload: any;
+  // };
+
+  useEffect(() => {
+    dispatch(
+      createWindow({
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+        title: {
+          label: "test123",
+        },
+        body: {
+          type: "chats",
+          payload: "test",
+        },
+        options: [
+          {
+            name: "test1",
+            onClick: () => {
+              alert("test!!");
+            },
+          },
+        ],
+      })
+    );
+    dispatch(
+      createWindow({
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+        title: {
+          label: "test",
+        },
+        body: {
+          type: "chats",
+          payload: "test",
+        },
+      })
+    );
+  }, []);
+
   return (
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
+        {/* windows */}
+        {windows.map(({ dimensions, title, options, body }) => {
+          const WindowJSX = windowsVariants[body.type];
+
+          return (
+            <WindowJSX
+              dimensions={dimensions}
+              title={title}
+              options={options}
+            />
+          );
+        })}
+
+        {/* <Chats></Chats>
         <Chats></Chats>
-        <Chats></Chats>
-        <Chats></Chats>
+        <Chats></Chats> */}
+        {/* windows */}
+
         <DesktopArea />
         <TaskBar />
       </div>

@@ -13,29 +13,35 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 /* types */
 import { OptionsProps } from "../Window/Options";
+import { Window } from "../../redux/actions/windowsManagement/types";
 
-interface Props extends OptionsProps {
-  dimensions: {
-    width: number;
-    height: number;
-    minWidth: number;
-    minHeight: number;
-    maxWidth: number;
-    maxHeight: number;
-  };
-  titleImage?: string;
-  titleText: string;
-  children: JSX.Element[] | JSX.Element;
-  active: boolean
-}
+// export interface WindowProps extends OptionsProps {
+//   dimensions: {
+//     width: number | string;
+//     height: number | string;
+//     minWidth: number | string;
+//     minHeight: number | string;
+//     maxWidth: number | string;
+//     maxHeight: number | string;
+//   };
+//   title: {};
+//   titleImage?: string;
+//   titleText: string;
+//   children: JSX.Element[] | JSX.Element;
+//   active: boolean;
+// }
 
-const Window = ({
+// options?: {
+//   name: string;
+//   onClick: () => void;
+// }[];
+
+const WindowComponent = ({
   children,
   dimensions,
-  titleText,
-  titleImage,
+  title,
   options,
-}: Props) => {
+}: Window & { children: JSX.Element[] | JSX.Element }) => {
   return (
     <Rnd
       style={{
@@ -57,8 +63,8 @@ const Window = ({
       // bounds="window"
       // handle=".titleContainer"
     >
-      <div onClick={()=>{}} className={c.wrapper}>
-        <Title titleText={titleText} titleImage={titleImage} />
+      <div onClick={() => {}} className={c.wrapper}>
+        <Title titleText={title.label} titleIcon={title.icon} />
         <Options options={options} />
         <Seperator />
         {children}
@@ -70,4 +76,4 @@ const Window = ({
   );
 };
 
-export default Window;
+export default WindowComponent;

@@ -1,17 +1,15 @@
 /* types */
 /* 0 */
+import { stat } from "fs";
 import { CreateWindow } from "../actions/windowsManagement/types";
 import { Action } from "../actions/windowsManagement/types";
 /* 1 */
-import { Windows } from "../actions/windowsManagement/types";
+import { Window } from "../actions/windowsManagement/types";
 
-export const windowsManagement = (
-  state: Windows = { windows: [] },
-  action: Action
-) => {
+export const windowsManagement = (state: Window[] = [], action: Action) => {
   switch (action.type) {
     case CreateWindow:
-      return action.payload;
+      return [...state, { ...action.payload }];
     default:
       return state;
   }

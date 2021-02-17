@@ -3,7 +3,7 @@ import c from "./index.module.scss";
 
 export interface OptionsProps {
   options?: {
-    title: string;
+    name: string;
     onClick: () => void;
   }[];
 }
@@ -14,9 +14,9 @@ const Options = ({ options }: OptionsProps) => {
       {options ? (
         <div className={c.wrapper}>
           <ul className={c.optionsWrapper}>
-            {options.map(({ title, onClick }) => (
+            {options.map(({ name, onClick }) => (
               <li onClick={onClick} className={c.option}>
-                {title}
+                {name}
               </li>
             ))}
           </ul>

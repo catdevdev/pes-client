@@ -3,7 +3,7 @@ import c from "./index.module.scss";
 
 interface Props {
   titleText: string;
-  titleImage?: string;
+  titleIcon?: string;
 }
 
 const Title = ({ titleText }: Props) => {

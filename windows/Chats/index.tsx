@@ -7,22 +7,19 @@ import {
   move,
 } from "react-grid-dnd";
 /* UI Window */
-import Window from "../../components/Window";
+import WindowComponent from "../../components/Window";
 import Separator from "../../components/Window/Separator";
 import MenuWithSearchBar from "../../components/Window/MenuWithSearchBar";
 import Folder from "../../components/UI/Folder";
 /* UI */
 import Button from "../../components/UI/Button";
 import Frame from "../../components/UI/Frame";
+/* types */
+import { Window } from "../../redux/actions/windowsManagement/types";
 
-interface Props {
-  active: boolean;
-}
-
-const ChatsWindow = ({ active }: Props) => {
+const ChatsWindow = (props: Window) => {
   return (
-    <Window
-      active={active}
+    <WindowComponent
       dimensions={{
         width: 700,
         height: 300,
@@ -31,15 +28,16 @@ const ChatsWindow = ({ active }: Props) => {
         maxWidth: 800,
         maxHeight: 600,
       }}
-      titleText="hello, it's test!"
+      title={{ label: "hello, it's test!" }}
       options={[
         {
-          title: "Help",
+          name: "Help",
           onClick: () => {
             console.log("test");
           },
         },
       ]}
+      {...props}
     >
       <MenuWithSearchBar />
       <div style={{ padding: 4, height: "100%", flex: 1 }}>
@@ -76,7 +74,7 @@ const ChatsWindow = ({ active }: Props) => {
       {/* <Button>123</Button> */}
 
       {/* <Separator></Separator> */}
-    </Window>
+    </WindowComponent>
   );
 };
 
