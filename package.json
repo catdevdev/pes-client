@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/nanoid": "^2.1.0",
     "axios": "^0.21.1",
     "nanoid": "^3.1.20",
     "next": "10.0.6",
