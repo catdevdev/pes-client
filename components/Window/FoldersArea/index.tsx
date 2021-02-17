@@ -1,36 +1,46 @@
 /* imoprts */
 import c from "./index.module.scss";
-/* UI Window */
-import Separator from "../Separator";
+import {
+  GridContextProvider,
+  GridDropZone,
+  GridItem,
+  swap,
+  move,
+} from "react-grid-dnd";
 /* UI */
-import Button from "../../UI/Button";
+import Folder from "../../UI/Folder";
 import Frame from "../../UI/Frame";
-import Input from "../../UI/Input";
-/*  */
-const MenuWithSearchBar = () => {
+
+interface Folder {
+  name: string;
+}
+
+interface Props {
+  folderFontColor: string;
+  folders: Folder[];
+}
+
+const FoldersArea = ({ folderFontColor, folders }: Props) => {
   return (
-    <div className={c.wrapper}>
-      <div className={c.leftContainer}>
-        <div className={c.menuContainer}>
-          <Button style={{ width: 25, height: 25 }} />
-          <Button style={{ width: 25, height: 25 }} />
-          <Button style={{ width: 25, height: 25 }} />
-        </div>
-        <Separator />
-        <div className={c.searchContainer}>
-          <Button style={{ width: 60, height: 25, marginRight: 6 }}>
-            Join
-          </Button>
-          <Input style={{ height: 25, flex: 1, marginRight: 4 }} />
-        </div>
+    <Frame
+      withBoxShadow
+      style={{
+        width: "100%",
+        height: "100%",
+        background: "#fff",
+      }}
+    >
+      <div style={{ width: 400, padding: 18 }}>
+        <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
+          {folders.map(({name}) => (
+            <GridItem style={{ width: 32 }}>
+              <Folder fontColor={folderFontColor} folderName={name} />
+            </GridItem>
+          ))}
+        </GridDropZone>
       </div>
-      <div className={c.rightContainer}>
-        <Frame withBoxShadow style={{ width: 60, height: 60 }}>
-          <img className={c.img} src="/images/anime_girl.jpeg" alt="" />
-        </Frame>
-      </div>
-    </div>
+    </Frame>
   );
 };
 
-export default MenuWithSearchBar;
+export default FoldersArea;

@@ -10,10 +10,11 @@ import {
 import WindowComponent from "../../components/Window";
 import Separator from "../../components/Window/Separator";
 import MenuWithSearchBar from "../../components/Window/MenuWithSearchBar";
-import Folder from "../../components/UI/Folder";
+import FoldersArea from "../../components/Window/FoldersArea";
 /* UI */
 import Button from "../../components/UI/Button";
 import Frame from "../../components/UI/Frame";
+import Folder from "../../components/UI/Folder";
 /* types */
 import { Window } from "../../redux/actions/windowsManagement/types";
 
@@ -41,39 +42,11 @@ const ChatsWindow = (props: Window) => {
     >
       <MenuWithSearchBar />
       <div style={{ padding: 4, height: "100%", flex: 1 }}>
-        <Frame
-          withBoxShadow
-          style={{
-            width: "100%",
-            height: "100%",
-            background: "#fff",
-          }}
-        >
-          <div style={{ width: 400, padding: 18 }}>
-            <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
-              {[
-                "test",
-                "ffa",
-                "asdfs asdf",
-                "adf adf",
-                "asdf asdf",
-                "asdf",
-              ].map((el) => (
-                <GridItem style={{ width: 32 }}>
-                  <Folder
-                    fontColor={"#000"}
-                    // style={{ color: "#000" }}
-                    folderName={el}
-                  />
-                </GridItem>
-              ))}
-            </GridDropZone>
-          </div>
-        </Frame>
+        <FoldersArea
+          folderFontColor={"#000"}
+          folders={[{ name: "test1" }, { name: "test2" }]}
+        />
       </div>
-      {/* <Button>123</Button> */}
-
-      {/* <Separator></Separator> */}
     </WindowComponent>
   );
 };
