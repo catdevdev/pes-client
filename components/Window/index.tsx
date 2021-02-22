@@ -14,6 +14,12 @@ import Input from "../UI/Input";
 /* types */
 import { OptionsProps } from "../Window/Options";
 import { Window } from "../../redux/actions/windowsManagement/types";
+/* redux */
+import { useDispatch } from "react-redux";
+import {
+  deleteWindow,
+  selectWindow,
+} from "../../redux/actions/windowsManagement";
 
 // export interface WindowProps extends OptionsProps {
 //   dimensions: {
@@ -41,11 +47,16 @@ const WindowComponent = ({
   dimensions,
   title,
   options,
+  id,
+  zIndex,
+  isActive,
 }: Window & { children: JSX.Element[] | JSX.Element }) => {
+  const dispatch = useDispatch();
+
   return (
     <Rnd
       style={{
-        zIndex: 1,
+        zIndex,
       }}
       default={{
         x: 150,
@@ -58,13 +69,29 @@ const WindowComponent = ({
       maxWidth={dimensions.maxWidth}
       maxHeight={dimensions.maxHeight}
       dragHandleClassName="titleContainer"
+
       // minWidth={500}
       // minHeight={190}
       // bounds="window"
       // handle=".titleContainer"
     >
-      <div onClick={() => {}} className={c.wrapper}>
-        <Title titleText={title.label} titleIcon={title.icon} />
+      <div
+        onMouseDown={() => {
+          dispatch(selectWindow(id));
+        }}
+        onClick={() => {}}
+        className={c.wrapper}
+      >
+        <Title
+          isActive={isActive}
+          onClose={() => {
+            dispatch(deleteWindow(id));
+          }}
+          onFullScreen={() => {}}
+          onMinimize={() => {}}
+          titleText={title.label}
+          titleIcon={title.icon}
+        />
         <Options options={options} />
         <Seperator />
         {children}

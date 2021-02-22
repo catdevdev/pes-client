@@ -1,7 +1,9 @@
 export const CreateWindow = "CREATE_WINDOW";
-export const CloseWindow = "CLOSE_WINDOW";
+export const DeleteWindow = "DELETE_WINDOW";
+export const SelectWindow = "SELECT_WINDOW";
 
-import { CreateWindowAction } from "./index";
+/* types */
+import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from "./index";
 
 /* windows body types */
 export type WindowBodyType = "chats";
@@ -21,13 +23,16 @@ export interface Window {
     icon?: string;
   };
   options?: {
+    id?: string;
     name: string;
     onClick: () => void;
   }[];
+  isActive?: boolean;
+  zIndex?: number;
   body?: {
     type: WindowBodyType & string;
     payload: any;
   };
 }
 
-export type Action = CreateWindowAction;
+export type Action = CreateWindowAction | DeleteWindowAction | SelectWindowAction;

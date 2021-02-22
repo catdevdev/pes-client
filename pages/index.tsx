@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createWindow } from "../redux/actions/windowsManagement";
 /* redux-types */
 import { StoreState } from "../redux/reducers";
+import { nanoid } from "nanoid";
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -58,6 +59,7 @@ const Index = () => {
         },
         options: [
           {
+            id: nanoid(),
             name: "test1",
             onClick: () => {
               alert("test!!");
@@ -81,24 +83,74 @@ const Index = () => {
         },
       })
     );
+    dispatch(
+      createWindow({
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+        title: {
+          label: "test",
+        },
+        body: {
+          type: "chats",
+          payload: "test",
+        },
+      })
+    );
+    dispatch(
+      createWindow({
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+        title: {
+          label: "test",
+        },
+        body: {
+          type: "chats",
+          payload: "test",
+        },
+      })
+    );
+    dispatch(
+      createWindow({
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+        title: {
+          label: "test",
+        },
+        body: {
+          type: "chats",
+          payload: "test",
+        },
+      })
+    );
   }, []);
 
   return (
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {/* windows */}
-        {windows.map(({ dimensions, title, options, body, id }) => {
-          const WindowJSX = windowsVariants[body.type];
+        {windows.map(
+          ({ dimensions, title, options, body, id, zIndex, isActive }) => {
+            const WindowJSX = windowsVariants[body.type];
 
-          return (
-            <WindowJSX
-              key={id}
-              dimensions={dimensions}
-              title={title}
-              options={options}
-            />
-          );
-        })}
+            return (
+              <WindowJSX
+                id={id}
+                key={id}
+                dimensions={dimensions}
+                title={title}
+                options={options}
+                zIndex={zIndex}
+                isActive={isActive}
+              />
+            );
+          }
+        )}
 
         {/* <Chats></Chats>
         <Chats></Chats>

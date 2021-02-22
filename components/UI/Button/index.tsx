@@ -4,16 +4,19 @@ import c from "./index.module.scss";
 import Block from "../Frame";
 import { CSSProperties } from "react";
 
-interface Props {
-  children?: string;
-  style?: CSSProperties;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
 }
 
-const Button = ({ children, style }: Props) => {
+const Button = ({ ...props }: Props) => {
   return (
     // <Block style={{ width: 100, height: 25, ...style }}>
-    <button style={{ width: 100, height: 25, ...style }} className={c.wrapper}>
-      {children}
+    <button
+      {...props}
+      style={{ width: 100, height: 25, ...props.style }}
+      className={c.wrapper}
+    >
+      {props.children}
     </button>
     // </Block>
   );

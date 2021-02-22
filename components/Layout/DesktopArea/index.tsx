@@ -1,5 +1,6 @@
 /* imports */
 import c from "./index.module.scss";
+import { nanoid } from "nanoid";
 import {
   GridContextProvider,
   GridDropZone,
@@ -13,13 +14,20 @@ const DesktopArea = () => {
   return (
     <div className={c.wrapper}>
       <GridDropZone id="desktop_area" boxesPerRow={1} rowHeight={70}>
-        {["test", "ffa", "asdfs asdf", "adf adf", "asdf asdf", "asdf"].map(
-          (el) => (
-            <GridItem style={{ width: 32 }}>
-              <Folder folderName={el} />
-            </GridItem>
-          )
-        )}
+        {[
+          { id: nanoid(), name: "test1" },
+          { id: nanoid(), name: "test2" },
+          { id: nanoid(), name: "test3" },
+          { id: nanoid(), name: "test4" },
+          { id: nanoid(), name: "test5" },
+          { id: nanoid(), name: "test6" },
+          { id: nanoid(), name: "test7" },
+          { id: nanoid(), name: "test8" },
+        ].map(({ id, name }) => (
+          <GridItem key={id} style={{ width: 32 }}>
+            <Folder folderName={name} />
+          </GridItem>
+        ))}
       </GridDropZone>
     </div>
   );

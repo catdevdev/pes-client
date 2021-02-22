@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: #06157f;
   height: 18px;
   padding: 2px;
@@ -8,8 +9,23 @@
   cursor: grab;
 }
 
+.wrapperNotActive {
+  background: #808080;
+}
+
 .titleText {
   margin: 0;
   color: #fff;
   font-size: 14px;
+}
+
+.firstGroup {
+  display: flex;
+  align-items: center;
+  margin-right: 3px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  align-items: center;
 }
