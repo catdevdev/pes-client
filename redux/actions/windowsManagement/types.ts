@@ -3,12 +3,16 @@ export const DeleteWindow = "DELETE_WINDOW";
 export const SelectWindow = "SELECT_WINDOW";
 
 /* types */
-import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from "./index";
+import {
+  CreateWindowAction,
+  DeleteWindowAction,
+  SelectWindowAction,
+} from "./index";
 
 /* windows body types */
 export type WindowBodyType = "chats";
 /* type */
-export interface Window {
+export interface Window<I = any> {
   id?: string;
   dimensions: {
     width: number | string;
@@ -29,10 +33,38 @@ export interface Window {
   }[];
   isActive?: boolean;
   zIndex?: number;
-  body?: {
-    type: WindowBodyType & string;
-    payload: any;
-  };
+
+  body: I
 }
 
-export type Action = CreateWindowAction | DeleteWindowAction | SelectWindowAction;
+export interface ChatsWindowI {
+  type: "chats",
+  payload: {
+    searchText: string;
+    // enterOnClick: () => void;
+
+    pages: {
+      _404page: {
+        errorText?: string;
+        isCurrentPage: boolean;
+      };
+      Chat: {
+        messages: { username: string; message: string }[];
+        isCurrentPage: boolean;
+      };
+      Chats: {
+        chats: {
+          chatId: string;
+          chatName: string;
+        }[];
+        isCurrentPage: boolean;
+      };
+    };
+  }
+
+}
+
+export type Action =
+  | CreateWindowAction<ChatsWindowI>
+  | DeleteWindowAction
+  | SelectWindowAction;

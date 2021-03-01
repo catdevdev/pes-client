@@ -10,6 +10,10 @@ import {
 import { Action } from "../actions/windowsManagement/types";
 /* 1 */
 import { Window } from "../actions/windowsManagement/types";
+/* windows types */
+import { ChatsWindowI } from '../actions/windowsManagement/types'
+
+
 
 export const windowsManagement = (state: Window[] = [], action: Action) => {
   switch (action.type) {
@@ -31,23 +35,21 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
     case SelectWindow:
       /* Up window to top */
 
-      for(let index = 0; index < state.length; index++) {
+      for (let index = 0; index < state.length; index++) {
         state[index] = {
           ...state[index],
           zIndex: 0,
-          isActive: false
-        }
+          isActive: false,
+        };
       }
 
       const index = state.findIndex(({ id }) => id === action.payload);
       const copyState = [...state];
       copyState[index] = {
         ...copyState[index],
-        zIndex: (copyState[index].zIndex + 1),
+        zIndex: copyState[index].zIndex + 1,
         isActive: true,
       };
-
-
 
       return copyState;
     default:

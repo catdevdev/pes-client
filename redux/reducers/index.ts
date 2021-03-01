@@ -7,15 +7,16 @@ import { combineReducers } from "redux";
 /* reducers */
 import { windowsManagement } from "./windowsManagement";
 /* types */
-import { Window } from "../actions/windowsManagement/types";
+import { Window, ChatsWindowI } from "../actions/windowsManagement/types";
+
 // import { statusMachine } from "./statusMachine";
 // import { waterStatus } from "./waterStatus";
 // import { windowMachine } from "./windowMachine";
 
-export interface StoreState {
-  windowsManagement: Window[];
+export interface StoreState<I=any> {
+  windowsManagement: Window<I>[];
 }
 
-export const rootReducer = combineReducers<StoreState>({
+export const rootReducer = combineReducers<StoreState<ChatsWindowI>>({
   windowsManagement,
 });

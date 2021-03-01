@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import c from "./index.module.scss";
 import { GridContextProvider, swap } from "react-grid-dnd";
 /* components */
-import Window from "../components/Window";
+import WindowComponent from "../components/Window";
 /* layout */
 import TaskBar from "../components/Layout/TaskBar";
 import DesktopArea from "../components/Layout/DesktopArea";
@@ -14,6 +14,7 @@ import { windowsVariants } from "../windows";
 import { useSelector, useDispatch } from "react-redux";
 import { createWindow } from "../redux/actions/windowsManagement";
 /* redux-types */
+import { Window, ChatsWindowI } from "../redux/actions/windowsManagement/types";
 import { StoreState } from "../redux/reducers";
 import { nanoid } from "nanoid";
 
@@ -45,7 +46,7 @@ const Index = () => {
 
   useEffect(() => {
     dispatch(
-      createWindow({
+      createWindow<ChatsWindowI>({
         dimensions: {
           width: 1000,
           height: 500,
@@ -54,8 +55,20 @@ const Index = () => {
           label: "test123",
         },
         body: {
-          type: "chats",
-          payload: "test",
+          searchText: "pes.app/",
+          pages: {
+            _404page: {
+              isCurrentPage: false,
+            },
+            Chat: {
+              messages: [],
+              isCurrentPage: false,
+            },
+            Chats: {
+              chats: [],
+              isCurrentPage: true,
+            },
+          },
         },
         options: [
           {
@@ -94,7 +107,7 @@ const Index = () => {
         },
         body: {
           type: "chats",
-          payload: "test",
+          
         },
       })
     );
@@ -109,12 +122,12 @@ const Index = () => {
         },
         body: {
           type: "chats",
-          payload: "test",
+          
         },
       })
     );
     dispatch(
-      createWindow({
+      createWindow<ChatsWindowI>({
         dimensions: {
           width: 1000,
           height: 500,
@@ -122,10 +135,14 @@ const Index = () => {
         title: {
           label: "test",
         },
-        body: {
-          type: "chats",
-          payload: "test",
-        },
+      
+       body: {
+         type: "chats",
+         payload: {
+           
+         }
+         
+       }
       })
     );
   }, []);
@@ -148,6 +165,7 @@ const Index = () => {
                 zIndex={zIndex}
                 isActive={isActive}
               />
+              // <h1>123</h1>
             );
           }
         )}

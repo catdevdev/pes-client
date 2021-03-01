@@ -7,7 +7,17 @@ import Button from "../../UI/Button";
 import Frame from "../../UI/Frame";
 import Input from "../../UI/Input";
 
-const MenuWithSearchBar = () => {
+interface Props {
+  enterOnClick: () => void;
+  searchInputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchInputValue: string;
+}
+
+const MenuWithSearchBar = ({
+  enterOnClick,
+  searchInputOnChange,
+  searchInputValue,
+}: Props) => {
   return (
     <div className={c.wrapper}>
       <div className={c.leftContainer}>
@@ -18,10 +28,17 @@ const MenuWithSearchBar = () => {
         </div>
         <Separator />
         <div className={c.searchContainer}>
-          <Button style={{ width: 60, height: 25, marginRight: 6 }}>
+          <Button
+            onClick={enterOnClick}
+            style={{ width: 60, height: 25, marginRight: 6 }}
+          >
             Join
           </Button>
-          <Input style={{ height: 25, flex: 1, marginRight: 4 }} />
+          <Input
+            value={searchInputValue}
+            onChange={searchInputOnChange}
+            style={{ height: 25, flex: 1, marginRight: 4 }}
+          />
         </div>
       </div>
       <div className={c.rightContainer}>

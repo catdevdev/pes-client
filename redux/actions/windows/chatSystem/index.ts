@@ -2,11 +2,11 @@
 /* 0 */
 import { CreateWindow, DeleteWindow, SelectWindow } from "./types";
 /* 1 */
-import { Window, ChatsWindowI } from "./types";
+import { Window } from "./types";
 
-export interface CreateWindowAction<I> {
+export interface CreateWindowAction {
   type: typeof CreateWindow;
-  payload: Window<I>;
+  payload: Window;
 }
 
 export interface DeleteWindowAction {
@@ -19,7 +19,7 @@ export interface SelectWindowAction {
   payload: string;
 }
 
-export const createWindow = <I>(data: Window<I>): CreateWindowAction<I> => {
+export const createWindow = (data: Window): CreateWindowAction => {
   return {
     type: CreateWindow,
     payload: data,

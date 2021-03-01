@@ -11,13 +11,14 @@ import {
 import Folder from "../../UI/Folder";
 import Frame from "../../UI/Frame";
 
-interface Folder {
+interface FolderI {
+  id?: string;
   name: string;
 }
 
 interface Props {
   folderFontColor: string;
-  folders: Folder[];
+  folders: FolderI[];
 }
 
 const FoldersArea = ({ folderFontColor, folders }: Props) => {
@@ -32,8 +33,8 @@ const FoldersArea = ({ folderFontColor, folders }: Props) => {
     >
       <div style={{ width: 400, padding: 18 }}>
         <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
-          {folders.map(({name}) => (
-            <GridItem style={{ width: 32 }}>
+          {folders.map(({ id, name }) => (
+            <GridItem key={id} style={{ width: 32 }}>
               <Folder fontColor={folderFontColor} folderName={name} />
             </GridItem>
           ))}
