@@ -1,19 +1,15 @@
 /* imports */
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 /* types */
-/* 0 */
-import {
-  CreateWindow,
-  DeleteWindow,
-  SelectWindow,
-} from "../actions/windowsManagement/types";
-import { Action } from "../actions/windowsManagement/types";
+/* 0 - Action Types*/
+import { CreateWindow, DeleteWindow, SelectWindow } from '../actions/windowsManagement/types';
+import { OpenChatWindow } from '../../windows/chats/actions/types';
+import { Action } from '../actions/windowsManagement/types';
+import ActionChatWindow from '../../windows/chats/actions/types';
 /* 1 */
-import { Window } from "../actions/windowsManagement/types";
+import { Window } from '../actions/windowsManagement/types';
 /* windows types */
-import { ChatsWindowI } from '../actions/windowsManagement/types'
-
-
+import { ChatsWindowI } from '../../windows/chats/actions/types';
 
 export const windowsManagement = (state: Window[] = [], action: Action) => {
   switch (action.type) {
@@ -31,7 +27,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         },
       ];
     case DeleteWindow:
-      return state.filter(({ id }) => id !== action.payload);
+      return state.filter(({ id }) => id !== action.payload.id);
     case SelectWindow:
       /* Up window to top */
 
@@ -43,7 +39,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         };
       }
 
-      const index = state.findIndex(({ id }) => id === action.payload);
+      const index = state.findIndex(({ id }) => id === action.payload.id);
       const copyState = [...state];
       copyState[index] = {
         ...copyState[index],
@@ -52,6 +48,8 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
       };
 
       return copyState;
+    case OpenChatWindow: 
+      return state;
     default:
       return state;
   }

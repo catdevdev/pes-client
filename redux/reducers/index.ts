@@ -3,17 +3,18 @@
 // import { WaterStatus } from "./../api/waterStatus";
 // import { WindowMachine } from "./../api/windowMachine";
 /* redux stuffs */
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 /* reducers */
-import { windowsManagement } from "./windowsManagement";
+import { windowsManagement } from './windowsManagement';
 /* types */
-import { Window, ChatsWindowI } from "../actions/windowsManagement/types";
+import { Window } from '../actions/windowsManagement/types';
+import { ChatsWindowI } from '../../windows/chats/actions/types';
 
 // import { statusMachine } from "./statusMachine";
 // import { waterStatus } from "./waterStatus";
 // import { windowMachine } from "./windowMachine";
 
-export interface StoreState<I=any> {
+export interface StoreState<I = any> {
   windowsManagement: Window<I>[];
 }
 

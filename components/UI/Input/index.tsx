@@ -9,7 +9,9 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = (props: Props) => {
-  return <input {...props} style={props.style} className={c.wrapper} type="text" />;
+  return (
+    <input {...props} style={props.style} className={c.wrapper} type="text" />
+  );
 };
 
 export default Input;

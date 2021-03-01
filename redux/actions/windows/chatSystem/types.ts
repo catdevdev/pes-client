@@ -3,7 +3,11 @@ export const DeleteWindow = "DELETE_WINDOW";
 export const SelectWindow = "SELECT_WINDOW";
 
 /* types */
-import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from "./index";
+import {
+  CreateWindowAction,
+  DeleteWindowAction,
+  SelectWindowAction,
+} from "./index";
 
 /* windows body types */
 export type WindowBodyType = "chats";
@@ -35,4 +39,7 @@ export interface Window {
   };
 }
 
-export type Action = CreateWindowAction | DeleteWindowAction | SelectWindowAction;
+export type Action =
+  | CreateWindowAction
+  | DeleteWindowAction
+  | SelectWindowAction;

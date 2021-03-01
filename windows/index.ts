@@ -1,5 +1,5 @@
 /* imports */
-import Chats from "./Chats";
+import Chats from "./chats/component";
 /* types */
 import { WindowBodyType } from "../redux/actions/windowsManagement/types";
 

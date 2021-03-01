@@ -12,7 +12,8 @@
   &:focus {
     outline: rgb(0, 0, 0) dotted 1px;
     outline-offset: -5px;
-    box-shadow: rgb(255 255 255) 1px 1px 0px 1px inset, rgb(134 138 142) -0.5px -0.5px 0px 1px inset, rgb(0 0 0) 1px 1px 0px 1px;
+    box-shadow: rgb(255 255 255) 1px 1px 0px 1px inset,
+      rgb(134 138 142) -0.5px -0.5px 0px 1px inset, rgb(0 0 0) 1px 1px 0px 1px;
   }
   &:active {
     padding: 8px 0 5px;
@@ -20,7 +21,7 @@
     font-size: 13px;
     outline: rgb(0, 0, 0) dotted 1px;
     outline-offset: -5px;
-    box-shadow: rgb(134 138 142) 0px 0px 0px 1px inset, rgb(0 0 0) 0px 0px 0px 1px;
+    box-shadow: rgb(134 138 142) 0px 0px 0px 1px inset,
+      rgb(0 0 0) 0px 0px 0px 1px;
   }
-
 }

@@ -1,8 +1,9 @@
 /* types */
 /* 0 */
-import { CreateWindow, DeleteWindow, SelectWindow } from "./types";
+import { CreateWindow, DeleteWindow, SelectWindow } from './types';
 /* 1 */
-import { Window, ChatsWindowI } from "./types";
+import { Window } from './types';
+import { ChatsWindowI } from '../../../windows/chats/actions/types';
 
 export interface CreateWindowAction<I> {
   type: typeof CreateWindow;
@@ -11,12 +12,12 @@ export interface CreateWindowAction<I> {
 
 export interface DeleteWindowAction {
   type: typeof DeleteWindow;
-  payload: string;
+  payload: { id: string };
 }
 
 export interface SelectWindowAction {
   type: typeof SelectWindow;
-  payload: string;
+  payload: { id: string };
 }
 
 export const createWindow = <I>(data: Window<I>): CreateWindowAction<I> => {
@@ -29,13 +30,13 @@ export const createWindow = <I>(data: Window<I>): CreateWindowAction<I> => {
 export const deleteWindow = (id: string): DeleteWindowAction => {
   return {
     type: DeleteWindow,
-    payload: id,
+    payload: { id },
   };
 };
 
 export const selectWindow = (id: string): SelectWindowAction => {
   return {
     type: SelectWindow,
-    payload: id,
+    payload: { id },
   };
 };

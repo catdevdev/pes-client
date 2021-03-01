@@ -6,37 +6,59 @@ import Separator from "../Separator";
 import Button from "../../UI/Button";
 import Frame from "../../UI/Frame";
 import Input from "../../UI/Input";
+/* redux */
+import { useSelector } from "react-redux";
+/* redux types */
+import { StoreState } from "../../../redux/reducers";
+import { ChatsWindowI } from "../../../redux/actions/windowsManagement/types";
+
+// interface Props {
+//   enterOnClick: () => void;
+//   searchInputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//   searchInputValue: string;
+// }
 
 interface Props {
-  enterOnClick: () => void;
-  searchInputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  searchInputValue: string;
+  windowId: string;
 }
 
-const MenuWithSearchBar = ({
-  enterOnClick,
-  searchInputOnChange,
-  searchInputValue,
-}: Props) => {
+const MenuWithSearchBar = ({ windowId }: Props) => {
+  const windows = useSelector(
+    (state: StoreState<ChatsWindowI>) => state.windowsManagement
+  );
+  const {
+    body: {
+      payload: {
+        pages: { _404page, Chat, Chats },
+      },
+    },
+  } = windows.find(({ id }) => {
+    return windowId === id;
+  });
+
   return (
     <div className={c.wrapper}>
       <div className={c.leftContainer}>
         <div className={c.menuContainer}>
-          <Button style={{ width: 25, height: 25 }} />
-          <Button style={{ width: 25, height: 25 }} />
-          <Button style={{ width: 25, height: 25 }} />
+          {Chat.isCurrentPage && (
+            <>
+              <Button style={{ width: 25, height: 25 }} />
+              <Button style={{ width: 25, height: 25 }} />
+              <Button style={{ width: 25, height: 25 }} />
+            </>
+          )}
         </div>
         <Separator />
         <div className={c.searchContainer}>
           <Button
-            onClick={enterOnClick}
+            onClick={() => {}}
             style={{ width: 60, height: 25, marginRight: 6 }}
           >
             Join
           </Button>
           <Input
-            value={searchInputValue}
-            onChange={searchInputOnChange}
+            value={"toChange ( temp )"}
+            onChange={() => {}}
             style={{ height: 25, flex: 1, marginRight: 4 }}
           />
         </div>

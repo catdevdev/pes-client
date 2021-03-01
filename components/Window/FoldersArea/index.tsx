@@ -10,6 +10,8 @@ import {
 /* UI */
 import Folder from "../../UI/Folder";
 import Frame from "../../UI/Frame";
+/* redux */
+import { useSelector, useDispatch } from "react-redux";
 
 interface FolderI {
   id?: string;
@@ -35,7 +37,11 @@ const FoldersArea = ({ folderFontColor, folders }: Props) => {
         <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
           {folders.map(({ id, name }) => (
             <GridItem key={id} style={{ width: 32 }}>
-              <Folder fontColor={folderFontColor} folderName={name} />
+              <Folder
+                onDoubleClick={() => {}}
+                fontColor={folderFontColor}
+                folderName={name}
+              />
             </GridItem>
           ))}
         </GridDropZone>

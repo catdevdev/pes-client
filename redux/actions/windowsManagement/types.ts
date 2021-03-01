@@ -1,16 +1,16 @@
-export const CreateWindow = "CREATE_WINDOW";
-export const DeleteWindow = "DELETE_WINDOW";
-export const SelectWindow = "SELECT_WINDOW";
+export const CreateWindow = 'CREATE_WINDOW';
+export const DeleteWindow = 'DELETE_WINDOW';
+export const SelectWindow = 'SELECT_WINDOW';
 
 /* types */
-import {
-  CreateWindowAction,
-  DeleteWindowAction,
-  SelectWindowAction,
-} from "./index";
+/* 0 - ACTIONS */
+import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from './index';
+import { OpenChatAction } from '../../../windows/chats/actions';
+/* 1 - WINDOWS */
+import { ChatsWindowI } from '../../../windows/chats/actions/types';
 
 /* windows body types */
-export type WindowBodyType = "chats";
+export type WindowBodyType = 'chats';
 /* type */
 export interface Window<I = any> {
   id?: string;
@@ -34,37 +34,11 @@ export interface Window<I = any> {
   isActive?: boolean;
   zIndex?: number;
 
-  body: I
-}
-
-export interface ChatsWindowI {
-  type: "chats",
-  payload: {
-    searchText: string;
-    // enterOnClick: () => void;
-
-    pages: {
-      _404page: {
-        errorText?: string;
-        isCurrentPage: boolean;
-      };
-      Chat: {
-        messages: { username: string; message: string }[];
-        isCurrentPage: boolean;
-      };
-      Chats: {
-        chats: {
-          chatId: string;
-          chatName: string;
-        }[];
-        isCurrentPage: boolean;
-      };
-    };
-  }
-
+  body: I;
 }
 
 export type Action =
   | CreateWindowAction<ChatsWindowI>
   | DeleteWindowAction
-  | SelectWindowAction;
+  | SelectWindowAction
+  | OpenChatAction;

@@ -8,7 +8,7 @@ import WindowComponent from "../components/Window";
 import TaskBar from "../components/Layout/TaskBar";
 import DesktopArea from "../components/Layout/DesktopArea";
 /* windows */
-import Chats from "../windows/Chats";
+import Chats from "../windows/chats/component";
 import { windowsVariants } from "../windows";
 /* redux */
 import { useSelector, useDispatch } from "react-redux";
@@ -47,102 +47,48 @@ const Index = () => {
   useEffect(() => {
     dispatch(
       createWindow<ChatsWindowI>({
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-        title: {
-          label: "test123",
-        },
-        body: {
-          searchText: "pes.app/",
-          pages: {
-            _404page: {
-              isCurrentPage: false,
-            },
-            Chat: {
-              messages: [],
-              isCurrentPage: false,
-            },
-            Chats: {
-              chats: [],
-              isCurrentPage: true,
-            },
-          },
-        },
         options: [
           {
             id: nanoid(),
-            name: "test1",
-            onClick: () => {
-              alert("test!!");
-            },
+            name: "hello",
+            onClick: () => {},
           },
         ],
-      })
-    );
-    dispatch(
-      createWindow({
+
         dimensions: {
           width: 1000,
           height: 500,
         },
+
         title: {
           label: "test",
         },
+
         body: {
           type: "chats",
-          payload: "test",
+          payload: {
+            searchText: "test",
+            pages: {
+              _404page: {
+                isCurrentPage: false,
+              },
+              Chat: {
+                messages: [],
+                isCurrentPage: false,
+              },
+              Chats: {
+                chats: [
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "second chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                ],
+                isCurrentPage: true,
+              },
+            },
+          },
         },
-      })
-    );
-    dispatch(
-      createWindow({
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-        title: {
-          label: "test",
-        },
-        body: {
-          type: "chats",
-          
-        },
-      })
-    );
-    dispatch(
-      createWindow({
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-        title: {
-          label: "test",
-        },
-        body: {
-          type: "chats",
-          
-        },
-      })
-    );
-    dispatch(
-      createWindow<ChatsWindowI>({
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-        title: {
-          label: "test",
-        },
-      
-       body: {
-         type: "chats",
-         payload: {
-           
-         }
-         
-       }
       })
     );
   }, []);
@@ -164,6 +110,7 @@ const Index = () => {
                 options={options}
                 zIndex={zIndex}
                 isActive={isActive}
+                body={body}
               />
               // <h1>123</h1>
             );
