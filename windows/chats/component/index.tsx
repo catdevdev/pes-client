@@ -6,36 +6,16 @@ import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
 import MenuWithSearchBar from '../../../components/Window/MenuWithSearchBar';
 import FoldersArea from '../../../components/Window/FoldersArea';
+import MessagesChat from '../../../components/Window/MessagesChat';
 /* UI */
 import Button from '../../../components/UI/Button';
 import Frame from '../../../components/UI/Frame';
 import Folder from '../../../components/UI/Folder';
 /* types */
-import { Window, ChatsWindowI } from '../../../redux/actions/windowsManagement/types';
+import { Window } from '../../../redux/actions/windowsManagement/types';
+import { ChatsWindowI } from '../../../windows/chats/actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
-
-// export interface ChatsWindowI {
-//   searchText: string;
-//   enterOnClick: () => void;
-//   pages: {
-//     _404page: {
-//       errorText: string;
-//       isCurrentPage: boolean;
-//     };
-//     Chat: {
-//       messages: { username: string; message: string }[];
-//       isCurrentPage: boolean;
-//     };
-//     Chats: {
-//       chats: {
-//         chatId: string;
-//         chatName: string;
-//       }[];
-//       isCurrentPage: boolean;
-//     };
-//   };
-// }
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
   const {
@@ -46,12 +26,10 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
     },
   } = props;
 
-  // const pages = useSelector(() => )
-
   return (
     <WindowComponent {...props}>
       <MenuWithSearchBar windowId={props.id} />
-      <div style={{ padding: 4, height: '100%', flex: 1 }}>
+      <div style={{ padding: 4, height: 0, flex: 1 }}>
         {Chats.isCurrentPage && (
           <FoldersArea
             windowId={props.id}
@@ -61,6 +39,7 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             })}
           />
         )}
+        {Chat.isCurrentPage && <MessagesChat></MessagesChat>}
       </div>
     </WindowComponent>
   );
