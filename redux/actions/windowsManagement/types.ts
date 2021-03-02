@@ -6,6 +6,7 @@ export const SelectWindow = 'SELECT_WINDOW';
 /* 0 - ACTIONS */
 import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from './index';
 import { OpenChatAction } from '../../../windows/chats/actions';
+import { ChatsAction } from '../../../windows/chats/actions/types';
 /* 1 - WINDOWS */
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
 
@@ -41,4 +42,4 @@ export type Action =
   | CreateWindowAction<ChatsWindowI>
   | DeleteWindowAction
   | SelectWindowAction
-  | OpenChatAction;
+  | ChatsAction;

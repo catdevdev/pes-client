@@ -1,32 +1,33 @@
 export const OpenChatWindow = 'OPEN_CHAT_WINDOW';
-
+export const DeleteWindow = 'DELETE_WINDOW';
+export const SelectWindow = 'SELECT_WINDOW';
 
 /* types */
 import { OpenChatAction } from './index';
 
 export interface ChatsWindowI {
-  type: 'chats';
-  payload: {
-    searchText: string;
+  type?: 'chats';
+  payload?: {
+    searchText?: string;
     // enterOnClick: () => void;
-    pages: {
-      _404page: {
+    pages?: {
+      _404page?: {
         errorText?: string;
-        isCurrentPage: boolean;
+        isCurrentPage?: boolean;
       };
-      Chat: {
-        messages: { username: string; message: string }[];
-        isCurrentPage: boolean;
+      Chat?: {
+        messages?: { username: string; message: string }[];
+        isCurrentPage?: boolean;
       };
-      Chats: {
-        chats: {
-          chatId: string;
-          chatName: string;
+      Chats?: {
+        chats?: {
+          chatId?: string;
+          chatName?: string;
         }[];
-        isCurrentPage: boolean;
+        isCurrentPage?: boolean;
       };
     };
   };
 }
 
-export default OpenChatAction;
+export type ChatsAction = OpenChatAction;

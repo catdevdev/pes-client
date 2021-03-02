@@ -1,16 +1,16 @@
 /* imoprts */
-import c from "./index.module.scss";
+import c from './index.module.scss';
 /* UI Window */
-import Separator from "../Separator";
+import Separator from '../Separator';
 /* UI */
-import Button from "../../UI/Button";
-import Frame from "../../UI/Frame";
-import Input from "../../UI/Input";
+import Button from '../../UI/Button';
+import Frame from '../../UI/Frame';
+import Input from '../../UI/Input';
 /* redux */
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 /* redux types */
-import { StoreState } from "../../../redux/reducers";
-import { ChatsWindowI } from "../../../redux/actions/windowsManagement/types";
+import { StoreState } from '../../../redux/reducers';
+import { ChatsWindowI } from '../../../windows/chats/actions/types';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -23,9 +23,7 @@ interface Props {
 }
 
 const MenuWithSearchBar = ({ windowId }: Props) => {
-  const windows = useSelector(
-    (state: StoreState<ChatsWindowI>) => state.windowsManagement
-  );
+  const windows = useSelector((state: StoreState<ChatsWindowI>) => state.windowsManagement);
   const {
     body: {
       payload: {
@@ -50,14 +48,11 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
         </div>
         <Separator />
         <div className={c.searchContainer}>
-          <Button
-            onClick={() => {}}
-            style={{ width: 60, height: 25, marginRight: 6 }}
-          >
+          <Button onClick={() => {}} style={{ width: 60, height: 25, marginRight: 6 }}>
             Join
           </Button>
           <Input
-            value={"toChange ( temp )"}
+            value={'toChange ( temp )'}
             onChange={() => {}}
             style={{ height: 25, flex: 1, marginRight: 4 }}
           />

@@ -1,15 +1,21 @@
 /* imports */
 import { nanoid } from 'nanoid';
+/* utils */
+// import {use} from '../utils'
 /* types */
 /* 0 - Action Types*/
 import { CreateWindow, DeleteWindow, SelectWindow } from '../actions/windowsManagement/types';
 import { OpenChatWindow } from '../../windows/chats/actions/types';
 import { Action } from '../actions/windowsManagement/types';
-import ActionChatWindow from '../../windows/chats/actions/types';
+import { ChatsAction } from '../../windows/chats/actions/types';
 /* 1 */
 import { Window } from '../actions/windowsManagement/types';
 /* windows types */
 import { ChatsWindowI } from '../../windows/chats/actions/types';
+
+let indexWindow: number;
+let copyState: Window[];
+let copyStateChatsWindowI: Window<ChatsWindowI>[];
 
 export const windowsManagement = (state: Window[] = [], action: Action) => {
   switch (action.type) {
@@ -39,17 +45,37 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         };
       }
 
-      const index = state.findIndex(({ id }) => id === action.payload.id);
-      const copyState = [...state];
-      copyState[index] = {
-        ...copyState[index],
-        zIndex: copyState[index].zIndex + 1,
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyState = [...state];
+      copyState[indexWindow] = {
+        ...copyState[indexWindow],
+        zIndex: copyState[indexWindow].zIndex + 1,
         isActive: true,
       };
 
       return copyState;
-    case OpenChatWindow: 
-      return state;
+    case OpenChatWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                isCurrentPage: false,
+              },
+              Chat: {
+                isCurrentPage: true,
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
     default:
       return state;
   }

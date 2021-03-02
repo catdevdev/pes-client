@@ -1,17 +1,12 @@
 /* imoprts */
-import c from "./index.module.scss";
-import {
-  GridContextProvider,
-  GridDropZone,
-  GridItem,
-  swap,
-  move,
-} from "react-grid-dnd";
+import c from './index.module.scss';
+import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI */
-import Folder from "../../UI/Folder";
-import Frame from "../../UI/Frame";
+import Folder from '../../UI/Folder';
+import Frame from '../../UI/Frame';
 /* redux */
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { openChatWindow } from '../../../windows/chats/actions';
 
 interface FolderI {
   id?: string;
@@ -21,16 +16,19 @@ interface FolderI {
 interface Props {
   folderFontColor: string;
   folders: FolderI[];
+  windowId: string;
 }
 
-const FoldersArea = ({ folderFontColor, folders }: Props) => {
+const FoldersArea = ({ folderFontColor, folders, windowId }: Props) => {
+  const dispatch = useDispatch();
+
   return (
     <Frame
       withBoxShadow
       style={{
-        width: "100%",
-        height: "100%",
-        background: "#fff",
+        width: '100%',
+        height: '100%',
+        background: '#fff',
       }}
     >
       <div style={{ width: 400, padding: 18 }}>
@@ -38,7 +36,9 @@ const FoldersArea = ({ folderFontColor, folders }: Props) => {
           {folders.map(({ id, name }) => (
             <GridItem key={id} style={{ width: 32 }}>
               <Folder
-                onDoubleClick={() => {}}
+                onDoubleClick={() => {
+                  dispatch(openChatWindow(windowId));
+                }}
                 fontColor={folderFontColor}
                 folderName={name}
               />

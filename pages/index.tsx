@@ -91,6 +91,52 @@ const Index = () => {
         },
       })
     );
+    dispatch(
+      createWindow<ChatsWindowI>({
+        options: [
+          {
+            id: nanoid(),
+            name: "hello",
+            onClick: () => {},
+          },
+        ],
+
+        dimensions: {
+          width: 1000,
+          height: 500,
+        },
+
+        title: {
+          label: "test",
+        },
+
+        body: {
+          type: "chats",
+          payload: {
+            searchText: "test",
+            pages: {
+              _404page: {
+                isCurrentPage: false,
+              },
+              Chat: {
+                messages: [],
+                isCurrentPage: false,
+              },
+              Chats: {
+                chats: [
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "second chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: "first chat" },
+                ],
+                isCurrentPage: true,
+              },
+            },
+          },
+        },
+      })
+    );
   }, []);
 
   return (
