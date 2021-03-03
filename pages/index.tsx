@@ -1,48 +1,27 @@
 /* imports */
-import { useEffect } from "react";
-import c from "./index.module.scss";
-import { GridContextProvider, swap } from "react-grid-dnd";
+import { useEffect } from 'react';
+import c from './index.module.scss';
+import { GridContextProvider, swap } from 'react-grid-dnd';
+import { nanoid } from 'nanoid';
 /* components */
-import WindowComponent from "../components/Window";
+import WindowComponent from '../components/Window';
 /* layout */
-import TaskBar from "../components/Layout/TaskBar";
-import DesktopArea from "../components/Layout/DesktopArea";
+import TaskBar from '../components/Layout/TaskBar';
+import DesktopArea from '../components/Layout/DesktopArea';
 /* windows */
-import Chats from "../windows/chats/component";
-import { windowsVariants } from "../windows";
+import Chats from '../windows/chats/component';
+import { windowsVariants } from '../windows';
 /* redux */
-import { useSelector, useDispatch } from "react-redux";
-import { createWindow } from "../redux/actions/windowsManagement";
+import { useSelector, useDispatch } from 'react-redux';
+import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
-import { Window, ChatsWindowI } from "../redux/actions/windowsManagement/types";
-import { StoreState } from "../redux/reducers";
-import { nanoid } from "nanoid";
+import { Window } from '../redux/actions/windowsManagement/types';
+import { ChatsWindowI } from '../windows/chats/actions/types';
+import { StoreState } from '../redux/reducers';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
   const dispatch = useDispatch();
-
-  const WindowJSX = windowsVariants["chats"];
-
-  // dimensions: {
-  //   width: number | string;
-  //   height: number | string;
-  //   minWidth?: number | string;
-  //   minHeight?: number | string;
-  //   maxWidth?: number | string;
-  //   maxHeight?: number | string;
-  // };
-  // title: {
-  //   label: string;
-  //   icon?: string;
-  // };
-  // options?: {
-  //   options: [{ name: string; callback: () => void }];
-  // };
-  // body?: {
-  //   type: WindowBodyType & string;
-  //   payload: any;
-  // };
 
   useEffect(() => {
     dispatch(
@@ -50,7 +29,7 @@ const Index = () => {
         options: [
           {
             id: nanoid(),
-            name: "hello",
+            name: 'hello',
             onClick: () => {},
           },
         ],
@@ -61,13 +40,13 @@ const Index = () => {
         },
 
         title: {
-          label: "test",
+          label: 'test',
         },
 
         body: {
-          type: "chats",
+          type: 'chats',
           payload: {
-            searchText: "test",
+            searchText: 'test',
             pages: {
               _404page: {
                 isCurrentPage: false,
@@ -78,25 +57,25 @@ const Index = () => {
               },
               Chats: {
                 chats: [
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "second chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'second chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
                 ],
                 isCurrentPage: true,
               },
             },
           },
         },
-      })
+      }),
     );
     dispatch(
       createWindow<ChatsWindowI>({
         options: [
           {
             id: nanoid(),
-            name: "hello",
+            name: 'hello',
             onClick: () => {},
           },
         ],
@@ -107,13 +86,13 @@ const Index = () => {
         },
 
         title: {
-          label: "test",
+          label: 'test',
         },
 
         body: {
-          type: "chats",
+          type: 'chats',
           payload: {
-            searchText: "test",
+            searchText: 'test',
             pages: {
               _404page: {
                 isCurrentPage: false,
@@ -124,18 +103,18 @@ const Index = () => {
               },
               Chats: {
                 chats: [
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "second chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
-                  { chatId: nanoid(), chatName: "first chat" },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'second chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
+                  { chatId: nanoid(), chatName: 'first chat' },
                 ],
                 isCurrentPage: true,
               },
             },
           },
         },
-      })
+      }),
     );
   }, []);
 
@@ -143,25 +122,23 @@ const Index = () => {
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {/* windows */}
-        {windows.map(
-          ({ dimensions, title, options, body, id, zIndex, isActive }) => {
-            const WindowJSX = windowsVariants[body.type];
+        {windows.map(({ dimensions, title, options, body, id, zIndex, isActive }) => {
+          const WindowJSX = windowsVariants[body.type];
 
-            return (
-              <WindowJSX
-                id={id}
-                key={id}
-                dimensions={dimensions}
-                title={title}
-                options={options}
-                zIndex={zIndex}
-                isActive={isActive}
-                body={body}
-              />
-              // <h1>123</h1>
-            );
-          }
-        )}
+          return (
+            <WindowJSX
+              id={id}
+              key={id}
+              dimensions={dimensions}
+              title={title}
+              options={options}
+              zIndex={zIndex}
+              isActive={isActive}
+              body={body}
+            />
+            // <h1>123</h1>
+          );
+        })}
 
         {/* <Chats></Chats>
         <Chats></Chats>

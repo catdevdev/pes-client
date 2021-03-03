@@ -20,9 +20,18 @@
     left: 0;
     width: 100%;
     height: 1px;
-    content: "";
+    content: '';
     background: #fff;
   }
+}
+
+.container {
+  display: flex;
+}
+
+.tasksWrapper {
+  display: flex;
+  margin-left: 6px;
 }
 
 .time {
