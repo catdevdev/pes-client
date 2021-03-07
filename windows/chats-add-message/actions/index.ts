@@ -1,19 +1,19 @@
 /* types */
 /* 0 */
-import { OpenChatWindow } from './types';
+import { ChatsAddMessage } from './types';
 /* 1 */
-import { ChatsWindowI } from './types';
+import { ChatsAddMessageWindowI } from './types';
 /* 2 */
 import { Window } from '../../../redux/actions/windowsManagement/types';
 
-export interface OpenChatAction {
-  type: typeof OpenChatWindow;
+export interface ChatsAddMessageAction {
+  type: typeof ChatsAddMessage;
   payload: { id: string };
 }
 
-export const openChatWindow = (id: string): OpenChatAction => {
+export const chatsAddMessage = (id: string): ChatsAddMessageAction => {
   return {
-    type: OpenChatWindow,
+    type: ChatsAddMessage,
     payload: { id },
   };
 };

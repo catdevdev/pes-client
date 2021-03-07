@@ -1,46 +1,22 @@
 /* imports */
-import c from "./index.module.scss";
-import Draggable from "react-draggable";
-import { Rnd } from "react-rnd";
+import c from './index.module.scss';
+import Draggable from 'react-draggable';
+import { Rnd } from 'react-rnd';
 /* Window UI */
-import Title from "./Title";
-import Options from "./Options";
-import Seperator from "./Separator";
-import Footer from "./Footer";
+import Title from './Title';
+import Options from './Options';
+import Seperator from './Separator';
+import Footer from './Footer';
 /* UI */
-import Block from "../UI/Frame";
-import Button from "../UI/Button";
-import Input from "../UI/Input";
+import Block from '../UI/Frame';
+import Button from '../UI/Button';
+import Input from '../UI/Input';
 /* types */
-import { OptionsProps } from "../Window/Options";
-import { Window } from "../../redux/actions/windowsManagement/types";
+import { OptionsProps } from '../Window/Options';
+import { Window } from '../../redux/actions/windowsManagement/types';
 /* redux */
-import { useDispatch } from "react-redux";
-import {
-  deleteWindow,
-  selectWindow,
-} from "../../redux/actions/windowsManagement";
-
-// export interface WindowProps extends OptionsProps {
-//   dimensions: {
-//     width: number | string;
-//     height: number | string;
-//     minWidth: number | string;
-//     minHeight: number | string;
-//     maxWidth: number | string;
-//     maxHeight: number | string;
-//   };
-//   title: {};
-//   titleImage?: string;
-//   titleText: string;
-//   children: JSX.Element[] | JSX.Element;
-//   active: boolean;
-// }
-
-// options?: {
-//   name: string;
-//   onClick: () => void;
-// }[];
+import { useDispatch } from 'react-redux';
+import { deleteWindow, selectWindow } from '../../redux/actions/windowsManagement';
 
 const WindowComponent = ({
   children,
@@ -50,6 +26,7 @@ const WindowComponent = ({
   id,
   zIndex,
   isActive,
+  disableResize,
 }: Window & { children: JSX.Element[] | JSX.Element }) => {
   const dispatch = useDispatch();
 
@@ -64,6 +41,7 @@ const WindowComponent = ({
         width: dimensions.width,
         height: dimensions.height,
       }}
+      enableResizing={!disableResize}
       minWidth={dimensions.minWidth}
       minHeight={dimensions.minHeight}
       maxWidth={dimensions.maxWidth}

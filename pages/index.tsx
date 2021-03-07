@@ -17,6 +17,7 @@ import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
 import { Window } from '../redux/actions/windowsManagement/types';
 import { ChatsWindowI } from '../windows/chats/actions/types';
+import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 import { StoreState } from '../redux/reducers';
 
 const Index = () => {
@@ -24,6 +25,24 @@ const Index = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(
+      createWindow<ChatsAddMessageWindowI>({
+        dimensions: {
+          width: 200,
+          height: 170,
+        },
+        disableResize: true,
+        title: {
+          label: 'test',
+        },
+        body: {
+          type: 'chats-add-message',
+          payload: {
+            inputText: 'test',
+          },
+        },
+      }),
+    );
     dispatch(
       createWindow<ChatsWindowI>({
         options: [
@@ -122,23 +141,26 @@ const Index = () => {
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {/* windows */}
-        {windows.map(({ dimensions, title, options, body, id, zIndex, isActive }) => {
-          const WindowJSX = windowsVariants[body.type];
+        {windows.map(
+          ({ dimensions, title, options, body, id, zIndex, isActive, disableResize }) => {
+            const WindowJSX = windowsVariants[body.type];
 
-          return (
-            <WindowJSX
-              id={id}
-              key={id}
-              dimensions={dimensions}
-              title={title}
-              options={options}
-              zIndex={zIndex}
-              isActive={isActive}
-              body={body}
-            />
-            // <h1>123</h1>
-          );
-        })}
+            return (
+              <WindowJSX
+                id={id}
+                key={id}
+                dimensions={dimensions}
+                title={title}
+                options={options}
+                zIndex={zIndex}
+                isActive={isActive}
+                body={body}
+                disableResize={disableResize}
+              />
+              // <h1>123</h1>
+            );
+          },
+        )}
 
         {/* <Chats></Chats>
         <Chats></Chats>

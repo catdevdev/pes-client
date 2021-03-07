@@ -1,7 +1,4 @@
 export const OpenChatWindow = 'OPEN_CHAT_WINDOW';
-export const DeleteWindow = 'DELETE_WINDOW';
-export const SelectWindow = 'SELECT_WINDOW';
-
 /* types */
 import { OpenChatAction } from './index';
 

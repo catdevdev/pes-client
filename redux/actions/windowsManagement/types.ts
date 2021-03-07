@@ -23,6 +23,7 @@ export interface Window<I = any> {
     maxWidth?: number | string;
     maxHeight?: number | string;
   };
+  disableResize?: boolean,
   title: {
     label: string;
     icon?: string;
