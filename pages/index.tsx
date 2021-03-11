@@ -19,122 +19,19 @@ import { Window } from '../redux/actions/windowsManagement/types';
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 import { StoreState } from '../redux/reducers';
+/* create Windows */
+import { useCallWindow } from '../callWindows';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
   const dispatch = useDispatch();
 
+  const createWindow = useCallWindow();
+
   useEffect(() => {
-    dispatch(
-      createWindow<ChatsAddMessageWindowI>({
-        dimensions: {
-          width: 200,
-          height: 170,
-        },
-        disableResize: true,
-        title: {
-          label: 'test',
-        },
-        body: {
-          type: 'chats-add-message',
-          payload: {
-            inputText: 'test',
-          },
-        },
-      }),
-    );
-    dispatch(
-      createWindow<ChatsWindowI>({
-        options: [
-          {
-            id: nanoid(),
-            name: 'hello',
-            onClick: () => {},
-          },
-        ],
-
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-
-        title: {
-          label: 'test',
-        },
-
-        body: {
-          type: 'chats',
-          payload: {
-            searchText: 'test',
-            pages: {
-              _404page: {
-                isCurrentPage: false,
-              },
-              Chat: {
-                messages: [],
-                isCurrentPage: false,
-              },
-              Chats: {
-                chats: [
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'second chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                ],
-                isCurrentPage: true,
-              },
-            },
-          },
-        },
-      }),
-    );
-    dispatch(
-      createWindow<ChatsWindowI>({
-        options: [
-          {
-            id: nanoid(),
-            name: 'hello',
-            onClick: () => {},
-          },
-        ],
-
-        dimensions: {
-          width: 1000,
-          height: 500,
-        },
-
-        title: {
-          label: 'test',
-        },
-
-        body: {
-          type: 'chats',
-          payload: {
-            searchText: 'test',
-            pages: {
-              _404page: {
-                isCurrentPage: false,
-              },
-              Chat: {
-                messages: [],
-                isCurrentPage: false,
-              },
-              Chats: {
-                chats: [
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'second chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                  { chatId: nanoid(), chatName: 'first chat' },
-                ],
-                isCurrentPage: true,
-              },
-            },
-          },
-        },
-      }),
-    );
+    createWindow();
+    createWindow();
+    createWindow();
   }, []);
 
   return (
