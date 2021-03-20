@@ -5,6 +5,7 @@ import { ChatsAddMessageAction } from './index';
 export interface ChatsAddMessageWindowI {
   type?: 'chats-add-message';
   payload?: {
+    windowChatId?: string;
     inputText?: string;
   };
 }

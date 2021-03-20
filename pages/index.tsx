@@ -16,11 +16,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
 import { Window } from '../redux/actions/windowsManagement/types';
-import { ChatsWindowI } from '../windows/chats/actions/types';
-import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 import { StoreState } from '../redux/reducers';
 /* create Windows */
 import { useCallWindow } from '../callWindows';
+/* windows types */
+import { ChatsWindowI } from '../windows/chats/actions/types';
+import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -29,19 +30,23 @@ const Index = () => {
   const createWindow = useCallWindow();
 
   useEffect(() => {
-    createWindow();
-    createWindow();
-    createWindow();
+    createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123' },
+    });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123', windowChatId: 'fasdf' },
+    });
   }, []);
 
   return (
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
-        {/* windows */}
-        {windows.map(
+        {windows.map<any>(
           ({ dimensions, title, options, body, id, zIndex, isActive, disableResize }) => {
             const WindowJSX = windowsVariants[body.type];
-
             return (
               <WindowJSX
                 id={id}
@@ -54,15 +59,9 @@ const Index = () => {
                 body={body}
                 disableResize={disableResize}
               />
-              // <h1>123</h1>
             );
           },
         )}
-
-        {/* <Chats></Chats>
-        <Chats></Chats>
-        <Chats></Chats> */}
-        {/* windows */}
 
         <DesktopArea />
         <TaskBar />

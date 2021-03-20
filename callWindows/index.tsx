@@ -5,16 +5,47 @@ import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+/* windows name */
+import { windowsVariants } from '../windows';
 
 interface Props {
-  windowType: string;
+  windowType: 'createAddMessageWindow' | 'createChatsWindow';
 }
 
-export const useCallWindow = ({ windowType }: Props) => {
+export const useCallWindow = () => {
   const dispatch = useDispatch();
 
+  type Sum = ChatsWindowI | ChatsAddMessageWindowI;
+
   const hashCreateWindow = {
-    createAddMessageWindow: () => {
+    ['chats']: (payload) => {
+      dispatch(
+        createWindow<ChatsWindowI>({
+          dimensions: {
+            width: 400,
+            height: 300,
+            minWidth: 400,
+            minHeight: 300,
+          },
+          title: {
+            label: 'chats',
+          },
+          options: [{ name: 'text', onClick: () => {} }],
+          body: {
+            type: 'chats',
+            payload: {
+              pages: {
+                _404page: { errorText: 'about', isCurrentPage: false },
+                Chat: { isCurrentPage: false },
+                Chats: { isCurrentPage: true, chats: [{ chatName: 'test' }] },
+              },
+              ...payload,
+            },
+          },
+        }),
+      );
+    },
+    ['chats-add-message']: (payload) => {
       dispatch(
         createWindow<ChatsAddMessageWindowI>({
           dimensions: {
@@ -28,7 +59,9 @@ export const useCallWindow = ({ windowType }: Props) => {
           body: {
             type: 'chats-add-message',
             payload: {
-              inputText: 'test',
+              inputText: 'inputText',
+              windowChatId: '',
+              ...payload,
             },
           },
         }),
@@ -36,6 +69,5 @@ export const useCallWindow = ({ windowType }: Props) => {
     },
   };
 
-  return () => hashCreateWindow[windowType]();
+  return <I extends {}>(props: I & Sum) => hashCreateWindow[props.type](props.payload);
 };
- 

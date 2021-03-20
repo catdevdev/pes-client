@@ -17,6 +17,8 @@ import { Window } from '../../redux/actions/windowsManagement/types';
 /* redux */
 import { useDispatch } from 'react-redux';
 import { deleteWindow, selectWindow } from '../../redux/actions/windowsManagement';
+/* utils */
+import { randomNumber } from '../../utils/random';
 
 const WindowComponent = ({
   children,
@@ -36,8 +38,8 @@ const WindowComponent = ({
         zIndex,
       }}
       default={{
-        x: 150,
-        y: 205,
+        x: randomNumber(0 + 300, window.innerWidth - 300),
+        y: randomNumber(0 + 200, window.innerHeight - 200),
         width: dimensions.width,
         height: dimensions.height,
       }}
