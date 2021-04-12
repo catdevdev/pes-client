@@ -1,0 +1,27 @@
+.messageContainer {
+  &:first-child {
+    margin: 0;
+  }
+  margin-top: 10px;
+  display: flex;
+
+  // background: rgba(255, 0, 0, 0.281);
+
+  .username {
+    margin: 0;
+    display: inline;
+    color: greenyellow;
+    font-size: 18px;
+  }
+  .arrow {
+    margin: 0;
+    font-size: 20px;
+    color: #fff;
+    padding: 0 5px 0;
+  }
+  .message {
+    margin: 0;
+    display: inline;
+    color: #fff;
+  }
+}
