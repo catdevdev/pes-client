@@ -1,7 +1,9 @@
-import React from "react";
-import IMessage from "./Models/IMessage"
 import c from './index.module.scss';
 
+export interface IMessage {
+    username: string,
+    message: string
+}
 
 const MessageComponent = (props: IMessage) => {
     return <div className={c.messageContainer}>

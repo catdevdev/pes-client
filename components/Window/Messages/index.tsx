@@ -1,8 +1,9 @@
-import React from "react";
-import Message from "../Message";
-import IMessages from "./Models/IMessages";
+import Message, { IMessage } from "../Message";
 import c from './index.module.scss';
-import IMessage from "../Message/Models/IMessage";
+
+interface IMessages {
+    messages: IMessage[];
+}
 
 const MessagesComponent = (props: IMessages) => {
     var messages = [];
