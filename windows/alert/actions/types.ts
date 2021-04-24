@@ -9,6 +9,7 @@ export interface AlertWindowI {
   payload?: {
     alertText: string;
     icon: Icon;
+    onButtonClick: () => void;
   };
 }
 

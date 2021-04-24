@@ -36,7 +36,9 @@ const AuthPesSystemWindow = (props: Window<AlertWindowI>) => {
           <Icon src={`/images/icons/${props.body.payload.icon}.svg`} />
           <Label style={{ marginLeft: 30, fontSize: 14 }}>{props.body.payload.alertText}</Label>
         </div>
-        <Button style={{ margin: '0 auto 15px' }}>Ok</Button>
+        <Button onClick={props.body.payload.onButtonClick} style={{ margin: '0 auto 15px' }}>
+          Ok
+        </Button>
       </div>
     </WindowComponent>
   );

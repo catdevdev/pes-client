@@ -1,5 +1,7 @@
 /* imports */
 import { useState, useEffect } from 'react';
+/* utils */
+import { nanoid } from 'nanoid';
 /* UI Window */
 import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
@@ -13,6 +15,8 @@ import { Window } from '../../../redux/actions/windowsManagement/types';
 import { AuthPesSystemWindowI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
+/* actions  */
+import { deleteWindow } from '../../../redux/actions/windowsManagement';
 /* axios */
 import axios from '../../../redux/api';
 /* spawn windows hook */
@@ -33,34 +37,28 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
   const [password, setPassword] = useState<string>('string');
   const [repeatPassword, setRepeatPassword] = useState<string>('string');
 
+  const dispatch = useDispatch();
   const createWindow = useCallWindow();
 
-  const validateCredentials = () => {
-    let validateIssue: string;
-    const checkLength = () => {
-      if (username.length <= 4) {
-        return (validateIssue = 'Your nickname should be greater then 4');
-      }
-      if (password.length <= 6) {
-        return (validateIssue = 'Your password should be greater then 6');
-      }
-    };
-    const checkValidValues = () => {};
-    checkLength();
-    if (validateIssue) {
+  const submitCredentials = async () => {
+    try {
+      const a = await register(username, password);
+    } catch (err) {
+      console.log(err.response.data);
+      const id = nanoid();
       createWindow<AlertWindowI | Window>({
+        id,
         type: 'alert',
         isLocked: true,
-        payload: { alertText: validateIssue, icon: 'error-red' },
+        payload: {
+          alertText: err.response.data.title,
+          icon: 'error-red',
+          onButtonClick: () => {
+            dispatch(deleteWindow(id));
+          },
+        },
       });
-      return;
     }
-  };
-
-  const submitCredentials = async () => {
-    validateCredentials();
-    const a = await register(username, password);
-    console.log(a);
   };
 
   useEffect(() => {
@@ -85,15 +83,30 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             </Label>
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 18 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Nickname:</Label>
-              <Input style={{ width: '100%' }}></Input>
+              <Input
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                style={{ width: '100%' }}
+              ></Input>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Password:</Label>
-              <Input style={{ width: '100%' }}></Input>
+              <Input
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                style={{ width: '100%' }}
+              ></Input>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 160 }}>Repeat Password:</Label>
-              <Input style={{ width: '100%' }}></Input>
+              <Input
+                onChange={(e) => {
+                  setRepeatPassword(e.target.value);
+                }}
+                style={{ width: '100%' }}
+              ></Input>
             </div>
             <div
               style={{

@@ -36,7 +36,6 @@ export interface Window<I = any> {
   isActive?: boolean;
   zIndex?: number;
   isLocked?: boolean;
-
   body: I;
 }
 
