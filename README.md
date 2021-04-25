@@ -7,7 +7,7 @@ yarn install
 yarn dev
 ```
 
-## How to get own window
+## How to add own window
 1. In **windows** folder create folder with name of window
 2. Inside this folder create folders `actions` and `component`
 3. Inside `actions` create `index.ts` and `types.ts` and use same code structure like in another folders of windows
@@ -17,5 +17,5 @@ yarn dev
 Add into `type Sum` your interface of window from `'./windows/{name-of-your-window}/actions/types.ts'`
 Add into `hashCreateWindow` object same structure like others windows
 7. To use your window init hook use `const createWindow = useCallWindow();`
-createWindow<Type_of_your_window>({ type: 'name-of-your-window' })
+`createWindow<Type_of_your_window>({ type: 'name-of-your-window' })`
 
