@@ -6,9 +6,11 @@ interface Props {
 }
 
 export const ProgressBar = (props: Props) => {
-  <div className={c.progressBar}>
-    <Filler percentage={props.percentage} />
-  </div>;
+  return (
+    <div className={c.progressBar}>
+      <Filler percentage={props.percentage} />
+    </div>
+  );
 };
 
 const Filler = (props: Props) => {
