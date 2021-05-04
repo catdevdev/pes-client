@@ -5,6 +5,7 @@ import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+import { MessageUserI } from '../windows/message-user/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 
@@ -15,7 +16,7 @@ interface Props {
 export const useCallWindow = () => {
   const dispatch = useDispatch();
 
-  type Sum = ChatsWindowI | ChatsAddMessageWindowI;
+  type Sum = ChatsWindowI | ChatsAddMessageWindowI | MessageUserI;
 
   const hashCreateWindow = {
     ['chats']: (payload) => {
@@ -61,6 +62,25 @@ export const useCallWindow = () => {
             payload: {
               inputText: 'inputText',
               windowChatId: '',
+              ...payload,
+            },
+          },
+        }),
+      );
+    },
+    ['message-user']: (payload) => {
+      dispatch(
+        createWindow<MessageUserI>({
+          dimensions: {
+            width: 400,
+            height: 400,
+          },
+          title: {
+            label: 'message-user',
+          },
+          body: {
+            type: 'message-user',
+            payload: {
               ...payload,
             },
           },

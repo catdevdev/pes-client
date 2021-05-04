@@ -22,6 +22,7 @@ import { useCallWindow } from '../callWindows';
 /* windows types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+import { MessageUserI } from '../windows/message-user/actions/types';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -38,6 +39,15 @@ const Index = () => {
     createWindow<ChatsAddMessageWindowI>({
       type: 'chats-add-message',
       payload: { inputText: '123', windowChatId: 'fasdf' },
+    });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123', windowChatId: 'fasdf' },
+    });
+
+    createWindow<MessageUserI>({
+      type: 'message-user',
+      payload: { username: 'Vitalik1972' },
     });
   }, []);
 
