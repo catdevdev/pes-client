@@ -26,10 +26,10 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
           return { ...window, isActive: false };
         }),
         {
-          ...action.payload,
           id: nanoid(),
           isActive: true,
           zIndex: state.length + 1,
+          ...action.payload,
         },
       ];
     case DeleteWindow:

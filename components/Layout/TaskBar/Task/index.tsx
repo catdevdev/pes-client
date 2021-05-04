@@ -9,7 +9,6 @@ import { selectWindow } from '../../../../redux/actions/windowsManagement';
 
 interface Props {
   windowId: string;
-  children: JSX.Element;
 }
 
 const Task = ({ windowId }: Props) => {
@@ -35,6 +34,9 @@ const Task = ({ windowId }: Props) => {
           alignItems: 'center',
           width: 140,
           height: 24,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}
         withBoxShadow={isActive}
       >

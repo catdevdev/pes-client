@@ -6,20 +6,27 @@ import { createWindow } from '../redux/actions/windowsManagement';
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 import { MessageUserI } from '../windows/message-user/actions/types';
+import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
+import { AlertWindowI } from '../windows/alert/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 
 interface Props {
-  windowType: 'createAddMessageWindow' | 'createChatsWindow';
+  windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system';
 }
 
 export const useCallWindow = () => {
   const dispatch = useDispatch();
 
-  type Sum = ChatsWindowI | ChatsAddMessageWindowI | MessageUserI;
+  type Sum =
+    | ChatsWindowI
+    | ChatsAddMessageWindowI
+    | AuthPesSystemWindowI
+    | AlertWindowI
+    | MessageUserI;
 
   const hashCreateWindow = {
-    ['chats']: (payload) => {
+    ['chats']: (data) => {
       dispatch(
         createWindow<ChatsWindowI>({
           dimensions: {
@@ -32,6 +39,7 @@ export const useCallWindow = () => {
             label: 'chats',
           },
           options: [{ name: 'text', onClick: () => {} }],
+          ...data,
           body: {
             type: 'chats',
             payload: {
@@ -40,13 +48,13 @@ export const useCallWindow = () => {
                 Chat: { isCurrentPage: false },
                 Chats: { isCurrentPage: true, chats: [{ chatName: 'test' }] },
               },
-              ...payload,
+              ...data.payload,
             },
           },
         }),
       );
     },
-    ['chats-add-message']: (payload) => {
+    ['chats-add-message']: (data) => {
       dispatch(
         createWindow<ChatsAddMessageWindowI>({
           dimensions: {
@@ -57,14 +65,59 @@ export const useCallWindow = () => {
           title: {
             label: 'test',
           },
+          ...data,
           body: {
             type: 'chats-add-message',
             payload: {
               inputText: 'inputText',
               windowChatId: '',
-              ...payload,
+              ...data.payload,
             },
           },
+        }),
+      );
+    },
+    ['auth-pes-system']: (data) => {
+      dispatch(
+        createWindow<AuthPesSystemWindowI>({
+          dimensions: {
+            width: 320,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'Register new account in PES system',
+          },
+          ...data,
+          body: {
+            type: 'auth-pes-system',
+            payload: {
+              ...data.payload,
+            },
+          },
+        }),
+      );
+    },
+    ['alert']: (data) => {
+      dispatch(
+        createWindow<AlertWindowI>({
+          dimensions: {
+            width: 260,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: '',
+          },
+
+          ...data,
+          body: {
+            type: 'alert',
+            payload: {
+              ...data.payload,
+            },
+          },
+          isLocked: true,
         }),
       );
     },
@@ -89,5 +142,5 @@ export const useCallWindow = () => {
     },
   };
 
-  return <I extends {}>(props: I & Sum) => hashCreateWindow[props.type](props.payload);
+  return <I extends {}>(props: I & Sum) => hashCreateWindow[props.type](props);
 };

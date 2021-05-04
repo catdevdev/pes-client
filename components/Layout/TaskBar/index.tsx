@@ -15,11 +15,7 @@ const TaskBar = () => {
         <Button style={{ fontWeight: 700, width: 54, height: 24 }}>Start</Button>
         <div className={c.tasksWrapper}>
           {windows.map(({ id, title: { label } }) => {
-            return (
-              <Task windowId={id}>
-                <p className={c.name}>{label}</p>
-              </Task>
-            );
+            return <Task windowId={id} />;
           })}
         </div>
       </div>

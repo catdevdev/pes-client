@@ -20,6 +20,10 @@ import { deleteWindow, selectWindow } from '../../redux/actions/windowsManagemen
 /* utils */
 import { randomNumber } from '../../utils/random';
 
+const BlockClickOnOthersWindows = () => {
+  return <div style={{ width: '100vw', height: '100vh', zIndex: 1, position: 'absolute' }} />;
+};
+
 const WindowComponent = ({
   children,
   dimensions,
@@ -29,57 +33,60 @@ const WindowComponent = ({
   zIndex,
   isActive,
   disableResize,
+  isLocked,
 }: Window & { children: JSX.Element[] | JSX.Element }) => {
   const dispatch = useDispatch();
-
   return (
-    <Rnd
-      style={{
-        zIndex,
-      }}
-      default={{
-        x: randomNumber(0 + 300, window.innerWidth - 300),
-        y: randomNumber(0 + 200, window.innerHeight - 200),
-        width: dimensions.width,
-        height: dimensions.height,
-      }}
-      enableResizing={!disableResize}
-      minWidth={dimensions.minWidth}
-      minHeight={dimensions.minHeight}
-      maxWidth={dimensions.maxWidth}
-      maxHeight={dimensions.maxHeight}
-      dragHandleClassName="titleContainer"
-
-      // minWidth={500}
-      // minHeight={190}
-      // bounds="window"
-      // handle=".titleContainer"
-    >
-      <div
-        onMouseDown={() => {
-          dispatch(selectWindow(id));
+    <>
+      {isLocked && <BlockClickOnOthersWindows />}
+      <Rnd
+        style={{
+          zIndex,
         }}
-        onClick={() => {}}
-        className={c.wrapper}
+        default={{
+          x: randomNumber(0 + 300, window.innerWidth - 300),
+          y: randomNumber(0 + 200, window.innerHeight - 200),
+          width: dimensions.width,
+          height: dimensions.height,
+        }}
+        enableResizing={!disableResize}
+        minWidth={dimensions.minWidth}
+        minHeight={dimensions.minHeight}
+        maxWidth={dimensions.maxWidth}
+        maxHeight={dimensions.maxHeight}
+        dragHandleClassName="titleContainer"
+
+        // minWidth={500}
+        // minHeight={190}
+        // bounds="window"
+        // handle=".titleContainer"
       >
-        <Title
-          isActive={isActive}
-          onClose={() => {
-            dispatch(deleteWindow(id));
+        <div
+          onMouseDown={() => {
+            dispatch(selectWindow(id));
           }}
-          onFullScreen={() => {}}
-          onMinimize={() => {}}
-          titleText={title.label}
-          titleIcon={title.icon}
-        />
-        <Options options={options} />
-        <Seperator />
-        {children}
-        {/* <Button style={{ height: 50 }}>hello</Button>
+          onClick={() => {}}
+          className={c.wrapper}
+        >
+          <Title
+            isActive={isActive}
+            onClose={() => {
+              dispatch(deleteWindow(id));
+            }}
+            onFullScreen={() => {}}
+            onMinimize={() => {}}
+            titleText={title.label}
+            titleIcon={title.icon}
+          />
+          <Options options={options} />
+          <Seperator />
+          {children}
+          {/* <Button style={{ height: 50 }}>hello</Button>
         <Button style={{ height: 50 }}>hello</Button>
         <Input /> */}
-      </div>
-    </Rnd>
+        </div>
+      </Rnd>
+    </>
   );
 };
 

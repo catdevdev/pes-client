@@ -1,8 +1,8 @@
-import axios from "axios";
-axios.defaults.baseURL = "https://api.example.com";
+import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: 'http://134.249.99.75:5001/api/v1/',
+  headers: {},
 });
 
 export default instance;

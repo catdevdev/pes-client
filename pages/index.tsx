@@ -23,6 +23,8 @@ import { useCallWindow } from '../callWindows';
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
 import { MessageUserI } from '../windows/message-user/actions/types';
+import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
+import { AlertWindowI } from '../windows/alert/actions/types';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -49,13 +51,29 @@ const Index = () => {
       type: 'message-user',
       payload: { username: 'Vitalik1972' },
     });
+    // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    // createWindow<ChatsAddMessageWindowI>({
+    //   type: 'chats-add-message',
+    //   payload: { inputText: '123' },
+    // });
+    // createWindow<ChatsAddMessageWindowI>({
+    //   type: 'chats-add-message',
+    //   payload: { inputText: '123', windowChatId: 'fasdf' },
+    // });
+    // createWindow<ChatsAddMessageWindowI>({
+    //   type: 'chats-add-message',
+    //   payload: { inputText: '123', windowChatId: 'fasdf' },
+    // });
+    createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
+
+    // createWindow<AlertWindowI>({ type: 'alert' });
   }, []);
 
   return (
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {windows.map<any>(
-          ({ dimensions, title, options, body, id, zIndex, isActive, disableResize }) => {
+          ({ dimensions, title, options, body, id, zIndex, isActive, disableResize, isLocked }) => {
             const WindowJSX = windowsVariants[body.type];
             return (
               <WindowJSX
@@ -68,6 +86,7 @@ const Index = () => {
                 isActive={isActive}
                 body={body}
                 disableResize={disableResize}
+                isLocked={isLocked}
               />
             );
           },

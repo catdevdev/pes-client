@@ -23,7 +23,7 @@ export interface Window<I = any> {
     maxWidth?: number | string;
     maxHeight?: number | string;
   };
-  disableResize?: boolean,
+  disableResize?: boolean;
   title: {
     label: string;
     icon?: string;
@@ -35,7 +35,7 @@ export interface Window<I = any> {
   }[];
   isActive?: boolean;
   zIndex?: number;
-
+  isLocked?: boolean;
   body: I;
 }
 
