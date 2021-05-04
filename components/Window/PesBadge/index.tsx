@@ -2,7 +2,7 @@ import { ProgressBar } from '../../UI/ProgressBar';
 
 import c from './index.module.scss';
 
-interface BadgeModel {
+export interface BadgeModel {
   score: number;
   badgeLocation: string;
   title: string;

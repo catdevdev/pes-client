@@ -1,10 +1,12 @@
 /* types */
 import WindowComponent from '../../../components/Window';
-import PesBadgeComponent from '../../../components/Window/PesBadge';
+import PesBadgeComponent, { BadgeModel } from '../../../components/Window/PesBadge';
 import PesBadge from '../../../components/Window/PesBadge';
 import { Window } from '../../../redux/actions/windowsManagement/types';
 import { MessageUserI } from '../actions/types';
 import Header from '../../../components/UI/Header';
+import { useState, useEffect } from 'react';
+import { getPesScore } from '../../../redux/api/service';
 
 const MessageUser = (props: Window<MessageUserI>) => {
   const {
@@ -13,10 +15,21 @@ const MessageUser = (props: Window<MessageUserI>) => {
     },
   } = props;
 
+  const [pesScore, setBadge] = useState<BadgeModel>(null);
+
+  const fetchPesScore = async () => {
+    const response = await getPesScore(username);
+    setBadge(response);
+  };
+
+  useEffect(() => {
+    fetchPesScore();
+  }, []);
+
   return (
     <WindowComponent {...props}>
       <Header text={username}></Header>
-      <PesBadgeComponent score={60} title={'Emerald Doge'} badgeLocation={'./images/Emerald.png'} />
+      {pesScore != null && <PesBadgeComponent {...pesScore} />}
     </WindowComponent>
   );
 };
