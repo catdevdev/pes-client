@@ -1,0 +1,14 @@
+.progressBar {
+  position: relative;
+  height: 2em;
+  width: 100%;
+  border-radius: 50px;
+  border: 1px solid #333;
+}
+
+.filler {
+  background: #1da589;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.2s ease-in;
+}

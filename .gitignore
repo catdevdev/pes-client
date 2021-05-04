@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#inmemory db
+*.sqlite
+
+#vsCode
+.vs

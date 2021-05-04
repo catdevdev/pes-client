@@ -22,6 +22,7 @@ import { useCallWindow } from '../callWindows';
 /* windows types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+import { MessageUserI } from '../windows/message-user/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
 
@@ -32,6 +33,24 @@ const Index = () => {
   const createWindow = useCallWindow();
 
   useEffect(() => {
+    createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123' },
+    });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123', windowChatId: 'fasdf' },
+    });
+    createWindow<ChatsAddMessageWindowI>({
+      type: 'chats-add-message',
+      payload: { inputText: '123', windowChatId: 'fasdf' },
+    });
+
+    createWindow<MessageUserI>({
+      type: 'message-user',
+      payload: { username: 'Vitalik1972' },
+    });
     // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsAddMessageWindowI>({
     //   type: 'chats-add-message',
