@@ -6,7 +6,7 @@ import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
 import MenuWithSearchBar from '../../chats/components/MenuWithSearchBar';
 import FoldersArea from '../../../components/Window/FoldersArea';
-import MessagesChat from '../../../components/Window/MessagesChat';
+import MessagesChat from '../../chats/components/MessagesChat';
 import Options from '../../../components/Window/Options';
 /* UI */
 import Button from '../../../components/UI/Button';

@@ -83,7 +83,7 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
           {Chat.isCurrentPage && (
             <Button
               onClick={() => {
-                dispatch(openChatsWindow);
+                dispatch(openChatsWindow(windowId));
               }}
               style={{ width: 60, height: 25, marginRight: 6 }}
             >
