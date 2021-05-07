@@ -2,23 +2,23 @@
 import c from './index.module.scss';
 import { nanoid } from 'nanoid';
 /* UI Window */
-import Separator from '../Separator';
+import Separator from '../../../../components/Window/Separator';
 /* UI */
-import Button from '../../UI/Button';
-import Frame from '../../UI/Frame';
-import Input from '../../UI/Input';
+import Button from '../../../../components/UI/Button';
+import Frame from '../../../../components/UI/Frame';
+import Input from '../../../../components/UI/Input';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* redux types */
-import { Window } from '../../../redux/actions/windowsManagement/types';
-import { StoreState } from '../../../redux/reducers';
-import { ChatsWindowI } from '../../../windows/chats/actions/types';
-import { openChatsWindow } from '../../../windows/chats/actions';
-import { createWindow } from '../../../redux/actions/windowsManagement';
+import { Window } from '../../../../redux/actions/windowsManagement/types';
+import { StoreState } from '../../../../redux/reducers';
+import { ChatsWindowI } from '../../actions/types';
+import { openChatsWindow } from '../../actions';
+import { createWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
-import { ChatsCreateChatI } from '../../../windows/chats-create-chat/actions/types';
-import { useCallWindow } from '../../../callWindows';
-import { createChatWindow } from '../../../windows/chats-create-chat/actions';
+import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
+import { useCallWindow } from '../../../../callWindows';
+import { createChatWindow } from '../../../chats-create-chat/actions';
 
 // interface Props {
 //   enterOnClick: () => void;
