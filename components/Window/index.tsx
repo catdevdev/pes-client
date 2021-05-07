@@ -34,6 +34,7 @@ const WindowComponent = ({
   isActive,
   disableResize,
   isLocked,
+  isLoading,
 }: Window & { children: JSX.Element[] | JSX.Element }) => {
   const dispatch = useDispatch();
   return (
@@ -67,6 +68,7 @@ const WindowComponent = ({
           }}
           onClick={() => {}}
           className={c.wrapper}
+          style={{ cursor: isLoading && 'wait' }}
         >
           <Title
             isActive={isActive}

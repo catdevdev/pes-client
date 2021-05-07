@@ -11,19 +11,7 @@ export interface OpenChatAction {
   payload: { id: string };
 }
 
-export interface BackToChatsAction {
-  type: typeof OpenChatWindow;
-  payload: { id: string };
-}
-
 export const openChatWindow = (id: string): OpenChatAction => {
-  return {
-    type: OpenChatWindow,
-    payload: { id },
-  };
-};
-
-export const backToChatsWindow = (id: string): BackToChatsAction => {
   return {
     type: OpenChatWindow,
     payload: { id },

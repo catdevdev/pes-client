@@ -40,9 +40,12 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
   const dispatch = useDispatch();
   const createWindow = useCallWindow();
 
+  
+
   const submitCredentials = async () => {
     try {
-      const a = await register(username, password);
+      const { data } = await register(username, password);
+      localStorage.setItem('token', data);
     } catch (err) {
       console.log(err.response.data);
       const id = nanoid();

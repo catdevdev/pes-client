@@ -5,19 +5,25 @@ import { createWindow } from '../redux/actions/windowsManagement';
 /* redux-types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 
 interface Props {
-  windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system';
+  windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
 }
 
 export const useCallWindow = () => {
   const dispatch = useDispatch();
 
-  type Sum = ChatsWindowI | ChatsAddMessageWindowI | AuthPesSystemWindowI | AlertWindowI;
+  type Sum =
+    | ChatsWindowI
+    | ChatsAddMessageWindowI
+    | AuthPesSystemWindowI
+    | AlertWindowI
+    | ChatsCreateChatI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -45,6 +51,30 @@ export const useCallWindow = () => {
               ...data.payload,
             },
           },
+        }),
+      );
+    },
+    ['chats-create-chat']: (data) => {
+      dispatch(
+        createWindow<ChatsCreateChatI>({
+          dimensions: {
+            width: 280,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: '',
+          },
+          ...data,
+          body: {
+            type: 'chats-create-chat',
+            payload: {
+              ...data.payload,
+              chatName: '',
+              chatPassword: '',
+            },
+          },
+          isLocked: true,
         }),
       );
     },

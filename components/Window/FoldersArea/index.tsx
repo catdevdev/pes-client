@@ -8,18 +8,20 @@ import Frame from '../../UI/Frame';
 import { useSelector, useDispatch } from 'react-redux';
 import { openChatWindow } from '../../../windows/chats/actions';
 
-interface FolderI {
+export interface FolderI {
   id?: string;
   name: string;
+  onDoubleClick: () => void;
 }
 
 interface Props {
   folderFontColor: string;
   folders: FolderI[];
   windowId: string;
+  liteVersion: boolean;
 }
 
-const FoldersArea = ({ folderFontColor, folders, windowId }: Props) => {
+const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props) => {
   const dispatch = useDispatch();
 
   return (
@@ -31,21 +33,39 @@ const FoldersArea = ({ folderFontColor, folders, windowId }: Props) => {
         background: '#fff',
       }}
     >
-      <div style={{ width: 400, padding: 18 }}>
-        <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
-          {folders.map(({ id, name }) => (
-            <GridItem key={id} style={{ width: 32 }}>
-              <Folder
-                onDoubleClick={() => {
-                  dispatch(openChatWindow(windowId));
-                }}
-                fontColor={folderFontColor}
-                folderName={name}
-              />
-            </GridItem>
-          ))}
-        </GridDropZone>
-      </div>
+      <>
+        {!liteVersion && (
+          <div style={{ width: 400, padding: 18 }}>
+            <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
+              {folders.map(({ id, name, onDoubleClick }) => (
+                <GridItem key={id} style={{ width: 32 }}>
+                  <Folder
+                    onDoubleClick={onDoubleClick}
+                    fontColor={folderFontColor}
+                    folderName={name}
+                  />
+                </GridItem>
+              ))}
+            </GridDropZone>
+          </div>
+        )}
+        {liteVersion && (
+          <div style={{ width: 400, padding: 18 }}>
+            <div className={c.folderAreaWrapper}>
+              {folders.map(({ id, name, onDoubleClick }) => (
+                <div style={{ width: 70 }}>
+                  <Folder
+                    key={id}
+                    onDoubleClick={onDoubleClick}
+                    fontColor={folderFontColor}
+                    folderName={name}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </>
     </Frame>
   );
 };

@@ -22,6 +22,7 @@ import { useCallWindow } from '../callWindows';
 /* windows types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
+import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
 
@@ -33,6 +34,14 @@ const Index = () => {
 
   useEffect(() => {
     // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    // createWindow<ChatsCreateChatI | Window>({
+    //   type: 'chats-create-chat',
+    //   payload: {
+    //     relativeWindowChatId: '213',
+    //     onCreate: () => {},
+    //   },
+    // });
     // createWindow<ChatsAddMessageWindowI>({
     //   type: 'chats-add-message',
     //   payload: { inputText: '123' },
@@ -45,7 +54,9 @@ const Index = () => {
     //   type: 'chats-add-message',
     //   payload: { inputText: '123', windowChatId: 'fasdf' },
     // });
-    createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
+    if (!localStorage.getItem('token')) {
+      createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
+    }
 
     // createWindow<AlertWindowI>({ type: 'alert' });
   }, []);
@@ -54,7 +65,18 @@ const Index = () => {
     <GridContextProvider onChange={() => {}}>
       <div className={c.container}>
         {windows.map<any>(
-          ({ dimensions, title, options, body, id, zIndex, isActive, disableResize, isLocked }) => {
+          ({
+            dimensions,
+            title,
+            options,
+            body,
+            id,
+            zIndex,
+            isActive,
+            disableResize,
+            isLocked,
+            isLoading,
+          }) => {
             const WindowJSX = windowsVariants[body.type];
             return (
               <WindowJSX
@@ -68,6 +90,7 @@ const Index = () => {
                 body={body}
                 disableResize={disableResize}
                 isLocked={isLocked}
+                isLoading={isLoading}
               />
             );
           },

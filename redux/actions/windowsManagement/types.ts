@@ -1,12 +1,19 @@
 export const CreateWindow = 'CREATE_WINDOW';
 export const DeleteWindow = 'DELETE_WINDOW';
 export const SelectWindow = 'SELECT_WINDOW';
+export const SetLoadingWindow = 'SET_LOADING_WINDOW';
 
 /* types */
 /* 0 - ACTIONS */
-import { CreateWindowAction, DeleteWindowAction, SelectWindowAction } from './index';
+import {
+  CreateWindowAction,
+  DeleteWindowAction,
+  SelectWindowAction,
+  SetLoadingAction,
+} from './index';
 import { OpenChatAction } from '../../../windows/chats/actions';
 import { ChatsAction } from '../../../windows/chats/actions/types';
+import { ChangeChatDataAction } from '../../../windows/chats-create-chat/actions';
 /* 1 - WINDOWS */
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
 
@@ -36,6 +43,7 @@ export interface Window<I = any> {
   isActive?: boolean;
   zIndex?: number;
   isLocked?: boolean;
+  isLoading?: boolean;
   body: I;
 }
 
@@ -43,4 +51,6 @@ export type Action =
   | CreateWindowAction<ChatsWindowI>
   | DeleteWindowAction
   | SelectWindowAction
-  | ChatsAction;
+  | ChatsAction
+  | SetLoadingAction
+  | ChangeChatDataAction;

@@ -1,5 +1,5 @@
 /* imports */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI Window */
 import WindowComponent from '../../../components/Window';
@@ -13,11 +13,10 @@ import Frame from '../../../components/UI/Frame';
 import Folder from '../../../components/UI/Folder';
 /* types */
 import { Window } from '../../../redux/actions/windowsManagement/types';
-import { ChatsWindowI } from '../actions/types';
+import { ChatsWindowI } from '../../chats/actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
-/* actions */
-import { fetchAllChats, openChatWindow, OpenChatsAction } from '../actions';
+import { openChatWindow } from '../actions';
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
   const {
@@ -29,10 +28,6 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   } = props;
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllChats(props.id));
-  }, []);
 
   return (
     <WindowComponent {...props}>

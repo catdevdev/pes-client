@@ -1,5 +1,6 @@
 /* imoprts */
 import c from './index.module.scss';
+import { nanoid } from 'nanoid';
 /* UI Window */
 import Separator from '../Separator';
 /* UI */
@@ -7,10 +8,17 @@ import Button from '../../UI/Button';
 import Frame from '../../UI/Frame';
 import Input from '../../UI/Input';
 /* redux */
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 /* redux types */
+import { Window } from '../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../redux/reducers';
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
+import { openChatsWindow } from '../../../windows/chats/actions';
+import { createWindow } from '../../../redux/actions/windowsManagement';
+/* spawn windows */
+import { ChatsCreateChatI } from '../../../windows/chats-create-chat/actions/types';
+import { useCallWindow } from '../../../callWindows';
+import { createChatWindow } from '../../../windows/chats-create-chat/actions';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -34,6 +42,10 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
     return windowId === id;
   });
 
+  const dispatch = useDispatch();
+
+  const createWindow = useCallWindow();
+
   return (
     <div className={c.wrapper}>
       <div className={c.leftContainer}>
@@ -45,12 +57,44 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
               <Button style={{ width: 25, height: 25 }} />
             </>
           )}
+          {Chats.isCurrentPage && (
+            <>
+              <Button
+                onClick={() => {
+                  const chatId = nanoid();
+                  createWindow<ChatsCreateChatI | Window>({
+                    id: chatId,
+                    type: 'chats-create-chat',
+                    payload: {
+                      relativeWindowChatId: windowId,
+                      onCreate: () => {},
+                      chatName: '',
+                      chatPassword: '',
+                    },
+                  });
+                }}
+                style={{ width: 25, height: 25 }}
+              />
+            </>
+          )}
         </div>
         <Separator />
         <div className={c.searchContainer}>
-          <Button onClick={() => {}} style={{ width: 60, height: 25, marginRight: 6 }}>
-            Join
-          </Button>
+          {Chat.isCurrentPage && (
+            <Button
+              onClick={() => {
+                dispatch(openChatsWindow);
+              }}
+              style={{ width: 60, height: 25, marginRight: 6 }}
+            >
+              Go back
+            </Button>
+          )}
+          {Chats.isCurrentPage && (
+            <Button onClick={() => {}} style={{ width: 60, height: 25, marginRight: 6 }}>
+              Join
+            </Button>
+          )}
           <Input
             value={'toChange ( temp )'}
             onChange={() => {}}

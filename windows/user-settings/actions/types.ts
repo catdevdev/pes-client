@@ -1,8 +1,9 @@
-export const OpenChatWindow = 'CHATS-WINDOW/OPEN_CHAT_WINDOW';
-export const OpenChatsWindow = 'CHATS-WINDOW/OPEN_CHATS_WINDOW';
-export const FetchAllChatsWindow = 'CHATS-WINDOW/FETCH_ALL_CHATS';
+export const OpenChatWindow = 'OPEN_CHAT_WINDOW';
+export const DeleteWindow = 'DELETE_WINDOW';
+export const SelectWindow = 'SELECT_WINDOW';
+
 /* types */
-import { FetchAllChatsAction, OpenChatAction, OpenChatsAction } from './index';
+import { OpenChatAction } from './index';
 
 export interface ChatsWindowI {
   type?: 'chats';
@@ -22,7 +23,6 @@ export interface ChatsWindowI {
         chats?: {
           chatId?: string;
           chatName?: string;
-          userCount?: number;
         }[];
         isCurrentPage?: boolean;
       };
@@ -30,4 +30,4 @@ export interface ChatsWindowI {
   };
 }
 
-export type ChatsAction = OpenChatAction | OpenChatsAction | FetchAllChatsAction;
+export type ChatsAction = OpenChatAction;
