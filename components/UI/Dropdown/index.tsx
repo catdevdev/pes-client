@@ -9,7 +9,6 @@ import c from './index.module.scss';
 interface Props {
   title: string;
   menuItems: { id: string; name: string; onClick: () => void }[];
-  onOpenClose: () => void;
   style: CSSProperties;
 }
 
