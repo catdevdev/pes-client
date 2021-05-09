@@ -1,33 +1,45 @@
 /* imports */
-import c from "./index.module.scss";
-import { nanoid } from "nanoid";
-import {
-  GridContextProvider,
-  GridDropZone,
-  GridItem,
-  swap,
-} from "react-grid-dnd";
+import c from './index.module.scss';
+import { nanoid } from 'nanoid';
+import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dnd';
 /* UI */
-import Folder from "../../UI/Folder";
+import Folder from '../../UI/Folder';
+import { ChatsWindowI } from '../../../windows/chats/actions/types';
+import { useCallWindow } from '../../../callWindows';
 
 const DesktopArea = () => {
+  const createWindow = useCallWindow();
+
   return (
     <div className={c.wrapper}>
       <GridDropZone id="desktop_area" boxesPerRow={1} rowHeight={70}>
         {[
-          { id: nanoid(), name: "test1" },
-          { id: nanoid(), name: "test2" },
-          { id: nanoid(), name: "test3" },
-          { id: nanoid(), name: "test4" },
-          { id: nanoid(), name: "test5" },
-          { id: nanoid(), name: "test6" },
-          { id: nanoid(), name: "test7" },
-          { id: nanoid(), name: "test8" },
-        ].map(({ id, name }) => (
-          <GridItem key={id} style={{ width: 32 }}>
-            <Folder folderName={name} />
-          </GridItem>
-        ))}
+          {
+            id: nanoid(),
+            name: 'chats',
+            folderIcon: 'folder',
+            onOpen: () => {
+              createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+            },
+          },
+          { id: nanoid(), name: 'settings', folderIcon: 'settings' },
+        ].map(
+          ({
+            id,
+            name,
+            folderIcon,
+            onOpen
+          }: {
+            id: string;
+            name: string;
+            folderIcon: 'folder' | 'settings';
+            onOpen: () => void
+          }) => (
+            <GridItem key={id} style={{ width: 32 }}>
+              <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
+            </GridItem>
+          ),
+        )}
       </GridDropZone>
     </div>
   );

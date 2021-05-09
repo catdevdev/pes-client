@@ -44,6 +44,33 @@ export const createChatWindow = (chatId: string, chatName: string, chatPassword:
     console.log(res);
     dispatch(setLoadingWindow(chatId, false));
     dispatch(deleteWindow(chatId));
+
+    const id = nanoid();
+
+    dispatch(
+      createWindow<AlertWindowI>({
+        id,
+        dimensions: {
+          width: 260,
+          height: 'auto',
+        },
+        disableResize: true,
+        title: {
+          label: '',
+        },
+        body: {
+          type: 'alert',
+          payload: {
+            alertText: 'Chat with name  was created successfully🤞',
+            icon: 'information',
+            onButtonClick: () => {
+              dispatch(deleteWindow(id));
+            },
+          },
+        },
+        isLocked: true,
+      }),
+    );
   } catch (err) {
     dispatch(setLoadingWindow(chatId, false));
     dispatch(deleteWindow(chatId));
@@ -65,7 +92,11 @@ export const createChatWindow = (chatId: string, chatName: string, chatPassword:
           type: 'alert',
           payload: {
             alertText:
-              err.response?.status === 401 ? 'Please auth in pes-system' : err.response?.data ? err.response.data : "server does not response💔",
+              err.response?.status === 401
+                ? 'Please auth in pes-system'
+                : err.response?.data
+                ? err.response.data
+                : 'server does not response💔',
             icon: 'error-red',
             onButtonClick: () => {
               dispatch(deleteWindow(id));

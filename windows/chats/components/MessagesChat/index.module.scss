@@ -31,10 +31,35 @@
     display: inline;
     color: greenyellow;
     font-size: 18px;
-
+    white-space: nowrap;
   }
 
   .message {
+    margin: 0;
+    display: inline;
+    color: #fff;
+  }
+}
+
+.ownMessageContainer {
+  &:first-child {
+    margin: 0;
+  }
+  margin-top: 10px;
+  display: flex;
+
+  // background: rgba(255, 0, 0, 0.281);
+
+  .username {
+    margin: 0 0 0 5px;
+    display: inline;
+    color: greenyellow;
+    font-size: 18px;
+    white-space: nowrap;
+  }
+
+  .message {
+    text-align: right;
     margin: 0;
     display: inline;
     color: #fff;

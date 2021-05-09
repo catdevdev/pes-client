@@ -68,7 +68,12 @@ const WindowComponent = ({
           }}
           onClick={() => {}}
           className={c.wrapper}
-          style={{ cursor: isLoading && 'wait' }}
+          style={{
+            cursor: isLoading && 'wait',
+            filter: isActive
+              ? 'drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.3))'
+              : 'drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1))',
+          }}
         >
           <Title
             isActive={isActive}

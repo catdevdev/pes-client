@@ -31,6 +31,7 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
         width: '100%',
         height: '100%',
         background: '#fff',
+        overflowY: 'scroll',
       }}
     >
       <>
@@ -40,9 +41,11 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
               {folders.map(({ id, name, onDoubleClick }) => (
                 <GridItem key={id} style={{ width: 32 }}>
                   <Folder
+                    key={id}
                     onDoubleClick={onDoubleClick}
                     fontColor={folderFontColor}
                     folderName={name}
+                    folderIcon="folder"
                   />
                 </GridItem>
               ))}
@@ -50,7 +53,7 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
           </div>
         )}
         {liteVersion && (
-          <div style={{ width: 400, padding: 18 }}>
+          <div style={{ width: '100%', padding: 18 }}>
             <div className={c.folderAreaWrapper}>
               {folders.map(({ id, name, onDoubleClick }) => (
                 <div style={{ width: 70 }}>
@@ -59,6 +62,7 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
                     onDoubleClick={onDoubleClick}
                     fontColor={folderFontColor}
                     folderName={name}
+                    folderIcon="folder"
                   />
                 </div>
               ))}

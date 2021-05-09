@@ -7,7 +7,7 @@ interface Props {
   children?: JSX.Element;
   onClick?: () => void;
   style: CSSProperties;
-  withBoxShadow?: boolean;
+  withBoxShadow?: boolean;  
 }
 
 const Frame = ({ onClick, children, style, withBoxShadow }: Props) => {

@@ -19,6 +19,8 @@ import { createWindow } from '../../../../redux/actions/windowsManagement';
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
 import { useCallWindow } from '../../../../callWindows';
 import { createChatWindow } from '../../../chats-create-chat/actions';
+import React from 'react';
+import Dropdown from '../../../../components/UI/Dropdown';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -55,6 +57,40 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
               <Button style={{ width: 25, height: 25 }} />
               <Button style={{ width: 25, height: 25 }} />
               <Button style={{ width: 25, height: 25 }} />
+              <Dropdown
+                menuItems={[
+                  {
+                    id: 'adfs',
+                    name: 'fsf',
+                    onClick: () => {
+                      console.log(123);
+                    },
+                  },
+                  {
+                    id: 'adddfs',
+                    name: 'ddd',
+                    onClick: () => {
+                      console.log(123);
+                    },
+                  },
+                  {
+                    id: 'f',
+                    name: 'ddd',
+                    onClick: () => {
+                      console.log(123);
+                    },
+                  },
+                  {
+                    id: 'gb',
+                    name: 'ddd',
+                    onClick: () => {
+                      console.log(123);
+                    },
+                  },
+                ]}
+                style={{ margin: '2px 0 0 8px' }}
+                title="Users"
+              ></Dropdown>
             </>
           )}
           {Chats.isCurrentPage && (
