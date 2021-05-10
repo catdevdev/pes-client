@@ -8,6 +8,7 @@ import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/typ
 import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
+import { InputDataI } from '../windows/input-data/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 
@@ -23,7 +24,8 @@ export const useCallWindow = () => {
     | ChatsAddMessageWindowI
     | AuthPesSystemWindowI
     | AlertWindowI
-    | ChatsCreateChatI;
+    | ChatsCreateChatI
+    | InputDataI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -45,7 +47,7 @@ export const useCallWindow = () => {
             payload: {
               pages: {
                 _404page: { errorText: 'about', isCurrentPage: false },
-                Chat: { isCurrentPage: false },
+                Chat: { isCurrentPage: false, messages: [] },
                 Chats: { isCurrentPage: true, chats: [{ chatName: 'test' }] },
               },
               ...data.payload,
@@ -137,6 +139,28 @@ export const useCallWindow = () => {
           ...data,
           body: {
             type: 'alert',
+            payload: {
+              ...data.payload,
+            },
+          },
+          isLocked: true,
+        }),
+      );
+    },
+    ['input-data']: (data) => {
+      dispatch(
+        createWindow<InputDataI>({
+          dimensions: {
+            width: 260,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: '',
+          },
+          ...data,
+          body: {
+            type: 'input-data',
             payload: {
               ...data.payload,
             },

@@ -9,6 +9,7 @@ import { windowsManagement } from './windowsManagement';
 /* types */
 import { Window } from '../actions/windowsManagement/types';
 import { ChatsWindowI } from '../../windows/chats/actions/types';
+import { InputDataI } from '../../windows/input-data/actions/types';
 
 // import { statusMachine } from "./statusMachine";
 // import { waterStatus } from "./waterStatus";
@@ -18,6 +19,8 @@ export interface StoreState<I = any> {
   windowsManagement: Window<I>[];
 }
 
-export const rootReducer = combineReducers<StoreState<ChatsWindowI>>({
+type Sum = ChatsWindowI & InputDataI;
+
+export const rootReducer = combineReducers<StoreState<Sum>>({
   windowsManagement,
 });

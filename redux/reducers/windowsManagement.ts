@@ -9,6 +9,7 @@ import {
 } from '../actions/windowsManagement/types';
 import {
   FetchAllChatsWindow,
+  FetchChatByIdWindow,
   OpenChatsWindow,
   OpenChatWindow,
 } from '../../windows/chats/actions/types';
@@ -20,11 +21,13 @@ import { Window } from '../actions/windowsManagement/types';
 /* windows types */
 import { ChatsWindowI } from '../../windows/chats/actions/types';
 import { ChatsCreateChatI } from '../../windows/chats-create-chat/actions/types';
+import { ChangeInputDataWindow, InputDataI } from '../../windows/input-data/actions/types';
 
 let indexWindow: number;
 let copyState: Window[];
 let copyStateChatsWindowI: Window<ChatsWindowI>[];
 let copyStateChatsCreateChatWindowI: Window<ChatsCreateChatI>[];
+let copyStateInputDataWindowI: Window<InputDataI>[];
 
 export const windowsManagement = (state: Window[] = [], action: Action) => {
   switch (action.type) {
@@ -73,7 +76,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
       return copyStateChatsWindowI;
     // chats
     case OpenChatWindow:
-      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
       copyStateChatsWindowI = [...state];
       copyStateChatsWindowI[indexWindow] = {
         ...copyStateChatsWindowI[indexWindow],
@@ -88,7 +91,8 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 isCurrentPage: false,
               },
               Chat: {
-                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                chatId: action.payload.chatId,
                 isCurrentPage: true,
               },
             },
@@ -112,8 +116,9 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 isCurrentPage: true,
               },
               Chat: {
-                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
                 isCurrentPage: false,
+                chatId: '',
               },
             },
           },
@@ -135,9 +140,32 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
                 chats: action.payload.chats,
               },
-              Chat: {
+              // Chat: {
+              //   ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+              //   isCurrentPage: false,
+              // },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
+    case FetchChatByIdWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
-                isCurrentPage: false,
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                messages: [],
               },
             },
           },
@@ -146,7 +174,6 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
       return copyStateChatsWindowI;
     /* chats-add-chat */
     case ChangeChatDataWindow:
-      console.log(action.payload.chatName);
       indexWindow = state.findIndex(({ id }) => id === action.payload.id);
       copyStateChatsCreateChatWindowI = [...state];
       copyStateChatsCreateChatWindowI[indexWindow] = {
@@ -161,6 +188,21 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         },
       };
       return copyStateChatsCreateChatWindowI;
+    /* chats-add-chat */
+    case ChangeInputDataWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyStateInputDataWindowI = [...state];
+      copyStateInputDataWindowI[indexWindow] = {
+        ...copyStateInputDataWindowI[indexWindow],
+        body: {
+          ...copyStateInputDataWindowI[indexWindow].body,
+          payload: {
+            ...copyStateInputDataWindowI[indexWindow].body.payload,
+            data: action.payload.data,
+          },
+        },
+      };
+      return copyStateInputDataWindowI;
     default:
       return state;
   }

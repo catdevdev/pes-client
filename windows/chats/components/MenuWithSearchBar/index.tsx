@@ -14,13 +14,16 @@ import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
 import { openChatsWindow } from '../../actions';
-import { createWindow } from '../../../../redux/actions/windowsManagement';
+import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
 import { useCallWindow } from '../../../../callWindows';
 import { createChatWindow } from '../../../chats-create-chat/actions';
 import React from 'react';
 import Dropdown from '../../../../components/UI/Dropdown';
+import { InputDataI } from '../../../input-data/actions/types';
+/* api */
+import { addMessage } from '../../../../redux/api/messages';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -54,7 +57,27 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
         <div className={c.menuContainer}>
           {Chat.isCurrentPage && (
             <>
-              <Button style={{ width: 25, height: 25 }} />
+              <Button
+                onClick={() => {
+                  const id = nanoid();
+                  createWindow<InputDataI | Window>({
+                    id,
+                    type: 'input-data',
+                    payload: {
+                      alertText: `Just enter  message \n
+                                    tip: please write nice message`,
+                      inputField: 'input',
+                      buttonText: 'Add',
+                      icon: 'information',
+                      onButtonClick: async () => {
+                        const a = await addMessage('123', '123');
+                        dispatch(deleteWindow(id));
+                      },
+                    },
+                  });
+                }}
+                style={{ width: 25, height: 25 }}
+              />
               <Button style={{ width: 25, height: 25 }} />
               <Button style={{ width: 25, height: 25 }} />
               <Dropdown
@@ -132,7 +155,7 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
             </Button>
           )}
           <Input
-            value={'toChange ( temp )'}
+            value={`chat/${Chat.chatId}`}
             onChange={() => {}}
             style={{ height: 25, flex: 1, marginRight: 4 }}
           />

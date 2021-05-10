@@ -17,7 +17,8 @@ import { ChatsWindowI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* actions */
-import { fetchAllChats, openChatWindow, OpenChatsAction } from '../actions';
+import { fetchAllChats, openChatWindow, OpenChatsAction, fetchChatById } from '../actions';
+import Textarea from '../../../components/UI/TextArea';
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
   const {
@@ -31,8 +32,9 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllChats(props.id));
-  }, []);
+    Chat.isCurrentPage && dispatch(fetchChatById(props.id, props.body.payload.pages.Chat.chatId));
+    Chats.isCurrentPage && dispatch(fetchAllChats(props.id));
+  }, [Chat.isCurrentPage, Chats.isCurrentPage]);
 
   return (
     <WindowComponent {...props}>
@@ -48,13 +50,13 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
                 id: chatId,
                 name: chatName,
                 onDoubleClick: () => {
-                  dispatch(openChatWindow(props.id));
+                  dispatch(openChatWindow(props.id, chatId));
                 },
               };
             })}
           />
         )}
-        {Chat.isCurrentPage && <MessagesChat></MessagesChat>}
+        {Chat.isCurrentPage && <MessagesChat messages={Chat.messages}></MessagesChat>}
       </div>
     </WindowComponent>
   );

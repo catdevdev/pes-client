@@ -4,7 +4,9 @@ import axios from '../index';
 import { Chat, Chats } from './types';
 
 export const getChatById = async (chatId: string) => {
-  return await axios.get(`chat/${chatId}`);
+  return await axios.get(`chat/${chatId}`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const deleteChatById = async (chatId: string) => {
@@ -29,8 +31,12 @@ export const createChat = async (chatName: string, chatPassword: string) => {
   }
 };
 
-export const joinChat = async (chatId: string) => {
-  return await axios.post(`chat/${chatId}/join`);
+export const joinChat = async (chatId: string, password: string) => {
+  return await axios.post(
+    `chat/${chatId}/join`,
+    { password },
+    { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } },
+  );
 };
 
 export const getMembersFromChatAdmin = async (chatId: string) => {

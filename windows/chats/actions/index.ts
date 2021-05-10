@@ -1,17 +1,23 @@
 /* types */
 /* 0 */
-import { OpenChatWindow, OpenChatsWindow, FetchAllChatsWindow } from './types';
+import { OpenChatWindow, OpenChatsWindow, FetchAllChatsWindow, FetchChatByIdWindow } from './types';
+import { AlertWindowI } from '../../alert/actions/types';
+import { InputDataI } from '../../input-data/actions/types';
 /* 1 */
 import { ChatsWindowI } from './types';
 /* 2 */
-import { Window } from '../../../redux/actions/windowsManagement/types';
+import { SetLoadingWindow, Window } from '../../../redux/actions/windowsManagement/types';
 /* api */
-import { getAllChats } from '../../../redux/api/chats';
-import { Chats } from '../../../redux/api/chats/types';
+import { getAllChats, getChatById, joinChat } from '../../../redux/api/chats';
+import { Chats, Messages } from '../../../redux/api/chats/types';
+import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
+import { nanoid } from 'nanoid';
+import { store } from '../../../redux/store';
+import { EEXIST } from 'node:constants';
 
 export interface OpenChatAction {
   type: typeof OpenChatWindow;
-  payload: { id: string };
+  payload: { windowId: string; chatId: string };
 }
 
 export interface OpenChatsAction {
@@ -24,11 +30,87 @@ export interface FetchAllChatsAction {
   payload: { id: string; chats: Chats };
 }
 
-export const openChatWindow = (id: string): OpenChatAction => {
-  return {
-    type: OpenChatWindow,
-    payload: { id },
-  };
+export interface FetchChatByIdAction {
+  type: typeof FetchChatByIdWindow;
+  payload: { id: string; messages: Messages };
+}
+
+export const openChatWindow = (windowId: string, chatId: string) => (dispatch) => {
+  const inputWindowId = nanoid();
+  dispatch(
+    createWindow<InputDataI>({
+      id: inputWindowId,
+      dimensions: {
+        width: 260,
+        height: 'auto',
+      },
+      disableResize: true,
+      title: {
+        label: '',
+      },
+      body: {
+        type: 'input-data',
+        payload: {
+          alertText: `Enter password from this chat.
+          Default password may be '1'`,
+          buttonText: 'Join',
+          icon: 'warning',
+          inputField: 'input',
+          onButtonClick: async () => {
+            try {
+              dispatch({
+                type: SetLoadingWindow,
+                payload: { id: inputWindowId, loading: true },
+              });
+              await joinChat(
+                chatId,
+                store.getState().windowsManagement.find(({ id }) => id === inputWindowId).body
+                  .payload.data,
+              );
+              const res = await getChatById(chatId);
+              dispatch({
+                type: OpenChatWindow,
+                payload: { windowId, chatId },
+              });
+              dispatch({
+                type: SetLoadingWindow,
+                payload: { id: inputWindowId, loading: false },
+              });
+              dispatch(deleteWindow(inputWindowId));
+            } catch (err) {
+              const idAlertWindow = nanoid();
+              console.log(err.response);
+              dispatch(
+                createWindow<AlertWindowI>({
+                  id: idAlertWindow,
+                  dimensions: {
+                    width: 260,
+                    height: 'auto',
+                  },
+                  disableResize: true,
+                  title: {
+                    label: '',
+                  },
+                  body: {
+                    type: 'alert',
+                    payload: {
+                      icon: 'error-white',
+                      alertText: err.response.data.resultMessage,
+                      onButtonClick: () => {
+                        dispatch(deleteWindow(idAlertWindow));
+                      },
+                    },
+                  },
+                  isLocked: true,
+                }),
+              );
+              dispatch(deleteWindow(inputWindowId));
+            }
+          },
+        },
+      },
+    }),
+  );
 };
 
 export const openChatsWindow = (id: string): OpenChatsAction => {
@@ -44,6 +126,16 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
     dispatch({
       type: FetchAllChatsWindow,
       payload: { id, chats: res.data.chats },
+    });
+  } catch (err) {}
+};
+
+export const fetchChatById = (windowId: string, chatId: string) => async (dispatch) => {
+  try {
+    const res = await getChatById(chatId);
+    dispatch({
+      type: FetchChatByIdWindow,
+      payload: { windowId, messages: res.data.messages },
     });
   } catch (err) {}
 };

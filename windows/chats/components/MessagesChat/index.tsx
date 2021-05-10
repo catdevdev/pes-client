@@ -6,12 +6,15 @@ import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dn
 import axios from '../../../../redux/api';
 /* UI */
 import Folder from '../../../../components/UI/Folder';
+import { Messages } from '../../../../redux/api/chats/types';
 
 interface MessageProps {
+  username: string;
+  message: string;
   isOwn?: boolean;
 }
 
-const Message = ({ isOwn }: MessageProps) => {
+const Message = ({ username, message, isOwn }: MessageProps) => {
   const [isAppearUserBadge, setIsAppearUserBadge] = useState<boolean>(false);
   const [data, setData] = useState<boolean>(false);
   return (
@@ -19,27 +22,19 @@ const Message = ({ isOwn }: MessageProps) => {
       {!isOwn ? (
         <div className={c.messageContainer}>
           <p style={{ color: '#E00000' }} className={c.username}>
-            lol228322 {'>'}
+            {username} {'>'}
           </p>
           <p style={{ color: '#000' }} className={c.message}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, itaque modi. Doloribus
-            cumque voluptatibus amet odio mollitia! Distinctio fugiat eos perferendis consequuntur
-            omnis tenetur vero ea illo. Pariatur dolorum voluptas cumque ut veritatis adipisci
-            accusantium, vel quos cupiditate, optio labore voluptatem tempore nisi modi unde
-            recusandae odit maxime ad dolorem?
+            {message}
           </p>
         </div>
       ) : (
         <div className={c.ownMessageContainer}>
           <p style={{ color: '#000' }} className={c.message}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, itaque modi. Doloribus
-            cumque voluptatibus amet odio mollitia! Distinctio fugiat eos perferendis consequuntur
-            omnis tenetur vero ea illo. Pariatur dolorum voluptas cumque ut veritatis adipisci
-            accusantium, vel quos cupiditate, optio labore voluptatem tempore nisi modi unde
-            recusandae odit maxime ad dolorem?
+            {message}
           </p>
           <p style={{ color: '#09D61D' }} className={c.username}>
-            {'<'} lol228322
+            {'<'} {username}
           </p>
         </div>
       )}
@@ -47,14 +42,20 @@ const Message = ({ isOwn }: MessageProps) => {
   );
 };
 
-const MessagesChat = () => {
+type Props = {
+  messages: Messages;
+};
+
+const MessagesChat = ({ messages }: Props) => {
   return (
     <div style={{ background: '#fff' }} className={c.wrapper}>
       <div className={c.container}>
-        <Message></Message>
-        <Message></Message>
-        <Message isOwn></Message>
-        <Message></Message>
+        {messages.length === 0 && (
+          <Message username={'chat_bot'} message={'this is chat is emtpy'}></Message>
+        )}
+        {messages.map(({ username, message }) => (
+          <Message username={username} message={message}></Message>
+        ))}
       </div>
     </div>
   );
