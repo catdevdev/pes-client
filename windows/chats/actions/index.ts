@@ -71,11 +71,10 @@ export const openChatWindow = (windowId: string, chatId: string) => (dispatch) =
                   store.getState().windowsManagement.find(({ id }) => id === inputWindowId).body
                     .payload.data,
                 );
-                const res = await getChatById(chatId);
                 dispatch({
                   type: OpenChatWindow,
                   payload: { windowId, chatId },
-                });
+                 });
                 dispatch({
                   type: SetLoadingWindow,
                   payload: { id: inputWindowId, loading: false },
@@ -116,13 +115,10 @@ export const openChatWindow = (windowId: string, chatId: string) => (dispatch) =
       }),
     );
   } else {
-    (async function () {
-      const res = await getChatById(chatId);
-      dispatch({
-        type: OpenChatWindow,
-        payload: { windowId, chatId },
-      });
-    })();
+    dispatch({
+      type: OpenChatWindow,
+      payload: { windowId, chatId },
+    });
   }
 };
 

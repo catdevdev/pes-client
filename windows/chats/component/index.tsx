@@ -34,7 +34,7 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   useEffect(() => {
     Chat.isCurrentPage && dispatch(fetchChatById(props.id, props.body.payload.pages.Chat.chatId));
     Chats.isCurrentPage && dispatch(fetchAllChats(props.id));
-  }, [Chat.isCurrentPage, Chats.isCurrentPage]);
+  }, [Chat.isCurrentPage, Chats.isCurrentPage, ]);
 
   return (
     <WindowComponent {...props}>

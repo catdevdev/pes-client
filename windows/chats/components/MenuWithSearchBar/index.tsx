@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
-import { fetchChatById, openChatsWindow } from '../../actions';
+import { fetchAllChats, fetchChatById, openChatsWindow } from '../../actions';
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
@@ -135,8 +135,10 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                     id: chatId,
                     type: 'chats-create-chat',
                     payload: {
-                      relativeWindowChatId: windowId,
-                      onCreate: () => {},
+                      relatedWindowId: windowId,
+                      onFinishedCreate: () => {
+                        dispatch(fetchAllChats(windowId));
+                      },
                       chatName: '',
                       chatPassword: '',
                     },

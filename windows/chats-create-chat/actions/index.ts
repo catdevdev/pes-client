@@ -19,6 +19,7 @@ import {
 } from '../../../redux/actions/windowsManagement';
 import { AlertWindowI } from '../../alert/actions/types';
 import { store } from '../../../redux/store';
+import { fetchAllChats } from '../../chats/actions';
 
 export interface ChangeChatDataAction {
   type: typeof ChangeChatDataWindow;
@@ -36,13 +37,17 @@ export const changeChatDataWindow = (
   };
 };
 
-export const createChatWindow = (chatId: string, chatName: string, chatPassword: string) => async (
-  dispatch,
-) => {
+export const createChatWindow = (
+  chatId: string,
+  chatName: string,
+  chatPassword: string,
+  chatWindowId: string,
+) => async (dispatch) => {
   try {
     dispatch(setLoadingWindow(chatId, true));
-    const res = await createChat(chatName, chatPassword);
-    console.log(res);
+    await createChat(chatName, chatPassword);
+    dispatch(fetchAllChats(chatWindowId));
+
     dispatch(setLoadingWindow(chatId, false));
     dispatch(deleteWindow(chatId));
 

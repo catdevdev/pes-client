@@ -23,6 +23,7 @@ import { changeChatDataWindow, createChatWindow } from '../actions';
 import { StoreState } from '../../../redux/reducers';
 /* axios */
 import axios from '../../../redux/api';
+import { store } from '../../../redux/store';
 
 const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
   const [chatName, setChatName] = useState('');
@@ -78,6 +79,7 @@ const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
                 props.id,
                 window.body.payload.chatName,
                 window.body.payload.chatPassword,
+                props.body.payload.relatedWindowId
               ),
             );
           }}
