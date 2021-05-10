@@ -57,15 +57,13 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
             <div className={c.folderAreaWrapper}>
               {folders.length === 0 && <>Loading...</>}
               {folders.map(({ id, name, onDoubleClick }) => (
-                <div style={{ width: 70 }}>
-                  <Folder
-                    key={id}
-                    onDoubleClick={onDoubleClick}
-                    fontColor={folderFontColor}
-                    folderName={name}
-                    folderIcon="folder"
-                  />
-                </div>
+                <Folder
+                  key={id}
+                  onDoubleClick={onDoubleClick}
+                  fontColor={folderFontColor}
+                  folderName={name}
+                  folderIcon="folder"
+                />
               ))}
             </div>
           </div>
