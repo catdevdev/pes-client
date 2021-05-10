@@ -70,10 +70,10 @@ const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
           ></Input>
         </div>
         <Button
-          onClick={() => {
+          onClick={async () => {
             const window: Window<ChatsCreateChatI> = windows.find(({ id }) => id === props.id);
             console.log(windows);
-            dispatch(
+           await dispatch(
               createChatWindow(
                 props.id,
                 window.body.payload.chatName,

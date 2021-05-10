@@ -18,6 +18,7 @@ import {
   createWindow,
 } from '../../../redux/actions/windowsManagement';
 import { AlertWindowI } from '../../alert/actions/types';
+import { store } from '../../../redux/store';
 
 export interface ChangeChatDataAction {
   type: typeof ChangeChatDataWindow;
@@ -45,11 +46,11 @@ export const createChatWindow = (chatId: string, chatName: string, chatPassword:
     dispatch(setLoadingWindow(chatId, false));
     dispatch(deleteWindow(chatId));
 
-    const id = nanoid();
+    const windowId = nanoid();
 
     dispatch(
       createWindow<AlertWindowI>({
-        id,
+        id: windowId,
         dimensions: {
           width: 260,
           height: 'auto',
@@ -64,7 +65,7 @@ export const createChatWindow = (chatId: string, chatName: string, chatPassword:
             alertText: 'Chat with name  was created successfully🤞',
             icon: 'information',
             onButtonClick: () => {
-              dispatch(deleteWindow(id));
+              dispatch(deleteWindow(windowId));
             },
           },
         },

@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
-import { openChatsWindow } from '../../actions';
+import { fetchChatById, openChatsWindow } from '../../actions';
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
@@ -24,6 +24,7 @@ import Dropdown from '../../../../components/UI/Dropdown';
 import { InputDataI } from '../../../input-data/actions/types';
 /* api */
 import { addMessage } from '../../../../redux/api/messages';
+import { store } from '../../../../redux/store';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -47,6 +48,10 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
     return windowId === id;
   });
 
+  const windowsInputMessage = useSelector(
+    (state: StoreState<InputDataI>) => state.windowsManagement,
+  );
+
   const dispatch = useDispatch();
 
   const createWindow = useCallWindow();
@@ -59,19 +64,25 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
             <>
               <Button
                 onClick={() => {
-                  const id = nanoid();
+                  const windowId = nanoid();
                   createWindow<InputDataI | Window>({
-                    id,
+                    id: windowId,
                     type: 'input-data',
                     payload: {
                       alertText: `Just enter  message \n
                                     tip: please write nice message`,
-                      inputField: 'input',
+                      inputField: 'textarea',
                       buttonText: 'Add',
                       icon: 'information',
                       onButtonClick: async () => {
-                        const a = await addMessage('123', '123');
-                        dispatch(deleteWindow(id));
+                        await addMessage(
+                          Chat.chatId,
+                          store.getState().windowsManagement.find(({ id }) => id === windowId).body
+                            .payload.data,
+                        );
+
+                        dispatch(fetchChatById(windowId, Chat.chatId));
+                        dispatch(deleteWindow(windowId));
                       },
                     },
                   });

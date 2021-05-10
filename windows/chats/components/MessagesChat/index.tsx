@@ -51,7 +51,7 @@ const MessagesChat = ({ messages }: Props) => {
     <div style={{ background: '#fff' }} className={c.wrapper}>
       <div className={c.container}>
         {messages.length === 0 && (
-          <Message username={'chat_bot'} message={'this is chat is emtpy'}></Message>
+          <Message username={'chat_bot'} message={'this chat is emtpy'}></Message>
         )}
         {messages.map(({ username, message }) => (
           <Message username={username} message={message}></Message>

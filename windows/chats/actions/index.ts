@@ -13,7 +13,7 @@ import { Chats, Messages } from '../../../redux/api/chats/types';
 import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
 import { nanoid } from 'nanoid';
 import { store } from '../../../redux/store';
-import { EEXIST } from 'node:constants';
+import { addMessage } from '../../../redux/api/messages';
 
 export interface OpenChatAction {
   type: typeof OpenChatWindow;
@@ -132,10 +132,22 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
 
 export const fetchChatById = (windowId: string, chatId: string) => async (dispatch) => {
   try {
+    console.log(chatId);
     const res = await getChatById(chatId);
+    console.log(res);
     dispatch({
       type: FetchChatByIdWindow,
       payload: { windowId, messages: res.data.messages },
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addMessageWindow = (windowInputId: string, chatId: string) => async (dispatch) => {
+  try {
+    const message = store.getState().windowsManagement.find(({ id }) => id === windowInputId).body
+      .payload.data;
+    const res = await addMessage(chatId, message);
   } catch (err) {}
 };

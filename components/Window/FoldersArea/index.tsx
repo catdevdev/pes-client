@@ -55,6 +55,7 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
         {liteVersion && (
           <div style={{ width: '100%', padding: 18 }}>
             <div className={c.folderAreaWrapper}>
+              {folders.length === 0 && <>Loading...</>}
               {folders.map(({ id, name, onDoubleClick }) => (
                 <div style={{ width: 70 }}>
                   <Folder

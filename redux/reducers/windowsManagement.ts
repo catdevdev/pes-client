@@ -140,16 +140,17 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
                 chats: action.payload.chats,
               },
-              // Chat: {
-              //   ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
-              //   isCurrentPage: false,
-              // },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                isCurrentPage: false,
+              },
             },
           },
         },
       };
       return copyStateChatsWindowI;
     case FetchChatByIdWindow:
+      console.log(action.payload.messages);
       indexWindow = state.findIndex(({ id }) => id === action.payload.id);
       copyStateChatsWindowI = [...state];
       copyStateChatsWindowI[indexWindow] = {
@@ -165,12 +166,13 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
               },
               Chat: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
-                messages: [],
+                messages: action.payload.messages,
               },
             },
           },
         },
       };
+
       return copyStateChatsWindowI;
     /* chats-add-chat */
     case ChangeChatDataWindow:

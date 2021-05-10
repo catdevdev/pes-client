@@ -35,7 +35,7 @@ const Index = () => {
 
   useEffect(() => {
     // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
-    createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+    // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsCreateChatI | Window>({
     //   type: 'chats-create-chat',
     //   payload: {
