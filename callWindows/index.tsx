@@ -33,7 +33,7 @@ export const useCallWindow = () => {
         createWindow<ChatsWindowI>({
           dimensions: {
             width: 400,
-            height: 300,
+            height: 400,
             minWidth: 400,
             minHeight: 300,
           },

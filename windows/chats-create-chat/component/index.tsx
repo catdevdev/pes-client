@@ -73,7 +73,7 @@ const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
           onClick={async () => {
             const window: Window<ChatsCreateChatI> = windows.find(({ id }) => id === props.id);
             console.log(windows);
-           await dispatch(
+            dispatch(
               createChatWindow(
                 props.id,
                 window.body.payload.chatName,

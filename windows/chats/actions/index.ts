@@ -36,81 +36,94 @@ export interface FetchChatByIdAction {
 }
 
 export const openChatWindow = (windowId: string, chatId: string) => (dispatch) => {
+  const chatWindow = store.getState().windowsManagement.find(({ id }) => id === windowId);
+  const chats = chatWindow.body.payload.pages.Chats.chats;
+  const chat = chats.find((chat) => chat.chatId === chatId);
   const inputWindowId = nanoid();
-  dispatch(
-    createWindow<InputDataI>({
-      id: inputWindowId,
-      dimensions: {
-        width: 260,
-        height: 'auto',
-      },
-      disableResize: true,
-      title: {
-        label: '',
-      },
-      body: {
-        type: 'input-data',
-        payload: {
-          alertText: `Enter password from this chat.
+  if (!chat.role) {
+    dispatch(
+      createWindow<InputDataI>({
+        id: inputWindowId,
+        dimensions: {
+          width: 260,
+          height: 'auto',
+        },
+        disableResize: true,
+        title: {
+          label: '',
+        },
+        body: {
+          type: 'input-data',
+          payload: {
+            alertText: `Enter password from this chat.
           Default password may be '1'`,
-          buttonText: 'Join',
-          icon: 'warning',
-          inputField: 'input',
-          onButtonClick: async () => {
-            try {
-              dispatch({
-                type: SetLoadingWindow,
-                payload: { id: inputWindowId, loading: true },
-              });
-              await joinChat(
-                chatId,
-                store.getState().windowsManagement.find(({ id }) => id === inputWindowId).body
-                  .payload.data,
-              );
-              const res = await getChatById(chatId);
-              dispatch({
-                type: OpenChatWindow,
-                payload: { windowId, chatId },
-              });
-              dispatch({
-                type: SetLoadingWindow,
-                payload: { id: inputWindowId, loading: false },
-              });
-              dispatch(deleteWindow(inputWindowId));
-            } catch (err) {
-              const idAlertWindow = nanoid();
-              console.log(err.response);
-              dispatch(
-                createWindow<AlertWindowI>({
-                  id: idAlertWindow,
-                  dimensions: {
-                    width: 260,
-                    height: 'auto',
-                  },
-                  disableResize: true,
-                  title: {
-                    label: '',
-                  },
-                  body: {
-                    type: 'alert',
-                    payload: {
-                      icon: 'error-white',
-                      alertText: err.response.data.resultMessage,
-                      onButtonClick: () => {
-                        dispatch(deleteWindow(idAlertWindow));
+            buttonText: 'Join',
+            icon: 'warning',
+            inputField: 'input',
+            onButtonClick: async () => {
+              try {
+                dispatch({
+                  type: SetLoadingWindow,
+                  payload: { id: inputWindowId, loading: true },
+                });
+                await joinChat(
+                  chatId,
+                  store.getState().windowsManagement.find(({ id }) => id === inputWindowId).body
+                    .payload.data,
+                );
+                const res = await getChatById(chatId);
+                dispatch({
+                  type: OpenChatWindow,
+                  payload: { windowId, chatId },
+                });
+                dispatch({
+                  type: SetLoadingWindow,
+                  payload: { id: inputWindowId, loading: false },
+                });
+                dispatch(deleteWindow(inputWindowId));
+              } catch (err) {
+                const idAlertWindow = nanoid();
+                console.log(err.response);
+                dispatch(
+                  createWindow<AlertWindowI>({
+                    id: idAlertWindow,
+                    dimensions: {
+                      width: 260,
+                      height: 'auto',
+                    },
+                    disableResize: true,
+                    title: {
+                      label: '',
+                    },
+                    body: {
+                      type: 'alert',
+                      payload: {
+                        icon: 'error-white',
+                        alertText: err.response.data.resultMessage,
+                        onButtonClick: () => {
+                          dispatch(deleteWindow(idAlertWindow));
+                        },
                       },
                     },
-                  },
-                  isLocked: true,
-                }),
-              );
-              dispatch(deleteWindow(inputWindowId));
-            }
+                    isLocked: true,
+                  }),
+                );
+                dispatch(deleteWindow(inputWindowId));
+              }
+            },
           },
         },
-      },
-    }),
-  );
+      }),
+    );
+  } else {
+    (async function () {
+      const res = await getChatById(chatId);
+      dispatch({
+        type: OpenChatWindow,
+        payload: { windowId, chatId },
+      });
+    })();
+  }
 };
 
 export const openChatsWindow = (id: string): OpenChatsAction => {

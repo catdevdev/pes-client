@@ -14,11 +14,15 @@ export const deleteChatById = async (chatId: string) => {
 };
 
 export const getChats = async (page: number, maxCount: number, term: string) => {
-  return await axios.get(`chat/search/${page}/${maxCount}/${term}`);
+  return await axios.get(`chat/search/${page}/${maxCount}/${term}`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const getAllChats = async (): Promise<AxiosResponse<Chats>> => {
-  return await axios.get<Chats>(`chat/search`);
+  return await axios.get<Chats>(`chat/search`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const createChat = async (chatName: string, chatPassword: string) => {

@@ -64,9 +64,9 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
             <>
               <Button
                 onClick={() => {
-                  const windowId = nanoid();
+                  const windowInputId = nanoid();
                   createWindow<InputDataI | Window>({
-                    id: windowId,
+                    id: windowInputId,
                     type: 'input-data',
                     payload: {
                       alertText: `Just enter  message \n
@@ -77,12 +77,11 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                       onButtonClick: async () => {
                         await addMessage(
                           Chat.chatId,
-                          store.getState().windowsManagement.find(({ id }) => id === windowId).body
-                            .payload.data,
+                          store.getState().windowsManagement.find(({ id }) => id === windowInputId)
+                            .body.payload.data,
                         );
-
                         dispatch(fetchChatById(windowId, Chat.chatId));
-                        dispatch(deleteWindow(windowId));
+                        dispatch(deleteWindow(windowInputId));
                       },
                     },
                   });

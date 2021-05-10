@@ -6,6 +6,13 @@ export const SetChatId = 'CHATS-WINDOW/SET_CHAT_ID';
 /* types */
 import { FetchAllChatsAction, FetchChatByIdAction, OpenChatAction, OpenChatsAction } from './index';
 
+enum Roles {
+  notUser = 0,
+  user = 1,
+  admin = 3,
+  creator = 5,
+}
+
 export interface ChatsWindowI {
   type?: 'chats';
   payload?: {
@@ -26,6 +33,7 @@ export interface ChatsWindowI {
           chatId?: string;
           chatName?: string;
           userCount?: number;
+          role: Roles;
         }[];
         isCurrentPage?: boolean;
       };
