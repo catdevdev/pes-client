@@ -1,7 +1,11 @@
 import axios from '../index';
 
 export const addMessage = async (chatId: string, message: string) => {
-  return await axios.post(`messages/add`, { chatId, message });
+  return await axios.post(
+    `messages/add`,
+    { chatId, message },
+    { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } },
+  );
 };
 
 export const editMessage = async (chatId: string, updatedMessage: string) => {

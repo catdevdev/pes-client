@@ -4,7 +4,7 @@ import c from './index.module.scss';
 import { CSSProperties } from 'react';
 
 interface Props {
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   onClick?: () => void;
   style: CSSProperties;
   withBoxShadow?: boolean;

@@ -11,9 +11,13 @@ import { getPesScore } from '../../../redux/api/service';
 const MessageUser = (props: Window<MessageUserI>) => {
   const {
     body: {
-      payload: { username },
+      payload: {
+        payload: { username },
+      },
     },
   } = props;
+
+  console.log(props);
 
   const [pesScore, setBadge] = useState<BadgeModel>(null);
 

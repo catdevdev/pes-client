@@ -4,7 +4,7 @@ export interface MessageUserI {
 };
 
 export interface PayloadModel {
-  username: string;
+  payload: { username: string; }
 }
 
 export const OpenChatWindow = 'OPEN_CHAT_WINDOW';

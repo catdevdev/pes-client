@@ -8,11 +8,13 @@ import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/typ
 import { MessageUserI } from '../windows/message-user/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
+import { InputDataI } from '../windows/input-data/actions/types';
+import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 
 interface Props {
-  windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system';
+  windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
 }
 
 export const useCallWindow = () => {
@@ -23,7 +25,9 @@ export const useCallWindow = () => {
     | ChatsAddMessageWindowI
     | AuthPesSystemWindowI
     | AlertWindowI
-    | MessageUserI;
+    | MessageUserI
+    | ChatsCreateChatI
+    | InputDataI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -31,7 +35,7 @@ export const useCallWindow = () => {
         createWindow<ChatsWindowI>({
           dimensions: {
             width: 400,
-            height: 300,
+            height: 400,
             minWidth: 400,
             minHeight: 300,
           },
@@ -45,12 +49,36 @@ export const useCallWindow = () => {
             payload: {
               pages: {
                 _404page: { errorText: 'about', isCurrentPage: false },
-                Chat: { isCurrentPage: false },
-                Chats: { isCurrentPage: true, chats: [{ chatName: 'test' }] },
+                Chat: { isCurrentPage: false, messages: [] },
+                Chats: { isCurrentPage: true, chats: [] },
               },
               ...data.payload,
             },
           },
+        }),
+      );
+    },
+    ['chats-create-chat']: (data) => {
+      dispatch(
+        createWindow<ChatsCreateChatI>({
+          dimensions: {
+            width: 280,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: '',
+          },
+          ...data,
+          body: {
+            type: 'chats-create-chat',
+            payload: {
+              ...data.payload,
+              chatName: '',
+              chatPassword: '',
+            },
+          },
+          isLocked: true,
         }),
       );
     },
@@ -137,6 +165,28 @@ export const useCallWindow = () => {
               ...payload,
             },
           },
+        }),
+      );
+    },
+    ['input-data']: (data) => {
+      dispatch(
+        createWindow<InputDataI>({
+          dimensions: {
+            width: 260,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: '',
+          },
+          ...data,
+          body: {
+            type: 'input-data',
+            payload: {
+              ...data.payload,
+            },
+          },
+          isLocked: true,
         }),
       );
     },

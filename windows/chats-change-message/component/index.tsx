@@ -4,7 +4,7 @@ import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-g
 /* UI Window */
 import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
-import MenuWithSearchBar from '../../../components/Window/MenuWithSearchBar';
+import MenuWithSearchBar from '../../chats/components/MenuWithSearchBar';
 import FoldersArea from '../../../components/Window/FoldersArea';
 import Messages from '../../../components/Window/Messages';
 /* UI */

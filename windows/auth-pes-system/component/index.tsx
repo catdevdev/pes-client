@@ -33,18 +33,68 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
     'Register new account in PES system' | 'Login into PES system'
   >('Register new account in PES system');
 
-  const [username, setUsername] = useState<string>('tes');
-  const [password, setPassword] = useState<string>('string');
-  const [repeatPassword, setRepeatPassword] = useState<string>('string');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [repeatPassword, setRepeatPassword] = useState<string>('');
 
   const dispatch = useDispatch();
   const createWindow = useCallWindow();
 
-  const submitCredentials = async () => {
+  const submitCredentialsRegister = async () => {
     try {
-      const a = await register(username, password);
+      const { data } = await register(username, password);
+      console.log(data);
+      localStorage.setItem('token', data.accessToken);
+      dispatch(deleteWindow(props.id));
+      const id = nanoid();
+      createWindow<AlertWindowI | Window>({
+        id,
+        type: 'alert',
+        isLocked: true,
+        payload: {
+          alertText: '🐶 Account successfully registered 🐶',
+          icon: 'information',
+          onButtonClick: () => {
+            dispatch(deleteWindow(id));
+          },
+        },
+      });
     } catch (err) {
-      console.log(err.response.data);
+      const id = nanoid();
+      createWindow<AlertWindowI | Window>({
+        id,
+        type: 'alert',
+        isLocked: true,
+        payload: {
+          alertText: err.response.data.title,
+          icon: 'error-red',
+          onButtonClick: () => {
+            dispatch(deleteWindow(id));
+          },
+        },
+      });
+    }
+  };
+
+  const submitCredentialsLogin = async () => {
+    try {
+      const { data } = await login(username, password);
+      localStorage.setItem('token', data.accessToken);
+      dispatch(deleteWindow(props.id));
+      const id = nanoid();
+      createWindow<AlertWindowI | Window>({
+        id,
+        type: 'alert',
+        isLocked: true,
+        payload: {
+          alertText: '🐶 You successfully logged in PES-system 🐶',
+          icon: 'information',
+          onButtonClick: () => {
+            dispatch(deleteWindow(id));
+          },
+        },
+      });
+    } catch (err) {
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
         id,
@@ -84,6 +134,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 18 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Nickname:</Label>
               <Input
+                value={username}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -93,6 +144,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Password:</Label>
               <Input
+                type="password"
+                value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -102,6 +155,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 160 }}>Repeat Password:</Label>
               <Input
+                type="password"
                 onChange={(e) => {
                   setRepeatPassword(e.target.value);
                 }}
@@ -119,7 +173,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
               <Button onClick={() => setCurrentPage('login')} style={{ width: 160 }}>
                 Login (if you have account)
               </Button>
-              <Button onClick={submitCredentials}>Enter</Button>
+              <Button onClick={submitCredentialsRegister}>Register</Button>
             </div>
           </>
         )}
@@ -132,6 +186,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 18 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Nickname:</Label>
               <Input
+                value={username}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -141,6 +196,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Password:</Label>
               <Input
+                type="password"
+                value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -158,16 +215,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
               <Button onClick={() => setCurrentPage('register')} style={{ width: 160 }}>
                 Register a new acount
               </Button>
-              <Button
-                onClick={async () => {
-                  console.log('hello');
-                  const token = await axios.post('user/login', { username, password });
-                  console.log(token);
-                  // localStorage.setItem('token', );
-                }}
-              >
-                Enter
-              </Button>
+              <Button onClick={submitCredentialsLogin}>Login</Button>
             </div>
           </>
         )}
