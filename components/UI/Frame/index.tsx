@@ -6,7 +6,7 @@ import { CSSProperties } from 'react';
 interface Props {
   children?: JSX.Element | JSX.Element[];
   onClick?: () => void;
-  style: CSSProperties;
+  style?: CSSProperties;
   withBoxShadow?: boolean;
 }
 

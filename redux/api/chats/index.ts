@@ -10,7 +10,9 @@ export const getChatById = async (chatId: string) => {
 };
 
 export const deleteChatById = async (chatId: string) => {
-  return await axios.delete(`chat/${chatId}`);
+  return await axios.delete(`chat/${chatId}`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const getChats = async (page: number, maxCount: number, term: string) => {

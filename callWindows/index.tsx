@@ -11,6 +11,7 @@ import { AlertWindowI } from '../windows/alert/actions/types';
 import { InputDataI } from '../windows/input-data/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
+import { ChatSettingsI } from '../windows/chat-settings/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
@@ -25,7 +26,8 @@ export const useCallWindow = () => {
     | AuthPesSystemWindowI
     | AlertWindowI
     | ChatsCreateChatI
-    | InputDataI;
+    | InputDataI
+    | ChatSettingsI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -161,6 +163,28 @@ export const useCallWindow = () => {
           ...data,
           body: {
             type: 'input-data',
+            payload: {
+              ...data.payload,
+            },
+          },
+          isLocked: true,
+        }),
+      );
+    },
+    ['chat-settings']: (data) => {
+      dispatch(
+        createWindow<ChatSettingsI>({
+          dimensions: {
+            width: 320,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'Chat setting',
+          },
+          ...data,
+          body: {
+            type: 'chat-settings',
             payload: {
               ...data.payload,
             },

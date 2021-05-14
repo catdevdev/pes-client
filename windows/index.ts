@@ -5,6 +5,7 @@ import ChatsCreateChat from './chats-create-chat/component';
 import AuthPesSystemWindow from './auth-pes-system/component';
 import AlertWindow from './alert/component';
 import InputData from './input-data/component';
+import ChatSettingsWindow from './chat-settings/component';
 /* types */
 import { WindowBodyType } from '../redux/actions/windowsManagement/types';
 
@@ -17,4 +18,5 @@ export const windowsVariants = {
   'chats-create-chat': ChatsCreateChat,
   alert: AlertWindow,
   'input-data': InputData,
+  'chat-settings': ChatSettingsWindow,
 };

@@ -25,6 +25,7 @@ import { InputDataI } from '../../../input-data/actions/types';
 /* api */
 import { addMessage } from '../../../../redux/api/messages';
 import { store } from '../../../../redux/store';
+import { ChatSettingsI } from '../../../chat-settings/actions/types';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -91,6 +92,17 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
               />
               <Button style={{ width: 25, height: 25, marginLeft: 4 }} />
               <Button style={{ width: 25, height: 25 }} />
+              <Button
+                style={{ width: 25, height: 25, marginLeft: 4 }}
+                onClick={() => {
+                  createWindow<ChatSettingsI | Window>({
+                    type: 'chat-settings',
+                    payload: {
+                      relatedWindowId: windowId,
+                    },
+                  });
+                }}
+              />
               <Dropdown
                 menuItems={[
                   {
@@ -124,7 +136,7 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                 ]}
                 style={{ margin: '2px 0 0 8px' }}
                 title="Users"
-              ></Dropdown>
+              />
             </>
           )}
           {Chats.isCurrentPage && (
