@@ -86,9 +86,10 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                     },
                   });
                 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/write_wordpad-1.png"
                 style={{ width: 25, height: 25 }}
               />
-              <Button style={{ width: 25, height: 25 }} />
+              <Button style={{ width: 25, height: 25, marginLeft: 4 }} />
               <Button style={{ width: 25, height: 25 }} />
               <Dropdown
                 menuItems={[
@@ -145,6 +146,7 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                   });
                 }}
                 style={{ width: 25, height: 25 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/directory_net_web-3.png"
               />
               <Button
                 onClick={() => {
@@ -167,7 +169,8 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                     },
                   });
                 }}
-                style={{ width: 25, height: 25 }}
+                style={{ width: 25, height: 25, marginLeft: 4 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/magnifying_glass_4-1.png"
               />
             </>
           )}
