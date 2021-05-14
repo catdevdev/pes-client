@@ -1,10 +1,11 @@
 export const OpenChatWindow = 'CHATS-WINDOW/OPEN_CHAT_WINDOW';
 export const OpenChatsWindow = 'CHATS-WINDOW/OPEN_CHATS_WINDOW';
 export const FetchAllChatsWindow = 'CHATS-WINDOW/FETCH_ALL_CHATS';
+export const FetchChatsByTermWindow = 'CHATS-WINDOW/FETCH_CHATS_BY_TERM';
 export const FetchChatByIdWindow = 'CHATS-WINDOW/FEATCH_CHAT_BY_ID';
 export const SetChatId = 'CHATS-WINDOW/SET_CHAT_ID';
 /* types */
-import { FetchAllChatsAction, FetchChatByIdAction, OpenChatAction, OpenChatsAction } from './index';
+import { FetchAllChatsAction, FetchChatByIdAction, FetchChatsByTermAction, OpenChatAction, OpenChatsAction } from './index';
 
 enum Roles {
   notUser = 0,
@@ -45,4 +46,5 @@ export type ChatsAction =
   | OpenChatAction
   | OpenChatsAction
   | FetchAllChatsAction
+  | FetchChatsByTermAction
   | FetchChatByIdAction;

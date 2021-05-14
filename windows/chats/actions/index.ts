@@ -1,6 +1,12 @@
 /* types */
 /* 0 */
-import { OpenChatWindow, OpenChatsWindow, FetchAllChatsWindow, FetchChatByIdWindow } from './types';
+import {
+  OpenChatWindow,
+  OpenChatsWindow,
+  FetchAllChatsWindow,
+  FetchChatsByTermWindow,
+  FetchChatByIdWindow,
+} from './types';
 import { AlertWindowI } from '../../alert/actions/types';
 import { InputDataI } from '../../input-data/actions/types';
 /* 1 */
@@ -8,7 +14,7 @@ import { ChatsWindowI } from './types';
 /* 2 */
 import { SetLoadingWindow, Window } from '../../../redux/actions/windowsManagement/types';
 /* api */
-import { getAllChats, getChatById, joinChat } from '../../../redux/api/chats';
+import { getAllChats, getChatById, getChats, joinChat } from '../../../redux/api/chats';
 import { Chats, Messages } from '../../../redux/api/chats/types';
 import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
 import { nanoid } from 'nanoid';
@@ -27,6 +33,10 @@ export interface OpenChatsAction {
 
 export interface FetchAllChatsAction {
   type: typeof FetchAllChatsWindow;
+  payload: { id: string; chats: Chats };
+}
+export interface FetchChatsByTermAction {
+  type: typeof FetchChatsByTermWindow;
   payload: { id: string; chats: Chats };
 }
 
@@ -74,7 +84,7 @@ export const openChatWindow = (windowId: string, chatId: string) => (dispatch) =
                 dispatch({
                   type: OpenChatWindow,
                   payload: { windowId, chatId },
-                 });
+                });
                 dispatch({
                   type: SetLoadingWindow,
                   payload: { id: inputWindowId, loading: false },
@@ -132,6 +142,16 @@ export const openChatsWindow = (id: string): OpenChatsAction => {
 export const fetchAllChats = (id: string) => async (dispatch) => {
   try {
     const res = await getAllChats();
+    dispatch({
+      type: FetchAllChatsWindow,
+      payload: { id, chats: res.data.chats },
+    });
+  } catch (err) {}
+};
+
+export const fetchChatsByTerm = (id: string, term: string) => async (dispatch) => {
+  try {
+    const res = await getChats(1, 999999, term);
     dispatch({
       type: FetchAllChatsWindow,
       payload: { id, chats: res.data.chats },

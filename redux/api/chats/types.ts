@@ -1,7 +1,15 @@
+enum Roles {
+  notUser = 0,
+  user = 1,
+  admin = 3,
+  creator = 5,
+}
+
 export type Chat = {
   chatId: string;
   chatName: string;
   userCount: number;
+  role: Roles;
 };
 
 export type Chats = Chat[];

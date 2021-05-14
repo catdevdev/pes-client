@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
-import { fetchAllChats, fetchChatById, openChatsWindow } from '../../actions';
+import { fetchAllChats, fetchChatById, fetchChatsByTerm, openChatsWindow } from '../../actions';
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
@@ -141,6 +141,29 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                       },
                       chatName: '',
                       chatPassword: '',
+                    },
+                  });
+                }}
+                style={{ width: 25, height: 25 }}
+              />
+              <Button
+                onClick={() => {
+                  const chatId = nanoid();
+                  createWindow<InputDataI | Window>({
+                    id: chatId,
+                    type: 'input-data',
+                    payload: {
+                      alertText: `Enter chat which you want to find`,
+                      inputField: 'input',
+                      buttonText: 'Find',
+                      icon: 'information',
+                      onButtonClick: async () => {
+                        const term = store
+                          .getState()
+                          .windowsManagement.find(({ id }) => id === chatId).body.payload.data;
+                        dispatch(fetchChatsByTerm(windowId, term));
+                        dispatch(deleteWindow(chatId));
+                      },
                     },
                   });
                 }}
