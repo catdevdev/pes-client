@@ -17,7 +17,7 @@ import { fetchAllChats, fetchChatById, fetchChatsByTerm, openChatsWindow } from 
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
-import { useCallWindow } from '../../../../callWindows';
+import { useCallWindow } from '../../../../hooks/callWindows';
 import { createChatWindow } from '../../../chats-create-chat/actions';
 import React, { memo } from 'react';
 import Dropdown from '../../../../components/UI/Dropdown';

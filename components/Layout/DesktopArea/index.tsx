@@ -5,7 +5,7 @@ import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dn
 /* UI */
 import Folder from '../../UI/Folder';
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
-import { useCallWindow } from '../../../callWindows';
+import { useCallWindow } from '../../../hooks/callWindows';
 import { memo } from 'react';
 import { ProfileSettingsI } from '../../../windows/profile-settings/actions/types';
 

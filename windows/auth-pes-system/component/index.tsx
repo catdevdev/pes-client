@@ -20,7 +20,7 @@ import { deleteWindow } from '../../../redux/actions/windowsManagement';
 /* axios */
 import axios from '../../../redux/api';
 /* spawn windows hook */
-import { useCallWindow } from '../../../callWindows';
+import { useCallWindow } from '../../../hooks/callWindows';
 /* windows types */
 import { AlertWindowI } from '../../../windows/alert/actions/types';
 /* api */

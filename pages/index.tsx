@@ -18,7 +18,7 @@ import { createWindow } from '../redux/actions/windowsManagement';
 import { Window } from '../redux/actions/windowsManagement/types';
 import { StoreState } from '../redux/reducers';
 /* create Windows */
-import { useCallWindow } from '../callWindows';
+import { useCallWindow } from '../hooks/callWindows';
 /* windows types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';

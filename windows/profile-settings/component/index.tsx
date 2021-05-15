@@ -25,7 +25,7 @@ import { openChatsWindow } from '../../chats/actions';
 import { store } from '../../../redux/store';
 import { deleteWindow } from '../../../redux/actions/windowsManagement';
 import { AuthPesSystemWindowI } from '../../auth-pes-system/actions/types';
-import { useCallWindow } from '../../../callWindows';
+import { useCallWindow } from '../../../hooks/callWindows';
 
 const ProfileSettings = (props: Window<ProfileSettingsI>) => {
   const dispatch = useDispatch();

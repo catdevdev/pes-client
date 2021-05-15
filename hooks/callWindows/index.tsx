@@ -1,18 +1,18 @@
 /* redux */
 import { useDispatch } from 'react-redux';
 /* actions */
-import { createWindow } from '../redux/actions/windowsManagement';
+import { createWindow } from '../../redux/actions/windowsManagement';
 /* redux-types */
-import { ChatsWindowI } from '../windows/chats/actions/types';
-import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
-import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
-import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
-import { AlertWindowI } from '../windows/alert/actions/types';
-import { InputDataI } from '../windows/input-data/actions/types';
+import { ChatsWindowI } from '../../windows/chats/actions/types';
+import { ChatsAddMessageWindowI } from '../../windows/chats-add-message/actions/types';
+import { ChatsCreateChatI } from '../../windows/chats-create-chat/actions/types';
+import { AuthPesSystemWindowI } from '../../windows/auth-pes-system/actions/types';
+import { AlertWindowI } from '../../windows/alert/actions/types';
+import { InputDataI } from '../../windows/input-data/actions/types';
 /* windows name */
-import { windowsVariants } from '../windows';
-import { ChatSettingsI } from '../windows/chat-settings/actions/types';
-import { ProfileSettingsI } from '../windows/profile-settings/actions/types';
+import { windowsVariants } from '../../windows';
+import { ChatSettingsI } from '../../windows/chat-settings/actions/types';
+import { ProfileSettingsI } from '../../windows/profile-settings/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';

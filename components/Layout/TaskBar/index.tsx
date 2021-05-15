@@ -8,8 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../../redux/reducers';
 import { memo } from 'react';
 
+import { useDate } from '../../../hooks/useDate';
+
 const TaskBar = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
+
+  const { time } = useDate();
   return (
     <div className={c.wrapper}>
       <div className={c.container}>
@@ -21,7 +25,7 @@ const TaskBar = () => {
         </div>
       </div>
 
-      <div className={c.time}>11:39 PM</div>
+      <div className={c.time}>{time}</div>
     </div>
   );
 };
