@@ -1,5 +1,5 @@
 /* imports */
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import c from './index.module.scss';
 import { GridContextProvider, swap } from 'react-grid-dnd';
 import { nanoid } from 'nanoid';
@@ -104,4 +104,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default memo(Index);

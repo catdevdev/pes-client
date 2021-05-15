@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { deleteWindow, selectWindow } from '../../redux/actions/windowsManagement';
 /* utils */
 import { randomNumber } from '../../utils/random';
+import { memo } from 'react';
 
 const BlockClickOnOthersWindows = () => {
   return <div style={{ width: '100vw', height: '100vh', zIndex: 1, position: 'absolute' }} />;
@@ -98,4 +99,4 @@ const WindowComponent = ({
   );
 };
 
-export default WindowComponent;
+export default memo(WindowComponent);

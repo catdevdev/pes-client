@@ -2,7 +2,7 @@
 import c from './index.module.scss';
 /* UI */
 import Block from '../Frame';
-import { CSSProperties } from 'react';
+import { CSSProperties, memo } from 'react';
 
 interface Props extends React.InputHTMLAttributes<HTMLDivElement> {
   white?: boolean;
@@ -20,4 +20,4 @@ const Loading = (props: Props) => {
   );
 };
 
-export default Loading;
+export default memo(Loading);

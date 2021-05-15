@@ -1,7 +1,7 @@
 /* imports */
 import c from './index.module.scss';
 /* types */
-import { CSSProperties } from 'react';
+import { CSSProperties, memo } from 'react';
 
 interface Props {
   children?: JSX.Element | JSX.Element[];
@@ -9,7 +9,6 @@ interface Props {
   style?: CSSProperties;
   withBoxShadow?: boolean;
   myRef?: React.RefObject<HTMLInputElement>;
-
 }
 
 const Frame = ({ onClick, children, style, withBoxShadow, myRef }: Props) => {
@@ -27,4 +26,4 @@ const Frame = ({ onClick, children, style, withBoxShadow, myRef }: Props) => {
   );
 };
 
-export default Frame;
+export default memo(Frame);

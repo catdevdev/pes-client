@@ -6,6 +6,7 @@ import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dn
 import Folder from '../../UI/Folder';
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
 import { useCallWindow } from '../../../callWindows';
+import { memo } from 'react';
 
 const DesktopArea = () => {
   const createWindow = useCallWindow();
@@ -45,4 +46,4 @@ const DesktopArea = () => {
   );
 };
 
-export default DesktopArea;
+export default memo(DesktopArea);

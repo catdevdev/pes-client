@@ -7,7 +7,7 @@ import Frame from '../../UI/Frame';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchChatsWithInfityScroll, openChatWindow } from '../../../windows/chats/actions';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import Loading from '../../UI/Loading';
 
 export interface FolderI {
@@ -97,4 +97,4 @@ const FoldersArea = ({
   );
 };
 
-export default FoldersArea;
+export default memo(FoldersArea);

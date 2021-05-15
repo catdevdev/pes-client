@@ -1,7 +1,7 @@
 /* imports */
 import c from './index.module.scss';
 /* UI */
-import { CSSProperties } from 'react';
+import { CSSProperties, memo } from 'react';
 
 interface Props {
   folderName: string;
@@ -27,4 +27,4 @@ const Folder = (props: Props) => {
   );
 };
 
-export default Folder;
+export default memo(Folder);

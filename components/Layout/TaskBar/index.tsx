@@ -6,6 +6,7 @@ import Task from './Task';
 /* redux */
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../../redux/reducers';
+import { memo } from 'react';
 
 const TaskBar = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -15,7 +16,7 @@ const TaskBar = () => {
         <Button style={{ fontWeight: 700, width: 54, height: 24 }}>Start</Button>
         <div className={c.tasksWrapper}>
           {windows.map(({ id, title: { label } }) => {
-            return <Task windowId={id} />;
+            return <Task key={id} windowId={id} />;
           })}
         </div>
       </div>
@@ -25,4 +26,4 @@ const TaskBar = () => {
   );
 };
 
-export default TaskBar;
+export default memo(TaskBar);

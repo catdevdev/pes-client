@@ -1,5 +1,5 @@
 /* imports */
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, memo, useState } from 'react';
 import Button from '../Button';
 import Frame from '../Frame';
 import Label from '../Label';
@@ -66,4 +66,4 @@ const Dropdown = (props: Props) => {
   );
 };
 
-export default Dropdown;
+export default memo(Dropdown);

@@ -1,5 +1,6 @@
 /* imports */
-import c from "./index.module.scss";
+import { memo } from 'react';
+import c from './index.module.scss';
 
 const Separator = () => {
   return (
@@ -10,4 +11,4 @@ const Separator = () => {
   );
 };
 
-export default Separator;
+export default memo(Separator);

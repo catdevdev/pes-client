@@ -1,5 +1,7 @@
 /* imports */
-import c from "./index.module.scss";
+import { nanoid } from 'nanoid';
+import { memo } from 'react';
+import c from './index.module.scss';
 
 export interface OptionsProps {
   options?: {
@@ -15,8 +17,8 @@ const Options = ({ options }: OptionsProps) => {
       {options ? (
         <div className={c.wrapper}>
           <ul className={c.optionsWrapper}>
-            {options.map(({ id, name, onClick }) => (
-              <li key={id} onClick={onClick} className={c.option}>
+            {options.map(({ name, onClick }) => (
+              <li key={nanoid()} onClick={onClick} className={c.option}>
                 {name}
               </li>
             ))}
@@ -29,4 +31,4 @@ const Options = ({ options }: OptionsProps) => {
   );
 };
 
-export default Options;
+export default memo(Options);

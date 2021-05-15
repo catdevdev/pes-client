@@ -1,5 +1,5 @@
 /* imports */
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI Window */
 import WindowComponent from '../../../components/Window';
@@ -50,7 +50,7 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   /*  */
   const scrolledAreaRef = useRef();
 
-  const countFetching = useRef(1);
+  const countFetching = useRef(2);
   const [loadingInfityScroll, setLoading] = useState(false);
 
   useEffect(() => {
@@ -93,7 +93,6 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
                 },
               };
             })}
-            scrolledToEnd={() => {}}
           />
         )}
         {Chat.isCurrentPage && <MessagesChat messages={Chat.messages}></MessagesChat>}
@@ -102,4 +101,4 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   );
 };
 
-export default ChatsWindow;
+export default memo(ChatsWindow);

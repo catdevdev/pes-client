@@ -2,7 +2,7 @@
 import c from './index.module.scss';
 /* UI */
 import Block from '../Frame';
-import { CSSProperties } from 'react';
+import { CSSProperties, memo } from 'react';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLFieldSetElement> {
   children?: React.ReactNode;
@@ -18,4 +18,4 @@ const Fieldset = ({ ...props }: Props) => {
   );
 };
 
-export default Fieldset;
+export default memo(Fieldset);

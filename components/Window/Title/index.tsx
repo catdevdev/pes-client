@@ -2,7 +2,7 @@
 import c from './index.module.scss';
 /* UI */
 import Button from '../../UI/Button';
-import React from 'react';
+import React, { memo } from 'react';
 import Loading from '../../UI/Loading';
 
 interface Props {
@@ -33,4 +33,4 @@ const Title = ({ titleText, onMinimize, onFullScreen, onClose, isActive, isLoadi
   );
 };
 
-export default Title;
+export default memo(Title);

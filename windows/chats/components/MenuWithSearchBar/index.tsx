@@ -19,7 +19,7 @@ import { createWindow, deleteWindow } from '../../../../redux/actions/windowsMan
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
 import { useCallWindow } from '../../../../callWindows';
 import { createChatWindow } from '../../../chats-create-chat/actions';
-import React from 'react';
+import React, { memo } from 'react';
 import Dropdown from '../../../../components/UI/Dropdown';
 import { InputDataI } from '../../../input-data/actions/types';
 /* api */
@@ -203,4 +203,4 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
   );
 };
 
-export default MenuWithSearchBar;
+export default memo(MenuWithSearchBar);
