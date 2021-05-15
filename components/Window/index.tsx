@@ -6,7 +6,6 @@ import { Rnd } from 'react-rnd';
 import Title from './Title';
 import Options from './Options';
 import Seperator from './Separator';
-import Footer from './Footer';
 /* UI */
 import Block from '../UI/Frame';
 import Button from '../UI/Button';

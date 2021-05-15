@@ -12,6 +12,7 @@ import { InputDataI } from '../windows/input-data/actions/types';
 /* windows name */
 import { windowsVariants } from '../windows';
 import { ChatSettingsI } from '../windows/chat-settings/actions/types';
+import { ProfileSettingsI } from '../windows/profile-settings/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
@@ -27,7 +28,8 @@ export const useCallWindow = () => {
     | AlertWindowI
     | ChatsCreateChatI
     | InputDataI
-    | ChatSettingsI;
+    | ChatSettingsI
+    | ProfileSettingsI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -127,6 +129,7 @@ export const useCallWindow = () => {
               ...data.payload,
             },
           },
+          isLocked: true,
         }),
       );
     },
@@ -194,6 +197,27 @@ export const useCallWindow = () => {
             },
           },
           isLocked: true,
+        }),
+      );
+    },
+    ['profile-settings']: (data) => {
+      dispatch(
+        createWindow<ProfileSettingsI>({
+          dimensions: {
+            width: 320,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'profile setting',
+          },
+          ...data,
+          body: {
+            type: 'profile-settings',
+            payload: {
+              ...data.payload,
+            },
+          },
         }),
       );
     },

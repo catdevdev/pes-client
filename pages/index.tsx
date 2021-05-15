@@ -26,6 +26,7 @@ import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
 import { InputDataI } from '../windows/input-data/actions/types';
+import { ProfileSettingsI } from '../windows/profile-settings/actions/types';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -34,7 +35,6 @@ const Index = () => {
   const createWindow = useCallWindow();
 
   useEffect(() => {
-    // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsCreateChatI | Window>({
     //   type: 'chats-create-chat',
