@@ -11,6 +11,7 @@ import {
   FetchAllChatsWindow,
   FetchChatByIdWindow,
   FetchChatsByTermWindow,
+  FetchChatsWithInfinityScrollWindow,
   FetchMembers,
   OpenChatsWindow,
   OpenChatWindow,
@@ -141,6 +142,33 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
               Chats: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
                 chats: action.payload.chats,
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                isCurrentPage: false,
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
+    case FetchChatsWithInfinityScrollWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+                chats: [
+                  ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats.chats,
+                  ...action.payload.chats,
+                ],
               },
               Chat: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,

@@ -4,6 +4,7 @@ import {
   OpenChatWindow,
   OpenChatsWindow,
   FetchAllChatsWindow,
+  FetchChatsWithInfinityScrollWindow,
   FetchChatsByTermWindow,
   FetchChatByIdWindow,
   FetchMembers,
@@ -42,6 +43,12 @@ export interface FetchAllChatsAction {
   type: typeof FetchAllChatsWindow;
   payload: { id: string; chats: Chats };
 }
+
+export interface FetchChatsWithInfinityScrollAction {
+  type: typeof FetchChatsWithInfinityScrollWindow;
+  payload: { id: string; chats: Chats };
+}
+
 export interface FetchChatsByTermAction {
   type: typeof FetchChatsByTermWindow;
   payload: { id: string; chats: Chats };
@@ -159,6 +166,26 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
       payload: { id, chats: res.data.chats },
     });
   } catch (err) {}
+};
+
+export const fetchChatsWithInfityScroll = (
+  id: string,
+  page: number,
+  fetchedCallback?: () => void,
+) => async (dispatch) => {
+  try {
+    const res = await getChats(page, 20);
+    if (res.data === []) {
+      throw new Error('empty array');
+    }
+    fetchedCallback && fetchedCallback();
+    dispatch({
+      type: FetchChatsWithInfinityScrollWindow,
+      payload: { id, chats: res.data.chats },
+    });
+  } catch (err) {
+    fetchedCallback && fetchedCallback();
+  }
 };
 
 export const fetchChatsByTerm = (id: string, term: string) => async (dispatch) => {

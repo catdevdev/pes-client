@@ -8,12 +8,15 @@ interface Props {
   onClick?: () => void;
   style?: CSSProperties;
   withBoxShadow?: boolean;
+  myRef?: React.RefObject<HTMLInputElement>;
+
 }
 
-const Frame = ({ onClick, children, style, withBoxShadow }: Props) => {
+const Frame = ({ onClick, children, style, withBoxShadow, myRef }: Props) => {
   return (
     <>
       <div
+        ref={myRef}
         onClick={onClick}
         style={style}
         className={`${c.wrapper} ${withBoxShadow ? c.withBoxShadow : ''}`}

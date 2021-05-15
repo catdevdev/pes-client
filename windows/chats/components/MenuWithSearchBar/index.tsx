@@ -193,6 +193,7 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
           />
         </div>
       </div>
+
       <div className={c.rightContainer}>
         <Frame withBoxShadow style={{ width: 60, height: 60 }}>
           <img className={c.img} src="/images/anime_girl.jpeg" alt="" />

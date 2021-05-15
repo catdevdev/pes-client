@@ -15,8 +15,8 @@ export const deleteChatById = async (chatId: string) => {
   });
 };
 
-export const getChats = async (page: number, maxCount: number, term: string) => {
-  return await axios.get(`chat/search/${page}/${maxCount}/${term}`, {
+export const getChats = async (page: number, maxCount: number, term?: string) => {
+  return await axios.get(`chat/search/${page}/${maxCount}${term ? `/${term}` : ''}`, {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
   });
 };

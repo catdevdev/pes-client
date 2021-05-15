@@ -1,6 +1,7 @@
 export const OpenChatWindow = 'CHATS-WINDOW/OPEN_CHAT_WINDOW';
 export const OpenChatsWindow = 'CHATS-WINDOW/OPEN_CHATS_WINDOW';
 export const FetchAllChatsWindow = 'CHATS-WINDOW/FETCH_ALL_CHATS';
+export const FetchChatsWithInfinityScrollWindow = 'CHATS-WINDOW/FETCH_CHATS_WITH_INFINITY_SCROLL';
 export const FetchChatsByTermWindow = 'CHATS-WINDOW/FETCH_CHATS_BY_TERM';
 export const FetchChatByIdWindow = 'CHATS-WINDOW/FEATCH_CHAT_BY_ID';
 export const FetchMembers = 'CHATS-WINDOW/FETCH_MEMBERS';
@@ -13,6 +14,7 @@ import {
   OpenChatAction,
   OpenChatsAction,
   FetchMembersAсtion,
+  FetchChatsWithInfinityScrollAction,
 } from './index';
 
 enum Roles {
@@ -58,6 +60,7 @@ export type ChatsAction =
   | OpenChatAction
   | OpenChatsAction
   | FetchAllChatsAction
+  | FetchChatsWithInfinityScrollAction
   | FetchChatsByTermAction
   | FetchChatByIdAction
   | FetchMembersAсtion;
