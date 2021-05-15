@@ -35,9 +35,10 @@ import { ChatSettingsI } from '../../../chat-settings/actions/types';
 
 interface Props {
   windowId: string;
+  isUsersLoading: boolean;
 }
 
-const MenuWithSearchBar = ({ windowId }: Props) => {
+const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
   const windows = useSelector((state: StoreState<ChatsWindowI>) => state.windowsManagement);
   const {
     body: {
@@ -51,6 +52,11 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
 
   const windowsInputMessage = useSelector(
     (state: StoreState<InputDataI>) => state.windowsManagement,
+  );
+
+  const { members } = useSelector(
+    (state: StoreState<ChatsWindowI>) =>
+      state.windowsManagement.find(({ id }) => id === windowId).body.payload.pages.Chat.members,
   );
 
   const dispatch = useDispatch();
@@ -104,36 +110,12 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                 }}
               />
               <Dropdown
-                menuItems={[
-                  {
-                    id: 'adfs',
-                    name: 'fsf',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'adddfs',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'f',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'gb',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                ]}
+                isLoading={isUsersLoading}
+                menuItems={members.map(({ username, isAdmin }) => ({
+                  id: nanoid(),
+                  name: username,
+                  onClick: () => {},
+                }))}
                 style={{ margin: '2px 0 0 8px' }}
                 title="Users"
               />

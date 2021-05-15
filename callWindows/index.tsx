@@ -49,7 +49,11 @@ export const useCallWindow = () => {
             payload: {
               pages: {
                 _404page: { errorText: 'about', isCurrentPage: false },
-                Chat: { isCurrentPage: false, messages: [] },
+                Chat: {
+                  isCurrentPage: false,
+                  messages: [],
+                  members: { isLoading: true, members: [] },
+                },
                 Chats: { isCurrentPage: true, chats: [] },
               },
               ...data.payload,

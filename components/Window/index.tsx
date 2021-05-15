@@ -76,6 +76,7 @@ const WindowComponent = ({
           }}
         >
           <Title
+            isLoading={isLoading}
             isActive={isActive}
             onClose={() => {
               dispatch(deleteWindow(id));

@@ -6,6 +6,7 @@ import {
   FetchAllChatsWindow,
   FetchChatsByTermWindow,
   FetchChatByIdWindow,
+  FetchMembers,
 } from './types';
 import { AlertWindowI } from '../../alert/actions/types';
 import { InputDataI } from '../../input-data/actions/types';
@@ -14,7 +15,13 @@ import { ChatsWindowI } from './types';
 /* 2 */
 import { SetLoadingWindow, Window } from '../../../redux/actions/windowsManagement/types';
 /* api */
-import { getAllChats, getChatById, getChats, joinChat } from '../../../redux/api/chats';
+import {
+  getAllChats,
+  getChatById,
+  getChats,
+  getMembersFromChat,
+  joinChat,
+} from '../../../redux/api/chats';
 import { Chats, Messages } from '../../../redux/api/chats/types';
 import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
 import { nanoid } from 'nanoid';
@@ -42,6 +49,11 @@ export interface FetchChatsByTermAction {
 
 export interface FetchChatByIdAction {
   type: typeof FetchChatByIdWindow;
+  payload: { id: string; messages: Messages };
+}
+
+export interface FetchMembersAсtion {
+  type: typeof FetchMembers;
   payload: { id: string; messages: Messages };
 }
 
@@ -178,5 +190,23 @@ export const addMessageWindow = (windowInputId: string, chatId: string) => async
     const message = store.getState().windowsManagement.find(({ id }) => id === windowInputId).body
       .payload.data;
     const res = await addMessage(chatId, message);
+  } catch (err) {}
+};
+
+export const fetchMembersChat = (windowId: string, chatId: string) => async (dispatch) => {
+  try {
+    // const message = store.getState().windowsManagement.find(({ id }) => id === windowInputId).body
+    //   .payload.data;
+    // const res = await addMessage(chatId, message);
+    const res = await getMembersFromChat(chatId);
+    console.log(res);
+
+    dispatch({
+      type: FetchMembers,
+      payload: {
+        windowId,
+        members: res.data,
+      },
+    });
   } catch (err) {}
 };

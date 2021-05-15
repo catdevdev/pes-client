@@ -17,7 +17,13 @@ import { ChatsWindowI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* actions */
-import { fetchAllChats, openChatWindow, OpenChatsAction, fetchChatById } from '../actions';
+import {
+  fetchAllChats,
+  openChatWindow,
+  OpenChatsAction,
+  fetchChatById,
+  fetchMembersChat,
+} from '../actions';
 import Textarea from '../../../components/UI/TextArea';
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
@@ -33,12 +39,14 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
 
   useEffect(() => {
     Chat.isCurrentPage && dispatch(fetchChatById(props.id, props.body.payload.pages.Chat.chatId));
+    Chat.isCurrentPage &&
+      dispatch(fetchMembersChat(props.id, props.body.payload.pages.Chat.chatId));
     Chats.isCurrentPage && dispatch(fetchAllChats(props.id));
-  }, [Chat.isCurrentPage, Chats.isCurrentPage, ]);
+  }, [Chat.isCurrentPage, Chats.isCurrentPage]);
 
   return (
     <WindowComponent {...props}>
-      <MenuWithSearchBar windowId={props.id} />
+      <MenuWithSearchBar isUsersLoading={Chat.members.isLoading} windowId={props.id} />
       <div style={{ padding: 4, height: 0, flex: 1 }}>
         {Chats.isCurrentPage && (
           <FoldersArea
