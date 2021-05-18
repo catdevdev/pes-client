@@ -13,6 +13,7 @@ import { InputDataI } from '../../windows/input-data/actions/types';
 import { windowsVariants } from '../../windows';
 import { ChatSettingsI } from '../../windows/chat-settings/actions/types';
 import { ProfileSettingsI } from '../../windows/profile-settings/actions/types';
+import { MessageUserI } from '../../windows/message-user/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
