@@ -1,23 +1,22 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { store } from "../store";
 import { LoginRequest, RefreshRequest, RefreshTokenResponse, Token } from "./types";
 
 
 export const baseUrl = 'http://134.249.99.75:5001/api/v1/';
+const accessTokenKey: string = "access_token";
+const refreshTokenKey: string = "refresh_token";
+const expirationDateKey: string = "exp";
 
 const instance = axios.create({
   baseURL: baseUrl,
   headers: {},
 });
 
-const accessTokenKey: string = "access_token";
-const refreshTokenKey: string = "refresh_token";
-const expirationDateKey: string = "exp";
 
 export class API {
-  baseAddress: string; //get it from some configuration using magic
   private getAcessToken() {
     var accessToken = localStorage.getItem(accessTokenKey);
+
     if (accessToken != null) {
       var expirationTime = Number(localStorage.getItem(expirationDateKey));
       var currentTime = Math.floor(Date.now() / 1000);
