@@ -8,6 +8,7 @@ import { ChatsWindowI } from '../../../windows/chats/actions/types';
 import { useCallWindow } from '../../../hooks/callWindows';
 import { memo } from 'react';
 import { ProfileSettingsI } from '../../../windows/profile-settings/actions/types';
+import { AuthPesSystemWindowI } from '../../../windows/auth-pes-system/actions/types';
 
 const DesktopArea = () => {
   const createWindow = useCallWindow();
@@ -32,6 +33,14 @@ const DesktopArea = () => {
               createWindow<ProfileSettingsI>({ type: 'profile-settings', payload: {} });
             },
           },
+          {
+            id: nanoid(),
+            name: 'auth',
+            folderIcon: 'dog',
+            onOpen: () => {
+              createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
+            },
+          },
         ].map(
           ({
             id,
@@ -41,7 +50,7 @@ const DesktopArea = () => {
           }: {
             id: string;
             name: string;
-            folderIcon: 'folder' | 'settings';
+            folderIcon: 'folder' | 'settings' | 'dog';
             onOpen: () => void;
           }) => (
             <GridItem key={id} style={{ width: 32 }}>

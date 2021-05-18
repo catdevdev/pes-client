@@ -32,14 +32,14 @@ const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
   const dispatch = useDispatch();
 
+  const isAuthorized = useSelector((state: StoreState) => state.userProfile.isAuthorized);
+
   const createWindow = useCallWindow();
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!isAuthorized) {
       createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
     }
-
-    // createWindow<AlertWindowI>({ type: 'alert' });
   }, []);
 
   return (

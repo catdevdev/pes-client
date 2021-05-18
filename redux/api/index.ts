@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { resourceUsage } from 'node:process';
 import { setUserData } from '../actions/userProfile';
 import { userProfile } from '../reducers/userProfile';
 import { store } from '../store';
@@ -70,6 +71,7 @@ export class API {
 
   private static redirectToLogin() {
     store.dispatch(setUserData({ isAuthorized: false }));
+    store.dispatch()
     //somehow redirect user to login page to get user input and call login
     //I have no clue how to do it though
   }
@@ -81,22 +83,26 @@ export class API {
     localStorage.setItem(expirationDateKey, String(tokens.expirationStamp));
   }
 
-  static login(username: string, password: string) {
+  private static clearLocalStorage() {
+    store.dispatch(setUserData({ isAuthorized: false }));
+    localStorage.clear();
+  }
+
+  static async login(username: string, password: string) {
     var request: LoginRequest = {
       username: username,
       password: password,
     };
 
     var requestConfig = request;
-    instance
-      .post<Tokens>('/user/login', requestConfig)
-      .then((x) => {
-        var token = x.data;
-        this.setTokenToLocalStorage(token);
-      })
-      .catch((x) => {
-        console.log(x);
-      });
+    try {
+      const res = await instance.post<Tokens>('/user/login', requestConfig);
+      const tokens = res.data;
+      this.setTokenToLocalStorage(tokens);
+      return true;
+    } catch (error) {
+      throw error;
+    }
   }
 
   static async register(username: string, password: string): Promise<boolean> {
@@ -107,20 +113,20 @@ export class API {
 
     var requestConfig = request;
 
-    // axios
-    //   .get<Token>('/user/register', requestConfig)
-    //   .then((x) => {
-    //     var token = x.data;
-    //     this.setTokenToLocalStorage(token);
-    //   })
-    //   .catch((x) => {
-    //     console.log(x);
-    //   });
-
     try {
       const res = await instance.post<Tokens>('/user/register', requestConfig);
       const tokens = res.data;
       this.setTokenToLocalStorage(tokens);
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async logout(): Promise<boolean> {
+    try {
+      await instance.post<Tokens>('/user/logout', {}, this.getRequestConfig());
+      this.clearLocalStorage();
       return true;
     } catch (error) {
       throw error;

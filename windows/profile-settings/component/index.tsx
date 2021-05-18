@@ -18,7 +18,7 @@ import { ProfileSettingsI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* axios */
-import axios from '../../../redux/api';
+import axios, { API } from '../../../redux/api';
 import Fieldset from '../../../components/UI/Fieldset';
 import { deleteChatById } from '../../../redux/api/chats';
 import { openChatsWindow } from '../../chats/actions';
@@ -79,8 +79,8 @@ const ProfileSettings = (props: Window<ProfileSettingsI>) => {
             </div>
           </Fieldset>
           <Button
-            onClick={() => {
-              localStorage.clear();
+            onClick={async () => {
+              await API.logout();
               dispatch(deleteWindow(props.id));
               createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
             }}

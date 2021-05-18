@@ -78,8 +78,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const submitCredentialsLogin = async () => {
     try {
-      const { data } = await login(username, password);
-      localStorage.setItem('token', data.accessToken);
+      await API.login(username, password);
+
       dispatch(deleteWindow(props.id));
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
