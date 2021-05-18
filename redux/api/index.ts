@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { store } from "../store";
+import { LoginRequest, RefreshRequest, RefreshTokenResponse, Token } from "./types";
 
 
 export const baseUrl = 'http://134.249.99.75:5001/api/v1/';
@@ -9,32 +10,9 @@ const instance = axios.create({
   headers: {},
 });
 
-//#region Local models
 const accessTokenKey: string = "access_token";
 const refreshTokenKey: string = "refresh_token";
 const expirationDateKey: string = "exp";
-
-interface RefreshTokenResponse {
-  successfull: boolean;
-  token: Token;
-}
-
-interface Token {
-  accessToken: string;
-  refreshToken: string;
-  expirationStamp: number;
-}
-
-interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-interface RefreshRequest {
-  token: string;
-  refreshToken: string;
-}
-//#endregion
 
 export class API {
   baseAddress: string; //get it from some configuration using magic
