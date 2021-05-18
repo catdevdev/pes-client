@@ -13,18 +13,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
-import { fetchAllChats, fetchChatById, openChatsWindow } from '../../actions';
+import { fetchAllChats, fetchChatById, fetchChatsByTerm, openChatsWindow } from '../../actions';
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
-import { useCallWindow } from '../../../../callWindows';
+import { useCallWindow } from '../../../../hooks/callWindows';
 import { createChatWindow } from '../../../chats-create-chat/actions';
-import React from 'react';
+import React, { memo } from 'react';
 import Dropdown from '../../../../components/UI/Dropdown';
 import { InputDataI } from '../../../input-data/actions/types';
 /* api */
 import { addMessage } from '../../../../redux/api/messages';
 import { store } from '../../../../redux/store';
+import { ChatSettingsI } from '../../../chat-settings/actions/types';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -34,9 +35,10 @@ import { store } from '../../../../redux/store';
 
 interface Props {
   windowId: string;
+  isUsersLoading: boolean;
 }
 
-const MenuWithSearchBar = ({ windowId }: Props) => {
+const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
   const windows = useSelector((state: StoreState<ChatsWindowI>) => state.windowsManagement);
   const {
     body: {
@@ -50,6 +52,11 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
 
   const windowsInputMessage = useSelector(
     (state: StoreState<InputDataI>) => state.windowsManagement,
+  );
+
+  const { members } = useSelector(
+    (state: StoreState<ChatsWindowI>) =>
+      state.windowsManagement.find(({ id }) => id === windowId).body.payload.pages.Chat.members,
   );
 
   const dispatch = useDispatch();
@@ -86,44 +93,32 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                     },
                   });
                 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/write_wordpad-1.png"
                 style={{ width: 25, height: 25 }}
               />
+              <Button style={{ width: 25, height: 25, marginLeft: 4 }} />
               <Button style={{ width: 25, height: 25 }} />
-              <Button style={{ width: 25, height: 25 }} />
+              <Button
+                style={{ width: 25, height: 25, marginLeft: 4 }}
+                onClick={() => {
+                  createWindow<ChatSettingsI | Window>({
+                    type: 'chat-settings',
+                    payload: {
+                      relatedWindowId: windowId,
+                    },
+                  });
+                }}
+              />
               <Dropdown
-                menuItems={[
-                  {
-                    id: 'adfs',
-                    name: 'fsf',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'adddfs',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'f',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                  {
-                    id: 'gb',
-                    name: 'ddd',
-                    onClick: () => {
-                      console.log(123);
-                    },
-                  },
-                ]}
+                isLoading={isUsersLoading}
+                menuItems={members.map(({ username, isAdmin }) => ({
+                  id: nanoid(),
+                  name: username,
+                  onClick: () => {},
+                }))}
                 style={{ margin: '2px 0 0 8px' }}
                 title="Users"
-              ></Dropdown>
+              />
             </>
           )}
           {Chats.isCurrentPage && (
@@ -145,6 +140,31 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
                   });
                 }}
                 style={{ width: 25, height: 25 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/directory_net_web-3.png"
+              />
+              <Button
+                onClick={() => {
+                  const chatId = nanoid();
+                  createWindow<InputDataI | Window>({
+                    id: chatId,
+                    type: 'input-data',
+                    payload: {
+                      alertText: `Enter chat which you want to find`,
+                      inputField: 'input',
+                      buttonText: 'Find',
+                      icon: 'information',
+                      onButtonClick: async () => {
+                        const term = store
+                          .getState()
+                          .windowsManagement.find(({ id }) => id === chatId).body.payload.data;
+                        dispatch(fetchChatsByTerm(windowId, term));
+                        dispatch(deleteWindow(chatId));
+                      },
+                    },
+                  });
+                }}
+                style={{ width: 25, height: 25, marginLeft: 4 }}
+                imageUrl="https://win98icons.alexmeub.com/icons/png/magnifying_glass_4-1.png"
               />
             </>
           )}
@@ -173,6 +193,7 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
           />
         </div>
       </div>
+
       <div className={c.rightContainer}>
         <Frame withBoxShadow style={{ width: 60, height: 60 }}>
           <img className={c.img} src="/images/anime_girl.jpeg" alt="" />
@@ -182,4 +203,4 @@ const MenuWithSearchBar = ({ windowId }: Props) => {
   );
 };
 
-export default MenuWithSearchBar;
+export default memo(MenuWithSearchBar);

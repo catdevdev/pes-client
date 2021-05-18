@@ -6,7 +6,9 @@ import Folder from '../../UI/Folder';
 import Frame from '../../UI/Frame';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
-import { openChatWindow } from '../../../windows/chats/actions';
+import { fetchChatsWithInfityScroll, openChatWindow } from '../../../windows/chats/actions';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import Loading from '../../UI/Loading';
 
 export interface FolderI {
   id?: string;
@@ -19,9 +21,18 @@ interface Props {
   folders: FolderI[];
   windowId: string;
   liteVersion: boolean;
+  scrolledAreaRef: React.RefObject<HTMLInputElement>;
+  loadingInfityScroll: boolean;
 }
 
-const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props) => {
+const FoldersArea = ({
+  folderFontColor,
+  folders,
+  windowId,
+  liteVersion,
+  scrolledAreaRef,
+  loadingInfityScroll,
+}: Props) => {
   const dispatch = useDispatch();
 
   return (
@@ -33,6 +44,7 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
         background: '#fff',
         overflowY: 'scroll',
       }}
+      myRef={scrolledAreaRef}
     >
       <>
         {!liteVersion && (
@@ -66,6 +78,18 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
                 />
               ))}
             </div>
+
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 25,
+                height: 25,
+              }}
+            >
+              {loadingInfityScroll && <Loading style={{ width: 25, height: 25 }}></Loading>}
+            </div>
           </div>
         )}
       </>
@@ -73,4 +97,4 @@ const FoldersArea = ({ folderFontColor, folders, windowId, liteVersion }: Props)
   );
 };
 
-export default FoldersArea;
+export default memo(FoldersArea);

@@ -1,19 +1,21 @@
 /* imports */
 import c from './index.module.scss';
 /* types */
-import { CSSProperties } from 'react';
+import { CSSProperties, memo } from 'react';
 
 interface Props {
   children?: JSX.Element | JSX.Element[];
   onClick?: () => void;
-  style: CSSProperties;
+  style?: CSSProperties;
   withBoxShadow?: boolean;
+  myRef?: React.RefObject<HTMLInputElement>;
 }
 
-const Frame = ({ onClick, children, style, withBoxShadow }: Props) => {
+const Frame = ({ onClick, children, style, withBoxShadow, myRef }: Props) => {
   return (
     <>
       <div
+        ref={myRef}
         onClick={onClick}
         style={style}
         className={`${c.wrapper} ${withBoxShadow ? c.withBoxShadow : ''}`}
@@ -24,4 +26,4 @@ const Frame = ({ onClick, children, style, withBoxShadow }: Props) => {
   );
 };
 
-export default Frame;
+export default memo(Frame);

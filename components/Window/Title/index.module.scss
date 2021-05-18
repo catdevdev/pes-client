@@ -25,6 +25,11 @@
   margin-right: 3px;
 }
 
+.leftContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .buttonsWrapper {
   display: flex;
   align-items: center;

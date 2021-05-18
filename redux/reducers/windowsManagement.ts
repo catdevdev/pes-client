@@ -10,6 +10,9 @@ import {
 import {
   FetchAllChatsWindow,
   FetchChatByIdWindow,
+  FetchChatsByTermWindow,
+  FetchChatsWithInfinityScrollWindow,
+  FetchMembers,
   OpenChatsWindow,
   OpenChatWindow,
 } from '../../windows/chats/actions/types';
@@ -149,6 +152,57 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         },
       };
       return copyStateChatsWindowI;
+    case FetchChatsWithInfinityScrollWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.id);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+                chats: [
+                  ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats.chats,
+                  ...action.payload.chats,
+                ],
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                isCurrentPage: false,
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
+    case FetchChatsByTermWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+                chats: action.payload.chats,
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                isCurrentPage: false,
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
     case FetchChatByIdWindow:
       console.log(action.payload.messages);
       indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
@@ -173,9 +227,36 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
           },
         },
       };
-
       return copyStateChatsWindowI;
-    /* chats-add-chat */
+    case FetchMembers:
+      /* chats-add-chat */
+      console.log(action.payload);
+      indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
+      copyStateChatsWindowI = [...state];
+      console.log(copyStateChatsWindowI[indexWindow]);
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                members: {
+                  isLoading: false,
+                  members: action.payload.members,
+                },
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
     case ChangeChatDataWindow:
       indexWindow = state.findIndex(({ id }) => id === action.payload.id);
       copyStateChatsCreateChatWindowI = [...state];
