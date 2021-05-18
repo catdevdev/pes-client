@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import axios from '../index';
 /* types */
-import { Chat, Chats } from './types';
+import { Chat, Chats, ChatsModel } from './types';
 
 export const getChatById = async (chatId: string) => {
   return await axios.get(`chat/${chatId}`, {
@@ -15,14 +15,14 @@ export const deleteChatById = async (chatId: string) => {
   });
 };
 
-export const getChats = async (page: number, maxCount: number, term?: string) => {
-  return await axios.get(`chat/search/${page}/${maxCount}${term ? `/${term}` : ''}`, {
+export const getChats = async (page: number, maxCount: number, term?: string): Promise<AxiosResponse<ChatsModel>> => {
+  return await axios.get<ChatsModel>(`chat/search/${page}/${maxCount}${term ? `/${term}` : ''}`, {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
   });
 };
 
-export const getAllChats = async (): Promise<AxiosResponse<Chats>> => {
-  return await axios.get<Chats>(`chat/search`, {
+export const getAllChats = async (): Promise<AxiosResponse<ChatsModel>> => {
+  return await axios.get<ChatsModel>(`chat/search`, {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
   });
 };

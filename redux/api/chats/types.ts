@@ -14,6 +14,10 @@ export type Chat = {
 
 export type Chats = Chat[];
 
+export interface ChatsModel {
+  chats: Chats
+}
+
 export type Message = {
   messageId?: string;
   username: string;

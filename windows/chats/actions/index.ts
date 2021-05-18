@@ -163,7 +163,7 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
     const res = await getAllChats();
     dispatch({
       type: FetchAllChatsWindow,
-      payload: { id, chats: res.data },
+      payload: { id, chats: res.data.chats },
     });
   } catch (err) { }
 };
@@ -175,7 +175,7 @@ export const fetchChatsWithInfityScroll = (
 ) => async (dispatch) => {
   try {
     const res = await getChats(page, 20);
-    if (res.data === []) {
+    if (res.data.chats === []) {
       throw new Error('empty array');
     }
     fetchedCallback && fetchedCallback();
@@ -195,7 +195,7 @@ export const fetchChatsByTerm = (id: string, term: string) => async (dispatch) =
       type: FetchAllChatsWindow,
       payload: { id, chats: res.data.chats },
     });
-  } catch (err) {}
+  } catch (err) { }
 };
 
 export const fetchChatById = (windowId: string, chatId: string) => async (dispatch) => {
@@ -235,5 +235,5 @@ export const fetchMembersChat = (windowId: string, chatId: string) => async (dis
         members: res.data,
       },
     });
-  } catch (err) {}
+  } catch (err) { }
 };
