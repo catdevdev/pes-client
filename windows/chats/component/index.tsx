@@ -6,7 +6,7 @@ import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
 import MenuWithSearchBar from '../components/MenuWithSearchBar';
 import FoldersArea from '../../../components/Window/FoldersArea';
-import Messages from '../../../components/Window/Messages';
+import MessagesChat from '../components/MessagesChat';
 /* UI */
 import Button from '../../../components/UI/Button';
 import Frame from '../../../components/UI/Frame';
@@ -95,14 +95,7 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             })}
           />
         )}
-        {Chat.isCurrentPage && (
-          <Messages
-            messages={[
-              { message: 'A text message', username: 'A username' },
-              { message: 'Anotehr message', username: 'Another username' },
-            ]}
-          ></Messages>
-        )}
+        {Chat.isCurrentPage && <MessagesChat messages={Chat.messages} />}
       </div>
     </WindowComponent>
   );

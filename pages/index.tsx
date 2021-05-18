@@ -35,44 +35,6 @@ const Index = () => {
   const createWindow = useCallWindow();
 
   useEffect(() => {
-    createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
-    createWindow<ChatsAddMessageWindowI>({
-      type: 'chats-add-message',
-      payload: { inputText: '123' },
-    });
-    createWindow<ChatsAddMessageWindowI>({
-      type: 'chats-add-message',
-      payload: { inputText: '123', windowChatId: 'fasdf' },
-    });
-    createWindow<ChatsAddMessageWindowI>({
-      type: 'chats-add-message',
-      payload: { inputText: '123', windowChatId: 'fasdf' },
-    });
-
-    createWindow<MessageUserI>({
-      type: 'message-user',
-      payload: { username: 'Vitalik1972' },
-    });
-    // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
-    // createWindow<ChatsCreateChatI | Window>({
-    //   type: 'chats-create-chat',
-    //   payload: {
-    //     relativeWindowChatId: '213',
-    //     onCreate: () => {},
-    //   },
-    // });
-    // createWindow<ChatsAddMessageWindowI>({
-    //   type: 'chats-add-message',
-    //   payload: { inputText: '123' },
-    // });
-    // createWindow<ChatsAddMessageWindowI>({
-    //   type: 'chats-add-message',
-    //   payload: { inputText: '123', windowChatId: 'fasdf' },
-    // });
-    // createWindow<ChatsAddMessageWindowI>({
-    //   type: 'chats-add-message',
-    //   payload: { inputText: '123', windowChatId: 'fasdf' },
-    // });
     if (!localStorage.getItem('token')) {
       createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
     }
