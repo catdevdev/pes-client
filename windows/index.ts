@@ -7,6 +7,7 @@ import AlertWindow from './alert/component';
 import Chats from './chats/component';
 import ChatsAddMessage from './chats-add-message/component';
 import InputData from './input-data/component';
+import MessageUser from './message-user/component'
 import ChatSettingsWindow from './chat-settings/component';
 import ProfileSettingsWindow from './profile-settings/component';
 /* types */
