@@ -1,5 +1,5 @@
 /* imports */
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import c from './index.module.scss';
 import { GridContextProvider, swap } from 'react-grid-dnd';
 import { nanoid } from 'nanoid';
@@ -18,7 +18,7 @@ import { createWindow } from '../redux/actions/windowsManagement';
 import { Window } from '../redux/actions/windowsManagement/types';
 import { StoreState } from '../redux/reducers';
 /* create Windows */
-import { useCallWindow } from '../callWindows';
+import { useCallWindow } from '../hooks/callWindows';
 /* windows types */
 import { ChatsWindowI } from '../windows/chats/actions/types';
 import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
@@ -26,6 +26,7 @@ import { MessageUserI } from '../windows/message-user/actions/types';
 import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
 import { AlertWindowI } from '../windows/alert/actions/types';
 import { InputDataI } from '../windows/input-data/actions/types';
+import { ProfileSettingsI } from '../windows/profile-settings/actions/types';
 
 const Index = () => {
   const windows = useSelector((state: StoreState) => state.windowsManagement);
@@ -52,7 +53,6 @@ const Index = () => {
       type: 'message-user',
       payload: { username: 'Vitalik1972' },
     });
-    // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
     // createWindow<ChatsCreateChatI | Window>({
     //   type: 'chats-create-chat',
@@ -122,4 +122,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default memo(Index);

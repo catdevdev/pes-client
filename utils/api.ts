@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { store } from "../redux/store";
 
 //#region Local models
 const accessTokenKey: string = "access_token";
@@ -59,7 +60,7 @@ export default class API {
       data: request //body
     };
 
-    axios.get<RefreshTokenResponse>(this.baseAddress + "/user/refresh", requestConfig)
+    axios.get<RefreshTokenResponse>("/user/refresh", requestConfig)
       .then(x => {
         if (x.data.successfull) {
           var token = x.data.token;
@@ -75,6 +76,10 @@ export default class API {
   }
 
   private redirectToLogin() {
+    store.commit("set-auth", false);
+    createWindow<>();
+    store.commit("set-auth", true);
+
     //somehow redirect user to login page to get user input and call login
     //I have no clue how to do it though
   }
@@ -95,7 +100,7 @@ export default class API {
       data: request //body
     };
 
-    axios.get<Token>(this.baseAddress + "/user/login", requestConfig)
+    axios.get<Token>("/user/login", requestConfig)
       .then(x => {
         var token = x.data;
         this.setTokenToLocalStorage(token);
@@ -105,11 +110,11 @@ export default class API {
       })
   }
 
-  private getRequestConfig(): AxiosRequestConfig {
+  public getRequestConfig(): AxiosRequestConfig {
     var accessToken = this.getAcessToken();
     return {
       headers: {
-        "Bearer": accessToken
+        "Authorization": "Bearer " + accessToken
       }
     }
   }

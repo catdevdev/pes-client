@@ -10,11 +10,13 @@ export const getChatById = async (chatId: string) => {
 };
 
 export const deleteChatById = async (chatId: string) => {
-  return await axios.delete(`chat/${chatId}`);
+  return await axios.delete(`chat/${chatId}`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
-export const getChats = async (page: number, maxCount: number, term: string) => {
-  return await axios.get(`chat/search/${page}/${maxCount}/${term}`, {
+export const getChats = async (page: number, maxCount: number, term?: string) => {
+  return await axios.get(`chat/search/${page}/${maxCount}${term ? `/${term}` : ''}`, {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
   });
 };
@@ -44,17 +46,25 @@ export const joinChat = async (chatId: string, password: string) => {
 };
 
 export const getMembersFromChatAdmin = async (chatId: string) => {
-  return await axios.get(`chat/${chatId}/admin/getMembers`);
+  return await axios.get(`chat/${chatId}/admin/getMembers`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const getMembersFromChat = async (chatId: string) => {
-  return await axios.get(`chat/${chatId}/getMembers`);
+  return await axios.get(`chat/${chatId}/getMembers`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const promoteAdminInChat = async (chatId: string, userId: string) => {
-  return await axios.post(`chat/${chatId}/admin/promote/${userId}`);
+  return await axios.post(`chat/${chatId}/admin/promote/${userId}`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };
 
 export const leaveFromChat = async (chatId: string) => {
-  return await axios.post(`chat/${chatId}/leave`);
+  return await axios.post(`chat/${chatId}/leave`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+  });
 };

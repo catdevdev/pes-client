@@ -1,5 +1,5 @@
 /* imports */
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import c from './index.module.scss';
 import { nanoid } from 'nanoid';
 import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dnd';
@@ -61,4 +61,4 @@ const MessagesChat = ({ messages }: Props) => {
   );
 };
 
-export default MessagesChat;
+export default memo(MessagesChat);

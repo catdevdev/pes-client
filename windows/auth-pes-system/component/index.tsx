@@ -20,7 +20,7 @@ import { deleteWindow } from '../../../redux/actions/windowsManagement';
 /* axios */
 import axios from '../../../redux/api';
 /* spawn windows hook */
-import { useCallWindow } from '../../../callWindows';
+import { useCallWindow } from '../../../hooks/callWindows';
 /* windows types */
 import { AlertWindowI } from '../../../windows/alert/actions/types';
 /* api */
@@ -139,7 +139,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
                   setUsername(e.target.value);
                 }}
                 style={{ width: '100%' }}
-              ></Input>
+              />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
               <Label style={{ marginRight: 4, width: 100 }}>Password:</Label>

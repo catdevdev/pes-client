@@ -1,5 +1,5 @@
 /* imports */
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI Window */
 import WindowComponent from '../../../components/Window';
@@ -17,7 +17,14 @@ import { ChatsWindowI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* actions */
-import { fetchAllChats, openChatWindow, OpenChatsAction, fetchChatById } from '../actions';
+import {
+  fetchAllChats,
+  openChatWindow,
+  OpenChatsAction,
+  fetchChatById,
+  fetchMembersChat,
+  fetchChatsWithInfityScroll,
+} from '../actions';
 import Textarea from '../../../components/UI/TextArea';
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
@@ -33,15 +40,47 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
 
   useEffect(() => {
     Chat.isCurrentPage && dispatch(fetchChatById(props.id, props.body.payload.pages.Chat.chatId));
-    Chats.isCurrentPage && dispatch(fetchAllChats(props.id));
-  }, [Chat.isCurrentPage, Chats.isCurrentPage, ]);
+    Chat.isCurrentPage &&
+      dispatch(fetchMembersChat(props.id, props.body.payload.pages.Chat.chatId));
+    Chats.isCurrentPage && dispatch(fetchChatsWithInfityScroll(props.id, 1));
+  }, [Chat.isCurrentPage, Chats.isCurrentPage]);
+  /*  */
+  /*  */
+  /*  */
+  /*  */
+  const scrolledAreaRef = useRef();
+
+  const countFetching = useRef(2);
+  const [loadingInfityScroll, setLoading] = useState(false);
+
+  useEffect(() => {
+    const element = scrolledAreaRef.current;
+    element.addEventListener('scroll', function (event) {
+      var element = event.target;
+
+      if (
+        element.scrollHeight - element.scrollTop === element.clientHeight &&
+        !loadingInfityScroll
+      ) {
+        setLoading(true);
+        dispatch(
+          fetchChatsWithInfityScroll(props.id, countFetching.current, () => {
+            setLoading(false);
+            countFetching.current++;
+          }),
+        );
+      }
+    });
+  }, []);
 
   return (
     <WindowComponent {...props}>
-      <MenuWithSearchBar windowId={props.id} />
+      <MenuWithSearchBar isUsersLoading={Chat.members.isLoading} windowId={props.id} />
       <div style={{ padding: 4, height: 0, flex: 1 }}>
         {Chats.isCurrentPage && (
           <FoldersArea
+            scrolledAreaRef={scrolledAreaRef}
+            loadingInfityScroll={loadingInfityScroll}
             liteVersion
             windowId={props.id}
             folderFontColor={'#000'}
@@ -69,4 +108,4 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
   );
 };
 
-export default ChatsWindow;
+export default memo(ChatsWindow);

@@ -1,17 +1,18 @@
 /* redux */
 import { useDispatch } from 'react-redux';
 /* actions */
-import { createWindow } from '../redux/actions/windowsManagement';
+import { createWindow } from '../../redux/actions/windowsManagement';
 /* redux-types */
-import { ChatsWindowI } from '../windows/chats/actions/types';
-import { ChatsAddMessageWindowI } from '../windows/chats-add-message/actions/types';
-import { MessageUserI } from '../windows/message-user/actions/types';
-import { AuthPesSystemWindowI } from '../windows/auth-pes-system/actions/types';
-import { AlertWindowI } from '../windows/alert/actions/types';
-import { InputDataI } from '../windows/input-data/actions/types';
-import { ChatsCreateChatI } from '../windows/chats-create-chat/actions/types';
+import { ChatsWindowI } from '../../windows/chats/actions/types';
+import { ChatsAddMessageWindowI } from '../../windows/chats-add-message/actions/types';
+import { ChatsCreateChatI } from '../../windows/chats-create-chat/actions/types';
+import { AuthPesSystemWindowI } from '../../windows/auth-pes-system/actions/types';
+import { AlertWindowI } from '../../windows/alert/actions/types';
+import { InputDataI } from '../../windows/input-data/actions/types';
 /* windows name */
-import { windowsVariants } from '../windows';
+import { windowsVariants } from '../../windows';
+import { ChatSettingsI } from '../../windows/chat-settings/actions/types';
+import { ProfileSettingsI } from '../../windows/profile-settings/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
@@ -27,7 +28,9 @@ export const useCallWindow = () => {
     | AlertWindowI
     | MessageUserI
     | ChatsCreateChatI
-    | InputDataI;
+    | InputDataI
+    | ChatSettingsI
+    | ProfileSettingsI;
 
   const hashCreateWindow = {
     ['chats']: (data) => {
@@ -49,7 +52,11 @@ export const useCallWindow = () => {
             payload: {
               pages: {
                 _404page: { errorText: 'about', isCurrentPage: false },
-                Chat: { isCurrentPage: false, messages: [] },
+                Chat: {
+                  isCurrentPage: false,
+                  messages: [],
+                  members: { isLoading: true, members: [] },
+                },
                 Chats: { isCurrentPage: true, chats: [] },
               },
               ...data.payload,
@@ -123,6 +130,7 @@ export const useCallWindow = () => {
               ...data.payload,
             },
           },
+          isLocked: true,
         }),
       );
     },
@@ -187,6 +195,49 @@ export const useCallWindow = () => {
             },
           },
           isLocked: true,
+        }),
+      );
+    },
+    ['chat-settings']: (data) => {
+      dispatch(
+        createWindow<ChatSettingsI>({
+          dimensions: {
+            width: 320,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'Chat setting',
+          },
+          ...data,
+          body: {
+            type: 'chat-settings',
+            payload: {
+              ...data.payload,
+            },
+          },
+          isLocked: true,
+        }),
+      );
+    },
+    ['profile-settings']: (data) => {
+      dispatch(
+        createWindow<ProfileSettingsI>({
+          dimensions: {
+            width: 320,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'profile setting',
+          },
+          ...data,
+          body: {
+            type: 'profile-settings',
+            payload: {
+              ...data.payload,
+            },
+          },
         }),
       );
     },

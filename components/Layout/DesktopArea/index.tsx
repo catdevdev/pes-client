@@ -5,7 +5,9 @@ import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dn
 /* UI */
 import Folder from '../../UI/Folder';
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
-import { useCallWindow } from '../../../callWindows';
+import { useCallWindow } from '../../../hooks/callWindows';
+import { memo } from 'react';
+import { ProfileSettingsI } from '../../../windows/profile-settings/actions/types';
 
 const DesktopArea = () => {
   const createWindow = useCallWindow();
@@ -22,18 +24,25 @@ const DesktopArea = () => {
               createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
             },
           },
-          { id: nanoid(), name: 'settings', folderIcon: 'settings' },
+          {
+            id: nanoid(),
+            name: 'settings',
+            folderIcon: 'settings',
+            onOpen: () => {
+              createWindow<ProfileSettingsI>({ type: 'profile-settings', payload: {} });
+            },
+          },
         ].map(
           ({
             id,
             name,
             folderIcon,
-            onOpen
+            onOpen,
           }: {
             id: string;
             name: string;
             folderIcon: 'folder' | 'settings';
-            onOpen: () => void
+            onOpen: () => void;
           }) => (
             <GridItem key={id} style={{ width: 32 }}>
               <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
@@ -45,4 +54,4 @@ const DesktopArea = () => {
   );
 };
 
-export default DesktopArea;
+export default memo(DesktopArea);

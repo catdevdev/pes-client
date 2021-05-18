@@ -1,19 +1,21 @@
 /* imports */
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, memo, useState } from 'react';
 import Button from '../Button';
 import Frame from '../Frame';
 import Label from '../Label';
+import Loading from '../Loading';
 import c from './index.module.scss';
 /* UI */
 
 interface Props {
   title: string;
   menuItems: { id: string; name: string; onClick: () => void }[];
+  isLoading: boolean;
   style: CSSProperties;
 }
 
 const Dropdown = (props: Props) => {
-  const { title, menuItems, style } = props;
+  const { title, menuItems, style, isLoading } = props;
   const [isOpened, setIsOpened] = useState(false);
   return (
     <div style={{ position: 'relative', width: 140, ...style }} className={c.folderWrapper}>
@@ -29,6 +31,7 @@ const Dropdown = (props: Props) => {
         }}
       >
         <Label style={{ color: isOpened ? '#fff' : '#000', marginLeft: 6 }}>{title}</Label>
+        {isLoading && <Loading />}
         <Button
           onClick={() => setIsOpened(!isOpened)}
           style={{
@@ -63,4 +66,4 @@ const Dropdown = (props: Props) => {
   );
 };
 
-export default Dropdown;
+export default memo(Dropdown);

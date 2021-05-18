@@ -1,6 +1,14 @@
 /* types */
 /* 0 */
-import { OpenChatWindow, OpenChatsWindow, FetchAllChatsWindow, FetchChatByIdWindow } from './types';
+import {
+  OpenChatWindow,
+  OpenChatsWindow,
+  FetchAllChatsWindow,
+  FetchChatsWithInfinityScrollWindow,
+  FetchChatsByTermWindow,
+  FetchChatByIdWindow,
+  FetchMembers,
+} from './types';
 import { AlertWindowI } from '../../alert/actions/types';
 import { InputDataI } from '../../input-data/actions/types';
 /* 1 */
@@ -8,7 +16,13 @@ import { ChatsWindowI } from './types';
 /* 2 */
 import { SetLoadingWindow, Window } from '../../../redux/actions/windowsManagement/types';
 /* api */
-import { getAllChats, getChatById, joinChat } from '../../../redux/api/chats';
+import {
+  getAllChats,
+  getChatById,
+  getChats,
+  getMembersFromChat,
+  joinChat,
+} from '../../../redux/api/chats';
 import { Chats, Messages } from '../../../redux/api/chats/types';
 import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
 import { nanoid } from 'nanoid';
@@ -30,9 +44,24 @@ export interface FetchAllChatsAction {
   payload: { id: string; chats: Chats };
 }
 
+export interface FetchChatsWithInfinityScrollAction {
+  type: typeof FetchChatsWithInfinityScrollWindow;
+  payload: { id: string; chats: Chats };
+}
+
+export interface FetchChatsByTermAction {
+  type: typeof FetchChatsByTermWindow;
+  payload: { id: string; chats: Chats };
+}
+
 export interface FetchChatByIdAction {
   type: typeof FetchChatByIdWindow;
   payload: { id: string; messages: Messages; windowId: string; };
+}
+
+export interface FetchMembersAсtion {
+  type: typeof FetchMembers;
+  payload: { id: string; messages: Messages };
 }
 
 export const openChatWindow = (windowId: string, chatId: string) => (dispatch) => {
@@ -139,6 +168,36 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
   } catch (err) { }
 };
 
+export const fetchChatsWithInfityScroll = (
+  id: string,
+  page: number,
+  fetchedCallback?: () => void,
+) => async (dispatch) => {
+  try {
+    const res = await getChats(page, 20);
+    if (res.data === []) {
+      throw new Error('empty array');
+    }
+    fetchedCallback && fetchedCallback();
+    dispatch({
+      type: FetchChatsWithInfinityScrollWindow,
+      payload: { id, chats: res.data.chats },
+    });
+  } catch (err) {
+    fetchedCallback && fetchedCallback();
+  }
+};
+
+export const fetchChatsByTerm = (id: string, term: string) => async (dispatch) => {
+  try {
+    const res = await getChats(1, 999999, term);
+    dispatch({
+      type: FetchAllChatsWindow,
+      payload: { id, chats: res.data.chats },
+    });
+  } catch (err) {}
+};
+
 export const fetchChatById = (windowId: string, chatId: string) => async (dispatch) => {
   try {
     console.log(chatId);
@@ -159,4 +218,22 @@ export const addMessageWindow = (windowInputId: string, chatId: string) => async
       .payload.data;
     const res = await addMessage(chatId, message);
   } catch (err) { }
+};
+
+export const fetchMembersChat = (windowId: string, chatId: string) => async (dispatch) => {
+  try {
+    // const message = store.getState().windowsManagement.find(({ id }) => id === windowInputId).body
+    //   .payload.data;
+    // const res = await addMessage(chatId, message);
+    const res = await getMembersFromChat(chatId);
+    console.log(res);
+
+    dispatch({
+      type: FetchMembers,
+      payload: {
+        windowId,
+        members: res.data,
+      },
+    });
+  } catch (err) {}
 };
