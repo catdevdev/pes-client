@@ -1,9 +1,9 @@
 export interface RefreshTokenResponse {
   successfull: boolean;
-  token: Token;
+  token: Tokens;
 }
 
-export interface Token {
+export interface Tokens {
   accessToken: string;
   refreshToken: string;
   expirationStamp: number;

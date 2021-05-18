@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 /* actions  */
 import { deleteWindow } from '../../../redux/actions/windowsManagement';
 /* axios */
-import axios from '../../../redux/api';
+import axios, { API } from '../../../redux/api';
 /* spawn windows hook */
 import { useCallWindow } from '../../../hooks/callWindows';
 /* windows types */
@@ -42,9 +42,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const submitCredentialsRegister = async () => {
     try {
-      const { data } = await register(username, password);
-      console.log(data);
-      localStorage.setItem('token', data.accessToken);
+      const { data } = await API.register(username, password);
+
       dispatch(deleteWindow(props.id));
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
@@ -61,6 +60,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
       });
     } catch (err) {
       const id = nanoid();
+      console.log(err);
       createWindow<AlertWindowI | Window>({
         id,
         type: 'alert',

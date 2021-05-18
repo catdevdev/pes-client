@@ -7,16 +7,16 @@ import {
   RefreshRequest,
   RefreshTokenResponse,
   RegisterRequest,
-  Token,
+  Tokens,
 } from './types';
 
-export const baseUrl = 'http://134.249.99.75:5001/api/v1/';
+export const baseURL = 'http://134.249.99.75:5001/api/v1/';
 const accessTokenKey: string = 'access_token';
 const refreshTokenKey: string = 'refresh_token';
 const expirationDateKey: string = 'exp';
 
 const instance = axios.create({
-  baseURL: baseUrl,
+  baseURL,
   headers: {},
 });
 
@@ -52,7 +52,7 @@ export class API {
       data: request, //body
     };
 
-    axios
+    instance
       .get<RefreshTokenResponse>('/user/refresh', requestConfig)
       .then((x) => {
         if (x.data.successfull) {
@@ -74,10 +74,11 @@ export class API {
     //I have no clue how to do it though
   }
 
-  private static setTokenToLocalStorage(token: Token) {
-    localStorage.setItem(accessTokenKey, token.accessToken);
-    localStorage.setItem(refreshTokenKey, token.refreshToken);
-    localStorage.setItem(expirationDateKey, String(token.expirationStamp));
+  private static setTokenToLocalStorage(tokens: Tokens) {
+    store.dispatch(setUserData({ isAuthorized: true }));
+    localStorage.setItem(accessTokenKey, tokens.accessToken);
+    localStorage.setItem(refreshTokenKey, tokens.refreshToken);
+    localStorage.setItem(expirationDateKey, String(tokens.expirationStamp));
   }
 
   static login(username: string, password: string) {
@@ -86,12 +87,9 @@ export class API {
       password: password,
     };
 
-    var requestConfig = {
-      data: request, //body
-    };
-
-    axios
-      .get<Token>('/user/login', requestConfig)
+    var requestConfig = request;
+    instance
+      .post<Tokens>('/user/login', requestConfig)
       .then((x) => {
         var token = x.data;
         this.setTokenToLocalStorage(token);
@@ -101,25 +99,32 @@ export class API {
       });
   }
 
-  static register(username: string, password: string) {
+  static async register(username: string, password: string): Promise<boolean> {
     var request: RegisterRequest = {
       username: username,
       password: password,
     };
 
-    var requestConfig = {
-      data: request, //body
-    };
+    var requestConfig = request;
 
-    axios
-      .get<Token>('/user/login', requestConfig)
-      .then((x) => {
-        var token = x.data;
-        this.setTokenToLocalStorage(token);
-      })
-      .catch((x) => {
-        console.log(x);
-      });
+    // axios
+    //   .get<Token>('/user/register', requestConfig)
+    //   .then((x) => {
+    //     var token = x.data;
+    //     this.setTokenToLocalStorage(token);
+    //   })
+    //   .catch((x) => {
+    //     console.log(x);
+    //   });
+
+    try {
+      const res = await instance.post<Tokens>('/user/register', requestConfig);
+      const tokens = res.data;
+      this.setTokenToLocalStorage(tokens);
+      return true;
+    } catch (error) {
+      throw error;
+    }
   }
 
   public static getRequestConfig(): AxiosRequestConfig {
