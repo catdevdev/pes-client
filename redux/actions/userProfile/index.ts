@@ -4,16 +4,14 @@ import { SetUserData } from './types';
 /* 1 */
 import { UserProfileI } from './types';
 
-export interface CreateWindowAction<I> {
-  type: typeof CreateWindow;
-  payload: Window<I>;
+export interface SetUserDataAction {
+  type: typeof SetUserData;
+  payload: UserProfileI;
 }
 
-export const createWindow = <I>(data: Window<I>): CreateWindowAction<I> => {
+export const setUserData = (data: UserProfileI): SetUserDataAction => {
   return {
-    type: CreateWindow,
+    type: SetUserData,
     payload: data,
   };
 };
-
-

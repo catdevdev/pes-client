@@ -1,22 +1,16 @@
 /* imports */
 import { nanoid } from 'nanoid';
+import { SetUserDataAction } from '../actions/userProfile';
+import { Action, SetUserData, UserProfileI } from '../actions/userProfile/types';
 
+const defaultState: UserProfileI = {
+  isAuthorized: false,
+};
 
-export const userProfile = (state, action) => {
+export const userProfile = (state: UserProfileI = defaultState, action: Action) => {
   switch (action.type) {
-    case CreateWindow:
-      /* all window isActive to False */
-      return [
-        ...state.map((window) => {
-          return { ...window, isActive: false };
-        }),
-        {
-          id: nanoid(),
-          isActive: true,
-          zIndex: state.length + 1,
-          ...action.payload,
-        },
-      ];
+    case SetUserData:
+      return { ...state, isAuthorized: action.payload.isAuthorized };
     default:
       return state;
   }
