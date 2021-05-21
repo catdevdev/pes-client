@@ -35,6 +35,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [pesKey, setpesKey] = useState<string>('');
   const [repeatPassword, setRepeatPassword] = useState<string>('');
 
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const submitCredentialsRegister = async () => {
     try {
-      const { data } = await API.register(username, password);
+      await API.register(username, password, pesKey);
 
       dispatch(deleteWindow(props.id));
       const id = nanoid();
@@ -158,6 +159,16 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
                 type="password"
                 onChange={(e) => {
                   setRepeatPassword(e.target.value);
+                }}
+                style={{ width: '100%' }}
+              ></Input>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
+              <Label style={{ marginRight: 4, width: 100 }}>What would a dog say?</Label>
+              <Input
+                value={pesKey}
+                onChange={(e) => {
+                  setpesKey(e.target.value);
                 }}
                 style={{ width: '100%' }}
               ></Input>
