@@ -56,6 +56,7 @@ export const useCallWindow = () => {
                 Chat: {
                   isCurrentPage: false,
                   messages: [],
+                  fontSize: 18,
                   members: { isLoading: true, members: [] },
                 },
                 Chats: { isCurrentPage: true, chats: [] },

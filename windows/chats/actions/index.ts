@@ -3,6 +3,7 @@
 import {
   OpenChatWindow,
   OpenChatsWindow,
+  SetFontWindow,
   FetchAllChatsWindow,
   FetchChatsWithInfinityScrollWindow,
   FetchChatsByTermWindow,
@@ -38,30 +39,34 @@ export interface OpenChatsAction {
   type: typeof OpenChatsWindow;
   payload: { id: string };
 }
+export interface SetFontSizeAction {
+  type: typeof SetFontWindow;
+  payload: { windowId: string; fontSize: number };
+}
 
 export interface FetchAllChatsAction {
   type: typeof FetchAllChatsWindow;
-  payload: { id: string; chats: Chats };
+  payload: { windowId: string; chats: Chats };
 }
 
 export interface FetchChatsWithInfinityScrollAction {
   type: typeof FetchChatsWithInfinityScrollWindow;
-  payload: { id: string; chats: Chats };
+  payload: { windowId: string; chats: Chats };
 }
 
 export interface FetchChatsByTermAction {
   type: typeof FetchChatsByTermWindow;
-  payload: { id: string; chats: Chats };
+  payload: { windowId: string; chats: Chats };
 }
 
 export interface FetchChatByIdAction {
   type: typeof FetchChatByIdWindow;
-  payload: { id: string; chat: ChatDisplay; windowId: string; };
+  payload: { id: string; chat: ChatDisplay; windowId: string };
 }
 
 export interface FetchMembersAсtion {
   type: typeof FetchMembers;
-  payload: { id: string; messages: Messages };
+  payload: { windowId: string; messages: Messages };
 }
 
 export const openChatWindow = (windowId: string, chatId: string) => (dispatch) => {
@@ -158,6 +163,13 @@ export const openChatsWindow = (id: string): OpenChatsAction => {
   };
 };
 
+export const setFontSizeWindow = (windowId: string, fontSize: number): SetFontSizeAction => {
+  return {
+    type: SetFontWindow,
+    payload: { windowId, fontSize },
+  };
+};
+
 export const fetchAllChats = (id: string) => async (dispatch) => {
   try {
     const res = await getAllChats();
@@ -165,7 +177,7 @@ export const fetchAllChats = (id: string) => async (dispatch) => {
       type: FetchAllChatsWindow,
       payload: { id, chats: res.data.chats },
     });
-  } catch (err) { }
+  } catch (err) {}
 };
 
 export const fetchChatsWithInfityScroll = (
@@ -195,7 +207,7 @@ export const fetchChatsByTerm = (id: string, term: string) => async (dispatch) =
       type: FetchAllChatsWindow,
       payload: { id, chats: res.data.chats },
     });
-  } catch (err) { }
+  } catch (err) {}
 };
 
 export const fetchChatById = (windowId: string, chatId: string) => async (dispatch) => {
@@ -218,7 +230,7 @@ export const addMessageWindow = (windowInputId: string, chatId: string) => async
     const message = store.getState().windowsManagement.find(({ id }) => id === windowInputId).body
       .payload.data;
     const res = await addMessage(chatId, message);
-  } catch (err) { }
+  } catch (err) {}
 };
 
 export const fetchMembersChat = (windowId: string, chatId: string) => async (dispatch) => {
@@ -236,5 +248,5 @@ export const fetchMembersChat = (windowId: string, chatId: string) => async (dis
         members: res.data,
       },
     });
-  } catch (err) { }
+  } catch (err) {}
 };

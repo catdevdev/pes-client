@@ -1,5 +1,6 @@
 export const OpenChatWindow = 'CHATS-WINDOW/OPEN_CHAT_WINDOW';
 export const OpenChatsWindow = 'CHATS-WINDOW/OPEN_CHATS_WINDOW';
+export const SetFontWindow = 'CHATS-WINDOW/SET_FONT_WINDOW';
 export const FetchAllChatsWindow = 'CHATS-WINDOW/FETCH_ALL_CHATS';
 export const FetchChatsWithInfinityScrollWindow = 'CHATS-WINDOW/FETCH_CHATS_WITH_INFINITY_SCROLL';
 export const FetchChatsByTermWindow = 'CHATS-WINDOW/FETCH_CHATS_BY_TERM';
@@ -37,6 +38,7 @@ export interface ChatsWindowI {
       };
       Chat?: {
         chatId: string;
+        fontSize: number;
         messages?: { username: string; message: string }[];
         chatImageLocation: string;
         members?: {

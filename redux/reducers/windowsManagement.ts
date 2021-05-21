@@ -15,6 +15,7 @@ import {
   FetchMembers,
   OpenChatsWindow,
   OpenChatWindow,
+  SetFontWindow,
 } from '../../windows/chats/actions/types';
 import { ChangeChatDataWindow } from '../../windows/chats-create-chat/actions/types';
 import { Action } from '../actions/windowsManagement/types';
@@ -128,6 +129,29 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
         },
       };
       return copyStateChatsWindowI;
+    case SetFontWindow:
+      indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
+      copyStateChatsWindowI = [...state];
+      copyStateChatsWindowI[indexWindow] = {
+        ...copyStateChatsWindowI[indexWindow],
+        body: {
+          ...copyStateChatsWindowI[indexWindow].body,
+          payload: {
+            ...copyStateChatsWindowI[indexWindow].body.payload,
+            pages: {
+              ...copyStateChatsWindowI[indexWindow].body.payload.pages,
+              Chats: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chats,
+              },
+              Chat: {
+                ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
+                fontSize: action.payload.fontSize,
+              },
+            },
+          },
+        },
+      };
+      return copyStateChatsWindowI;
     case FetchAllChatsWindow:
       indexWindow = state.findIndex(({ id }) => id === action.payload.id);
       copyStateChatsWindowI = [...state];
@@ -222,7 +246,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
               Chat: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
                 messages: action.payload.chat.messages,
-                chatImageLocation: action.payload.chat.chatImageLocation
+                chatImageLocation: action.payload.chat.chatImageLocation,
               },
             },
           },

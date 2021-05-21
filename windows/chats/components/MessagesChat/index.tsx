@@ -12,28 +12,29 @@ interface MessageProps {
   username: string;
   message: string;
   isOwn?: boolean;
+  fontSize: number;
 }
 
-const Message = ({ username, message, isOwn }: MessageProps) => {
+const Message = ({ username, message, isOwn, fontSize }: MessageProps) => {
   const [isAppearUserBadge, setIsAppearUserBadge] = useState<boolean>(false);
   const [data, setData] = useState<boolean>(false);
   return (
     <>
       {!isOwn ? (
         <div className={c.messageContainer}>
-          <p style={{ color: '#E00000' }} className={c.username}>
+          <p style={{ color: '#E00000', fontSize }} className={c.username}>
             {username} {'>'}
           </p>
-          <p style={{ color: '#000' }} className={c.message}>
+          <p style={{ color: '#000', fontSize }} className={c.message}>
             {message}
           </p>
         </div>
       ) : (
         <div className={c.ownMessageContainer}>
-          <p style={{ color: '#000' }} className={c.message}>
+          <p style={{ color: '#000', fontSize }} className={c.message}>
             {message}
           </p>
-          <p style={{ color: '#09D61D' }} className={c.username}>
+          <p style={{ color: '#09D61D', fontSize }} className={c.username}>
             {'<'} {username}
           </p>
         </div>
@@ -44,17 +45,18 @@ const Message = ({ username, message, isOwn }: MessageProps) => {
 
 type Props = {
   messages: Messages;
+  fontSize: number;
 };
 
-const MessagesChat = ({ messages }: Props) => {
+const MessagesChat = ({ messages, fontSize }: Props) => {
   return (
     <div style={{ background: '#fff' }} className={c.wrapper}>
       <div className={c.container}>
         {messages.length === 0 && (
-          <Message username={'chat_bot'} message={'this chat is emtpy'}></Message>
+          <Message fontSize={fontSize} username={'chat_bot'} message={'this chat is emtpy'} />
         )}
         {messages.map(({ username, message }) => (
-          <Message username={username} message={message}></Message>
+          <Message fontSize={fontSize} username={username} message={message} />
         ))}
       </div>
     </div>
