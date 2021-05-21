@@ -200,7 +200,15 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
 
       <div className={c.rightContainer}>
         <Frame withBoxShadow style={{ width: 60, height: 60 }}>
-          <img className={c.img} src={resolveLocation(Chat.chatImageLocation)} alt="Logo" />
+          <img
+            className={c.img}
+            src={
+              Chat.isCurrentPage
+                ? resolveLocation(Chat.chatImageLocation)
+                : '/images/anime_girl.jpeg'
+            }
+            alt="Logo"
+          />
         </Frame>
       </div>
     </div>
