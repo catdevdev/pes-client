@@ -13,7 +13,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Window } from '../../../../redux/actions/windowsManagement/types';
 import { StoreState } from '../../../../redux/reducers';
 import { ChatsWindowI } from '../../actions/types';
-import { fetchAllChats, fetchChatById, fetchChatsByTerm, openChatsWindow } from '../../actions';
+import {
+  fetchAllChats,
+  fetchChatById,
+  fetchChatsByTerm,
+  openChatsWindow,
+  setFontSizeWindow,
+} from '../../actions';
 import { createWindow, deleteWindow } from '../../../../redux/actions/windowsManagement';
 /* spawn windows */
 import { ChatsCreateChatI } from '../../../chats-create-chat/actions/types';
@@ -50,10 +56,6 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
   } = windows.find(({ id }) => {
     return windowId === id;
   });
-
-  const windowsInputMessage = useSelector(
-    (state: StoreState<InputDataI>) => state.windowsManagement,
-  );
 
   const { members } = useSelector(
     (state: StoreState<ChatsWindowI>) =>
@@ -97,8 +99,18 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                 imageUrl="https://win98icons.alexmeub.com/icons/png/write_wordpad-1.png"
                 style={{ width: 25, height: 25 }}
               />
-              <Button style={{ width: 25, height: 25, marginLeft: 4 }} />
-              <Button style={{ width: 25, height: 25 }} />
+              <Button
+                onClick={() => {
+                  dispatch(setFontSizeWindow(windowId, Chat.fontSize - 4));
+                }}
+                style={{ width: 25, height: 25, marginLeft: 4 }}
+              />
+              <Button
+                onClick={() => {
+                  dispatch(setFontSizeWindow(windowId, Chat.fontSize + 4));
+                }}
+                style={{ width: 25, height: 25 }}
+              />
               <Button
                 style={{ width: 25, height: 25, marginLeft: 4 }}
                 onClick={() => {
