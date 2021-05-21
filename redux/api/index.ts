@@ -11,7 +11,9 @@ import {
   Tokens,
 } from './types';
 
-export const baseURL = 'http://134.249.99.75:5001/api/v1/';
+export const baseServerUrl = "http://134.249.99.75:5001";
+export const baseURL = `${baseServerUrl}/api/v1/`;
+
 const accessTokenKey: string = 'access_token';
 const refreshTokenKey: string = 'refresh_token';
 const expirationDateKey: string = 'exp';
@@ -71,7 +73,6 @@ export class API {
 
   private static redirectToLogin() {
     store.dispatch(setUserData({ isAuthorized: false }));
-    store.dispatch();
     //somehow redirect user to login page to get user input and call login
     //I have no clue how to do it though
   }
@@ -105,10 +106,11 @@ export class API {
     }
   }
 
-  static async register(username: string, password: string): Promise<boolean> {
+  static async register(username: string, password: string, pesKey: string): Promise<boolean> {
     var request: RegisterRequest = {
       username: username,
       password: password,
+      pesKey: pesKey
     };
 
     var requestConfig = request;

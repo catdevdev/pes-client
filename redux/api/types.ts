@@ -17,6 +17,7 @@ export interface LoginRequest {
 export interface RegisterRequest {
   username: string;
   password: string;
+  pesKey: string;
 }
 
 export interface RefreshRequest {
