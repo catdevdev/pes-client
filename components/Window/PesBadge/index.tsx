@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { getPesScore } from '../../../redux/api/service';
 import { ProgressBar } from '../../UI/ProgressBar';
 
 import c from './index.module.scss';
@@ -8,16 +10,34 @@ export interface BadgeModel {
   title: string;
 }
 
-const PesBadgeComponent = (props: BadgeModel) => {
+export interface Props {
+  username: string;
+}
+
+const PesBadgeComponent = ({ username }: Props) => {
+  const [pesScore, setBadge] = useState<BadgeModel>(null);
+
+  const fetchPesScore = async () => {
+    const response = await getPesScore(username);
+    setBadge(response);
+  };
+
+  useEffect(() => {
+    fetchPesScore();
+  }, []);
+
   return (
-    <div className={c.Container}>
-      <img src={props.badgeLocation} className={c.image}></img>
-      <div className={c.title}>{props.title}</div>
-      <div className={c.barWrapper}>
-        <ProgressBar percentage={props.score}></ProgressBar>
-      </div>
-    </div>
+    <>
+      {pesScore && (
+        <div className={c.Container}>
+          <img src={pesScore.badgeLocation} className={c.image}></img>
+          <div className={c.title}>{pesScore.title}</div>
+          <div className={c.barWrapper}>
+            <ProgressBar percentage={pesScore.score}></ProgressBar>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
-
 export default PesBadgeComponent;

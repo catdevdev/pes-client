@@ -114,7 +114,10 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                 menuItems={members.map(({ username, isAdmin }) => ({
                   id: nanoid(),
                   name: username,
-                  onClick: () => {},
+                  onClick: () => {
+                    console.log(username);
+                    createWindow({ type: 'message-user', payload: { username } });
+                  },
                 }))}
                 style={{ margin: '2px 0 0 8px' }}
                 title="Users"

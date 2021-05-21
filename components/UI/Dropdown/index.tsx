@@ -1,4 +1,5 @@
 /* imports */
+import nanoid from 'nanoid';
 import React, { CSSProperties, memo, useState } from 'react';
 import Button from '../Button';
 import Frame from '../Frame';
@@ -46,20 +47,18 @@ const Dropdown = (props: Props) => {
       </Frame>
       {isOpened && (
         <div className={c.menuContainer}>
-          {menuItems.map(({ id, name, onClick }) => {
-            return (
-              <div
-                key={id}
-                onClick={() => {
-                  onClick();
-                  setIsOpened(false);
-                }}
-                className={c.option}
-              >
-                {name}
-              </div>
-            );
-          })}
+          {menuItems.map(({ id, name, onClick }) => (
+            <div
+              // key={Math.random()}
+              onClick={() => {
+                onClick();
+                setIsOpened(false);
+              }}
+              className={c.option}
+            >
+              {name}
+            </div>
+          ))}
         </div>
       )}
     </div>

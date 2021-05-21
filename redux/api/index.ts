@@ -24,8 +24,8 @@ const instance = axios.create({
 export class API {
   private static getAcessToken() {
     var accessToken = localStorage.getItem(accessTokenKey);
-
-    if (accessToken != null) {
+    console.log(accessToken);
+    if (accessToken) {
       var expirationTime = Number(localStorage.getItem(expirationDateKey));
       var currentTime = Math.floor(Date.now() / 1000);
       if (currentTime && expirationTime) {
@@ -71,7 +71,7 @@ export class API {
 
   private static redirectToLogin() {
     store.dispatch(setUserData({ isAuthorized: false }));
-    store.dispatch()
+    store.dispatch();
     //somehow redirect user to login page to get user input and call login
     //I have no clue how to do it though
   }
