@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
 import axios, { API } from '../index';
 /* types */
-import { Chat, Chats, ChatsModel } from './types';
+import { Chat, ChatDisplay, Chats, ChatsModel } from './types';
 
 export const getChatById = async (chatId: string) => {
-  return await axios.get(`chat/${chatId}`, API.getRequestConfig());
+  return await axios.get<ChatDisplay>(`chat/${chatId}`, API.getRequestConfig());
 };
 
 export const deleteChatById = async (chatId: string) => {
