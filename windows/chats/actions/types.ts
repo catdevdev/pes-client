@@ -38,6 +38,7 @@ export interface ChatsWindowI {
       Chat?: {
         chatId: string;
         messages?: { username: string; message: string }[];
+        chatImageLocation: string;
         members?: {
           isLoading: boolean;
           members: { username: string; isAdmin: boolean }[];

@@ -204,7 +204,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
       };
       return copyStateChatsWindowI;
     case FetchChatByIdWindow:
-      console.log(action.payload.messages);
+      console.log(action.payload);
       indexWindow = state.findIndex(({ id }) => id === action.payload.windowId);
       copyStateChatsWindowI = [...state];
       console.log(copyStateChatsWindowI[indexWindow]);
@@ -221,7 +221,8 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
               },
               Chat: {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
-                messages: action.payload.messages,
+                messages: action.payload.chat.messages,
+                chatImageLocation: action.payload.chat.chatImageLocation
               },
             },
           },
