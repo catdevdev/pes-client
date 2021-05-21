@@ -18,7 +18,7 @@ import { ProfileSettingsI } from '../actions/types';
 /* redux */
 import { useSelector, useDispatch } from 'react-redux';
 /* axios */
-import axios from '../../../redux/api';
+import axios, { API } from '../../../redux/api';
 import Fieldset from '../../../components/UI/Fieldset';
 import { deleteChatById } from '../../../redux/api/chats';
 import { openChatsWindow } from '../../chats/actions';
@@ -26,6 +26,7 @@ import { store } from '../../../redux/store';
 import { deleteWindow } from '../../../redux/actions/windowsManagement';
 import { AuthPesSystemWindowI } from '../../auth-pes-system/actions/types';
 import { useCallWindow } from '../../../hooks/callWindows';
+import PesBadgeComponent from '../../../components/Window/PesBadge';
 
 const ProfileSettings = (props: Window<ProfileSettingsI>) => {
   const dispatch = useDispatch();
@@ -70,17 +71,18 @@ const ProfileSettings = (props: Window<ProfileSettingsI>) => {
           </Fieldset>
           <Fieldset fieldset="PES-score">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Frame withBoxShadow style={{ width: 150, height: 150 }}>
+              {/* <PesBadgeComponent username={props.body.payload}  /> */}
+              {/* <Frame withBoxShadow style={{ width: 150, height: 150 }}>
                 <img
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   src="https://i.pinimg.com/originals/63/e1/d8/63e1d8b597aba9e9226fa5cc277afc32.jpg"
                 />
-              </Frame>
+              </Frame> */}
             </div>
           </Fieldset>
           <Button
-            onClick={() => {
-              localStorage.clear();
+            onClick={async () => {
+              await API.logout();
               dispatch(deleteWindow(props.id));
               createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
             }}

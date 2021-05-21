@@ -23,7 +23,7 @@ import {
   getMembersFromChat,
   joinChat,
 } from '../../../redux/api/chats';
-import { Chats, Messages } from '../../../redux/api/chats/types';
+import { ChatDisplay, Chats, Messages } from '../../../redux/api/chats/types';
 import { createWindow, deleteWindow } from '../../../redux/actions/windowsManagement';
 import { nanoid } from 'nanoid';
 import { store } from '../../../redux/store';
@@ -56,7 +56,7 @@ export interface FetchChatsByTermAction {
 
 export interface FetchChatByIdAction {
   type: typeof FetchChatByIdWindow;
-  payload: { id: string; messages: Messages; windowId: string; };
+  payload: { id: string; chat: ChatDisplay; windowId: string; };
 }
 
 export interface FetchMembersAсtion {
@@ -203,9 +203,10 @@ export const fetchChatById = (windowId: string, chatId: string) => async (dispat
     console.log(chatId);
     const res = await getChatById(chatId);
     console.log(res);
+    let chat = res.data;
     dispatch({
       type: FetchChatByIdWindow,
-      payload: { windowId, messages: res.data.messages },
+      payload: { windowId, chat },
     });
   } catch (err) {
     console.log(err);

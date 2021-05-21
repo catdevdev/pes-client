@@ -5,7 +5,7 @@ import { CSSProperties, memo } from 'react';
 
 interface Props {
   folderName: string;
-  folderIcon: 'folder' | 'settings';
+  folderIcon: 'folder' | 'settings' | 'dog';
   fontColor?: string;
   onDoubleClick: () => void;
 }
@@ -13,6 +13,7 @@ interface Props {
 const Icons = {
   folder: '/images/folder.svg',
   settings: '/images/window_icons/settings.png',
+  dog: '/images/window_icons/dog.png',
 };
 
 const Folder = (props: Props) => {

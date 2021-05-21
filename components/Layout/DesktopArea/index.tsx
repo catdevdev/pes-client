@@ -8,48 +8,82 @@ import { ChatsWindowI } from '../../../windows/chats/actions/types';
 import { useCallWindow } from '../../../hooks/callWindows';
 import { memo } from 'react';
 import { ProfileSettingsI } from '../../../windows/profile-settings/actions/types';
+import { AuthPesSystemWindowI } from '../../../windows/auth-pes-system/actions/types';
+import { useSelector } from 'react-redux';
+import { StoreState } from '../../../redux/reducers';
 
 const DesktopArea = () => {
   const createWindow = useCallWindow();
-
+  const isAuthorized = useSelector((state: StoreState) => state.userProfile.isAuthorized);
   return (
     <div className={c.wrapper}>
-      <GridDropZone id="desktop_area" boxesPerRow={1} rowHeight={70}>
-        {[
-          {
-            id: nanoid(),
-            name: 'chats',
-            folderIcon: 'folder',
-            onOpen: () => {
-              createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+      {isAuthorized ? (
+        <GridDropZone id="desktop_area" boxesPerRow={1} rowHeight={70}>
+          {[
+            {
+              id: nanoid(),
+              name: 'chats',
+              folderIcon: 'folder',
+              onOpen: () => {
+                createWindow<ChatsWindowI>({ type: 'chats', payload: {} });
+              },
             },
-          },
-          {
-            id: nanoid(),
-            name: 'settings',
-            folderIcon: 'settings',
-            onOpen: () => {
-              createWindow<ProfileSettingsI>({ type: 'profile-settings', payload: {} });
+            {
+              id: nanoid(),
+              name: 'settings',
+              folderIcon: 'settings',
+              onOpen: () => {
+                createWindow<ProfileSettingsI>({ type: 'profile-settings', payload: {} });
+              },
             },
-          },
-        ].map(
-          ({
-            id,
-            name,
-            folderIcon,
-            onOpen,
-          }: {
-            id: string;
-            name: string;
-            folderIcon: 'folder' | 'settings';
-            onOpen: () => void;
-          }) => (
-            <GridItem key={id} style={{ width: 32 }}>
-              <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
-            </GridItem>
-          ),
-        )}
-      </GridDropZone>
+          ].map(
+            ({
+              id,
+              name,
+              folderIcon,
+              onOpen,
+            }: {
+              id: string;
+              name: string;
+              folderIcon: 'folder' | 'settings' | 'dog';
+              onOpen: () => void;
+            }) => (
+              <GridItem key={id} style={{ width: 32 }}>
+                <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
+              </GridItem>
+            ),
+          )}
+        </GridDropZone>
+      ) : (
+        <GridDropZone id="desktop_area" boxesPerRow={1} rowHeight={70}>
+          {[
+            {
+              id: nanoid(),
+              name: 'auth',
+              folderIcon: 'dog',
+              onOpen: () => {
+                createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
+              },
+            },
+          ].map(
+            ({
+              id,
+              name,
+              folderIcon,
+              onOpen,
+            }: {
+              id: string;
+              name: string;
+              folderIcon: 'folder' | 'settings' | 'dog';
+              onOpen: () => void;
+            }) => (
+              <GridItem key={id} style={{ width: 32 }}>
+                <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
+              </GridItem>
+            ),
+          )}
+        </GridDropZone>
+      )}
     </div>
   );
 };

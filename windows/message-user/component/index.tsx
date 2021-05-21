@@ -11,29 +11,14 @@ import { getPesScore } from '../../../redux/api/service';
 const MessageUser = (props: Window<MessageUserI>) => {
   const {
     body: {
-      payload: {
-        payload: { username },
-      },
+      payload: { username },
     },
   } = props;
-
-  console.log(props);
-
-  const [pesScore, setBadge] = useState<BadgeModel>(null);
-
-  const fetchPesScore = async () => {
-    const response = await getPesScore(username);
-    setBadge(response);
-  };
-
-  useEffect(() => {
-    fetchPesScore();
-  }, []);
 
   return (
     <WindowComponent {...props}>
       <Header text={username}></Header>
-      {pesScore != null && <PesBadgeComponent {...pesScore} />}
+      <PesBadgeComponent username={username} />
     </WindowComponent>
   );
 };

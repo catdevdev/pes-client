@@ -131,7 +131,6 @@ export const useCallWindow = () => {
               ...data.payload,
             },
           },
-          isLocked: true,
         }),
       );
     },
@@ -171,7 +170,7 @@ export const useCallWindow = () => {
           body: {
             type: 'message-user',
             payload: {
-              ...payload,
+              ...payload.payload,
             },
           },
         }),

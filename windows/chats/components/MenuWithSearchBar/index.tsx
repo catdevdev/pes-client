@@ -26,6 +26,7 @@ import { InputDataI } from '../../../input-data/actions/types';
 import { addMessage } from '../../../../redux/api/messages';
 import { store } from '../../../../redux/store';
 import { ChatSettingsI } from '../../../chat-settings/actions/types';
+import { resolveLocation } from '../../../../utils';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -114,7 +115,10 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                 menuItems={members.map(({ username, isAdmin }) => ({
                   id: nanoid(),
                   name: username,
-                  onClick: () => {},
+                  onClick: () => {
+                    console.log(username);
+                    createWindow({ type: 'message-user', payload: { username } });
+                  },
                 }))}
                 style={{ margin: '2px 0 0 8px' }}
                 title="Users"
@@ -196,7 +200,7 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
 
       <div className={c.rightContainer}>
         <Frame withBoxShadow style={{ width: 60, height: 60 }}>
-          <img className={c.img} src="/images/anime_girl.jpeg" alt="" />
+          <img className={c.img} src={resolveLocation(Chat.chatImageLocation)} alt="Logo" />
         </Frame>
       </div>
     </div>

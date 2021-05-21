@@ -10,6 +10,7 @@ export type Chat = {
   chatName: string;
   userCount: number;
   role: Roles;
+  chatImageLocation: string;
 };
 
 export type Chats = Chat[];
@@ -25,3 +26,9 @@ export type Message = {
 };
 
 export type Messages = Message[];
+
+
+export interface ChatDisplay {
+  chatImageLocation: string;
+  messages: Messages;
+}

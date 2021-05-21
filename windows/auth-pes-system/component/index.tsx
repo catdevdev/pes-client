@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 /* actions  */
 import { deleteWindow } from '../../../redux/actions/windowsManagement';
 /* axios */
-import axios from '../../../redux/api';
+import axios, { API } from '../../../redux/api';
 /* spawn windows hook */
 import { useCallWindow } from '../../../hooks/callWindows';
 /* windows types */
@@ -35,6 +35,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [pesKey, setpesKey] = useState<string>('');
   const [repeatPassword, setRepeatPassword] = useState<string>('');
 
   const dispatch = useDispatch();
@@ -42,9 +43,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const submitCredentialsRegister = async () => {
     try {
-      const { data } = await register(username, password);
-      console.log(data);
-      localStorage.setItem('token', data.accessToken);
+      await API.register(username, password, pesKey);
+
       dispatch(deleteWindow(props.id));
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
@@ -61,6 +61,7 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
       });
     } catch (err) {
       const id = nanoid();
+      console.log(err);
       createWindow<AlertWindowI | Window>({
         id,
         type: 'alert',
@@ -78,8 +79,8 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
 
   const submitCredentialsLogin = async () => {
     try {
-      const { data } = await login(username, password);
-      localStorage.setItem('token', data.accessToken);
+      await API.login(username, password);
+
       dispatch(deleteWindow(props.id));
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
@@ -158,6 +159,16 @@ const AuthPesSystemWindow = (props: Window<AuthPesSystemWindowI>) => {
                 type="password"
                 onChange={(e) => {
                   setRepeatPassword(e.target.value);
+                }}
+                style={{ width: '100%' }}
+              ></Input>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 8 }}>
+              <Label style={{ marginRight: 4, width: 100 }}>What would a dog say?</Label>
+              <Input
+                value={pesKey}
+                onChange={(e) => {
+                  setpesKey(e.target.value);
                 }}
                 style={{ width: '100%' }}
               ></Input>
