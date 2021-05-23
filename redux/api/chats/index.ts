@@ -51,3 +51,7 @@ export const promoteAdminInChat = async (chatId: string, userId: string) => {
 export const leaveFromChat = async (chatId: string) => {
   return await axios.post(`chat/${chatId}/leave`, API.getRequestConfig());
 };
+
+export const up = async (chatId: string) => {
+  return await axios.post(`chat/${chatId}/leave`, API.getRequestConfig());
+};

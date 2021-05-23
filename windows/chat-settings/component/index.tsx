@@ -1,5 +1,5 @@
 /* imports */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI Window */
 import WindowComponent from '../../../components/Window';
@@ -23,9 +23,35 @@ import Fieldset from '../../../components/UI/Fieldset';
 import { deleteChatById } from '../../../redux/api/chats';
 import { openChatsWindow } from '../../chats/actions';
 import { store } from '../../../redux/store';
+import c from './index.module.scss';
 
 const ChatSettings = (props: Window<ChatSettingsI>) => {
   const dispatch = useDispatch();
+
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
+
+  const imgRef = useRef();
+
+  const saveFile = (e) => {
+    var selectedFile = e.target.files[0];
+    imgRef.current.title = selectedFile.name;
+    var reader = new FileReader();
+
+    reader.onload = function (event) {
+      imgRef.current.src = event.target.result;
+    };
+
+    reader.readAsDataURL(selectedFile);
+
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+  const uploadFile = () => {
+    const formData = new FormData();
+    formData.append('formFile', file);
+    formData.append('fileName', fileName);
+  };
 
   const { relatedWindowId } = props.body.payload;
   return (
@@ -68,14 +94,23 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Frame withBoxShadow style={{ width: 150, height: 150 }}>
                 <img
+                  ref={imgRef}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   src="https://i.pinimg.com/originals/63/e1/d8/63e1d8b597aba9e9226fa5cc277afc32.jpg"
                 />
               </Frame>
             </div>
-            <Button style={{ display: 'block', margin: '12px auto 6px', width: 150 }}>
-              Update image
-            </Button>
+
+            <Input
+              style={{ display: 'block', margin: '12px auto 6px', width: 200 }}
+              onChange={saveFile}
+              type="file"
+            ></Input>
+            {file && (
+              <Button style={{ display: 'block', margin: '12px auto 6px', width: 150 }}>
+                Upload image
+              </Button>
+            )}
           </Fieldset>
           <Button
             onClick={async () => {
