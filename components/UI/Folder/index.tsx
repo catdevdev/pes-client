@@ -7,6 +7,7 @@ interface Props {
   folderName: string;
   folderIcon: 'folder' | 'settings' | 'dog';
   fontColor?: string;
+  imageUrl?: string;
   onDoubleClick: () => void;
 }
 
@@ -17,10 +18,10 @@ const Icons = {
 };
 
 const Folder = (props: Props) => {
-  const { folderName, fontColor, onDoubleClick, folderIcon } = props;
+  const { folderName, fontColor, onDoubleClick, folderIcon, imageUrl } = props;
   return (
     <div onDoubleClick={onDoubleClick} className={c.folderWrapper}>
-      <img className={c.img} src={Icons[folderIcon]} alt="folder" />
+      <img style={{width: imageUrl && 42, height: imageUrl && 42}} className={c.img} src={imageUrl ? imageUrl : Icons[folderIcon]} alt="folder" />
       <p style={{ color: fontColor }} className={c.label}>
         {folderName}
       </p>
