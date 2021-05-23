@@ -26,6 +26,7 @@ import {
   fetchChatsWithInfityScroll,
 } from '../actions';
 import Textarea from '../../../components/UI/TextArea';
+import { resolveLocation } from '../../../utils';
 
 const ChatsWindow = (props: Window<ChatsWindowI>) => {
   const {
@@ -84,10 +85,11 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             liteVersion
             windowId={props.id}
             folderFontColor={'#000'}
-            folders={Chats.chats.map(({ chatId, chatName }) => {
+            folders={Chats.chats.map(({ chatId, chatName, chatImageLocation, userCount }) => {
               return {
                 id: chatId,
-                name: chatName,
+                name: `${chatName} \n (${userCount})`,
+                imageUrl: resolveLocation(chatImageLocation),
                 onDoubleClick: () => {
                   dispatch(openChatWindow(props.id, chatId));
                 },

@@ -213,6 +213,7 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
       <div className={c.rightContainer}>
         <Frame withBoxShadow style={{ width: 60, height: 60 }}>
           <img
+            id="image_chat"
             className={c.img}
             src={
               Chat.isCurrentPage

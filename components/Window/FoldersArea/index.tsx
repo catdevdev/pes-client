@@ -13,6 +13,7 @@ import Loading from '../../UI/Loading';
 export interface FolderI {
   id?: string;
   name: string;
+  imageUrl?: string;
   onDoubleClick: () => void;
 }
 
@@ -68,13 +69,14 @@ const FoldersArea = ({
           <div style={{ width: '100%', padding: 18 }}>
             <div className={c.folderAreaWrapper}>
               {folders.length === 0 && <>Loading...</>}
-              {folders.map(({ id, name, onDoubleClick }) => (
+              {folders.map(({ id, name, onDoubleClick, imageUrl }) => (
                 <Folder
                   key={id}
                   onDoubleClick={onDoubleClick}
                   fontColor={folderFontColor}
                   folderName={name}
                   folderIcon="folder"
+                  imageUrl={imageUrl}
                 />
               ))}
             </div>

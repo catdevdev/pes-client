@@ -20,10 +20,17 @@ import { useSelector, useDispatch } from 'react-redux';
 /* axios */
 import axios from '../../../redux/api';
 import Fieldset from '../../../components/UI/Fieldset';
-import { deleteChatById } from '../../../redux/api/chats';
+import { deleteChatById, uploadImageChat } from '../../../redux/api/chats';
 import { openChatsWindow } from '../../chats/actions';
 import { store } from '../../../redux/store';
 import c from './index.module.scss';
+import { resolveLocation } from '../../../utils';
+import { StoreState } from '../../../redux/reducers';
+import { ChatsWindowI } from '../../chats/actions/types';
+import { useCallWindow } from '../../../hooks/callWindows';
+import { AlertWindowI } from '../../alert/actions/types';
+import { nanoid } from 'nanoid';
+import { deleteWindow } from '../../../redux/actions/windowsManagement';
 
 const ChatSettings = (props: Window<ChatSettingsI>) => {
   const dispatch = useDispatch();
@@ -32,6 +39,12 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
   const [fileName, setFileName] = useState();
 
   const imgRef = useRef();
+
+  const createWindow = useCallWindow();
+
+  const messageChat: Window<ChatsWindowI> = useSelector((state: StoreState) =>
+    state.windowsManagement.find(({ id }) => id === props.body.payload.relatedWindowId),
+  );
 
   const saveFile = (e) => {
     var selectedFile = e.target.files[0];
@@ -47,10 +60,31 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
-  const uploadFile = () => {
+  const uploadFile = async () => {
     const formData = new FormData();
-    formData.append('formFile', file);
-    formData.append('fileName', fileName);
+    formData.append('file', file);
+    // formData.append('fileName', fileName);
+
+    try {
+      const res = await uploadImageChat(messageChat.body.payload.pages.Chat.chatId, formData);
+      const id = nanoid();
+      createWindow<AlertWindowI | Window>({
+        id,
+        type: 'alert',
+        payload: {
+          alertText: 'Image uploaded successfully',
+          icon: 'information',
+          onButtonClick: () => {
+            dispatch(deleteWindow(id));
+          },
+        },
+      });
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        (document.getElementById('image_chat') as HTMLImageElement).src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {}
   };
 
   const { relatedWindowId } = props.body.payload;
@@ -96,7 +130,7 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
                 <img
                   ref={imgRef}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  src="https://i.pinimg.com/originals/63/e1/d8/63e1d8b597aba9e9226fa5cc277afc32.jpg"
+                  src={resolveLocation(messageChat.body.payload.pages.Chat.chatImageLocation)}
                 />
               </Frame>
             </div>
@@ -107,7 +141,10 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
               type="file"
             ></Input>
             {file && (
-              <Button style={{ display: 'block', margin: '12px auto 6px', width: 150 }}>
+              <Button
+                onClick={uploadFile}
+                style={{ display: 'block', margin: '12px auto 6px', width: 150 }}
+              >
                 Upload image
               </Button>
             )}

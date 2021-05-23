@@ -217,7 +217,6 @@ export const useCallWindow = () => {
               ...data.payload,
             },
           },
-          isLocked: true,
         }),
       );
     },
