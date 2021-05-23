@@ -88,7 +88,7 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             folders={Chats.chats.map(({ chatId, chatName, chatImageLocation, userCount }) => {
               return {
                 id: chatId,
-                name: `${chatName} \n (${userCount})`,
+                name: `${chatName} (${userCount})`,
                 imageUrl: resolveLocation(chatImageLocation),
                 onDoubleClick: () => {
                   dispatch(openChatWindow(props.id, chatId));

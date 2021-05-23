@@ -56,6 +56,13 @@ export const up = async (chatId: string) => {
   return await axios.post(`chat/${chatId}/leave`, API.getRequestConfig());
 };
 
-export const uploadImageChat = async (chatId: string, formData: FormData) => {
-  return await axios.post(`chat/${chatId}/admin/uploadImage`, formData, API.getRequestConfig());
+export const uploadImageChat = async (
+  chatId: string,
+  formData: FormData,
+  onUploadProgress: (e: React.ChangeEvent) => void,
+) => {
+  return await axios.post(`chat/${chatId}/admin/uploadImage`, formData, {
+    ...API.getRequestConfig(),
+    onUploadProgress,
+  });
 };

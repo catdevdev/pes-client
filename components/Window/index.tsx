@@ -37,6 +37,9 @@ const WindowComponent = ({
   isLoading,
 }: Window & { children: JSX.Element[] | JSX.Element }) => {
   const dispatch = useDispatch();
+
+  const dimensionResolver = (dimension: string | number) =>
+    dimension === 'auto' ? 300 : dimension;
   return (
     <>
       {isLocked && <BlockClickOnOthersWindows />}
@@ -45,8 +48,14 @@ const WindowComponent = ({
           zIndex,
         }}
         default={{
-          x: randomNumber(0 + 300, window.innerWidth - 300),
-          y: randomNumber(0 + 200, window.innerHeight - 200),
+          x: randomNumber(
+            window.innerWidth / 2 - dimensionResolver(dimensions.width) / 2 - 50,
+            window.innerWidth / 2 - dimensionResolver(dimensions.width) / 2 + 50,
+          ),
+          y: randomNumber(
+            window.innerHeight / 2 - dimensionResolver(dimensions.width) / 2 - 50,
+            window.innerHeight / 2 - dimensionResolver(dimensions.height) / 2 + 50,
+          ),
           width: dimensions.width,
           height: dimensions.height,
         }}
@@ -56,11 +65,6 @@ const WindowComponent = ({
         maxWidth={dimensions.maxWidth}
         maxHeight={dimensions.maxHeight}
         dragHandleClassName="titleContainer"
-
-        // minWidth={500}
-        // minHeight={190}
-        // bounds="window"
-        // handle=".titleContainer"
       >
         <div
           onMouseDown={() => {

@@ -36,7 +36,7 @@ const AuthPesSystemWindow = (props: Window<AlertWindowI>) => {
           <Label style={{ marginLeft: 30, fontSize: 14 }}>{props.body.payload.alertText}</Label>
         </div>
         <Button onClick={props.body.payload.onButtonClick} style={{ margin: '0 auto 15px' }}>
-          Ok
+          {props.body.payload.buttonText ? props.body.payload.buttonText : 'Ok'}
         </Button>
       </div>
     </WindowComponent>
