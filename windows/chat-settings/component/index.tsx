@@ -37,6 +37,11 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
 
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
+  const [status, setStatus] = useState();
+
+  useEffect(() => {
+    setStatus(undefined);
+  }, [status === 100]);
 
   const imgRef = useRef();
 
@@ -66,11 +71,18 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
     // formData.append('fileName', fileName);
 
     try {
-      const res = await uploadImageChat(messageChat.body.payload.pages.Chat.chatId, formData);
+      const res = await uploadImageChat(
+        messageChat.body.payload.pages.Chat.chatId,
+        formData,
+        (e) => {
+          setStatus((e.loaded / e.total) * 100);
+        },
+      );
       const id = nanoid();
       createWindow<AlertWindowI | Window>({
         id,
         type: 'alert',
+
         payload: {
           alertText: 'Image uploaded successfully',
           icon: 'information',
@@ -145,18 +157,44 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
                 onClick={uploadFile}
                 style={{ display: 'block', margin: '12px auto 6px', width: 150 }}
               >
-                Upload image
+                {status ? status : 'Upload image'}
               </Button>
             )}
           </Fieldset>
           <Button
             onClick={async () => {
-              const chatId = store
-                .getState()
-                .windowsManagement.find(({ id }) => id === relatedWindowId).body.payload.pages.Chat
-                .chatId;
-              await deleteChatById(chatId);
-              dispatch(openChatsWindow(relatedWindowId));
+              const alertWindowId_1 = nanoid();
+              const alertWindowId_2 = nanoid();
+              createWindow<AlertWindowI | Window>({
+                id: alertWindowId_1,
+                type: 'alert',
+                payload: {
+                  alertText: 'Are you sure that you want to detele chat?',
+                  icon: 'question',
+                  buttonText: 'Yes',
+                  onButtonClick: async () => {
+                    const chatId = store
+                      .getState()
+                      .windowsManagement.find(({ id }) => id === relatedWindowId).body.payload.pages
+                      .Chat.chatId;
+                    await deleteChatById(chatId);
+                    dispatch(openChatsWindow(relatedWindowId));
+                    dispatch(deleteWindow(props.id));
+                    dispatch(deleteWindow(alertWindowId_1));
+                    createWindow<AlertWindowI | Window>({
+                      id: alertWindowId_2,
+                      type: 'alert',
+                      payload: {
+                        alertText: 'Chat has deleted successfully',
+                        icon: 'information',
+                        onButtonClick: () => {
+                          dispatch(deleteWindow(alertWindowId_2));
+                        },
+                      },
+                    });
+                  },
+                },
+              });
             }}
             style={{ display: 'block', margin: '12px auto 12px', width: 125 }}
           >
