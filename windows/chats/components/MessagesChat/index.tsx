@@ -55,8 +55,8 @@ const MessagesChat = ({ messages, fontSize }: Props) => {
         {messages.length === 0 && (
           <Message fontSize={fontSize} username={'chat_bot'} message={'this chat is emtpy'} />
         )}
-        {messages.map(({ username, message }) => (
-          <Message fontSize={fontSize} username={username} message={message} />
+        {messages.map(({ username, message, isMine }) => (
+          <Message isOwn={isMine} fontSize={fontSize} username={username} message={message} />
         ))}
       </div>
     </div>

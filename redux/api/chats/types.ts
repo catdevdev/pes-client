@@ -16,17 +16,17 @@ export type Chat = {
 export type Chats = Chat[];
 
 export interface ChatsModel {
-  chats: Chats
+  chats: Chats;
 }
 
 export type Message = {
   messageId?: string;
   username: string;
   message: string;
+  isMine: boolean;
 };
 
 export type Messages = Message[];
-
 
 export interface ChatDisplay {
   chatImageLocation: string;
