@@ -7,6 +7,7 @@ import axios from '../../../../redux/api';
 /* UI */
 import Folder from '../../../../components/UI/Folder';
 import { Messages } from '../../../../redux/api/chats/types';
+import { useCallWindow } from '../../../../hooks/callWindows';
 
 interface MessageProps {
   username: string;
@@ -18,11 +19,18 @@ interface MessageProps {
 const Message = ({ username, message, isOwn, fontSize }: MessageProps) => {
   const [isAppearUserBadge, setIsAppearUserBadge] = useState<boolean>(false);
   const [data, setData] = useState<boolean>(false);
+
+  const createWindow = useCallWindow();
+
+  const openPesBadge = () => {
+    createWindow({ type: 'message-user', payload: { username } });
+  };
+
   return (
     <>
       {!isOwn ? (
         <div className={c.messageContainer}>
-          <p style={{ color: '#E00000', fontSize }} className={c.username}>
+          <p onClick={openPesBadge} style={{ color: '#E00000', fontSize }} className={c.username}>
             {username} {'>'}
           </p>
           <p style={{ color: '#000', fontSize }} className={c.message}>
@@ -34,7 +42,7 @@ const Message = ({ username, message, isOwn, fontSize }: MessageProps) => {
           <p style={{ color: '#000', fontSize }} className={c.message}>
             {message}
           </p>
-          <p style={{ color: '#09D61D', fontSize }} className={c.username}>
+          <p onClick={openPesBadge} style={{ color: '#09D61D', fontSize }} className={c.username}>
             {'<'} {username}
           </p>
         </div>
