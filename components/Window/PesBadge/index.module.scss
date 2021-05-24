@@ -1,25 +1,18 @@
 .container {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
-.image{
+.image {
   display: block;
-  max-width: 250px;
+  width: 80%;
+  // max-width: 250px;
   margin-left: auto;
   margin-right: auto;
 }
-.barWrapper{
-  width: 100%;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
 
-}
-
-.title{
+.nickname {
   text-align: center;
-  font-size: 1.5rem;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-
+  font-size: 18px;
+  margin-top: 10px;
 }
