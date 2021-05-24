@@ -37,7 +37,7 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
 
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState<number>();
 
   useEffect(() => {
     setStatus(undefined);
@@ -75,7 +75,7 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
         messageChat.body.payload.pages.Chat.chatId,
         formData,
         (e) => {
-          setStatus((e.loaded / e.total) * 100);
+          setStatus(Math.round((e.loaded / e.total) * 100));
         },
       );
       const id = nanoid();
@@ -96,7 +96,22 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
         (document.getElementById('image_chat') as HTMLImageElement).src = event.target.result;
       };
       reader.readAsDataURL(file);
-    } catch (err) {}
+    } catch (err) {
+      if (err.response) {
+        const id = nanoid();
+        createWindow<AlertWindowI | Window>({
+          id,
+          type: 'alert',
+          payload: {
+            alertText: err.response.data.resultMessage,
+            icon: 'information',
+            onButtonClick: () => {
+              dispatch(deleteWindow(id));
+            },
+          },
+        });
+      }
+    }
   };
 
   const { relatedWindowId } = props.body.payload;
@@ -157,7 +172,7 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
                 onClick={uploadFile}
                 style={{ display: 'block', margin: '12px auto 6px', width: 150 }}
               >
-                {status ? status : 'Upload image'}
+                {status ? `${status}% ` : 'Upload image'}
               </Button>
             )}
           </Fieldset>
