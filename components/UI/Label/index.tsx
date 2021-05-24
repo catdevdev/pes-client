@@ -10,7 +10,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Label = (props: Props) => {
   return (
-    <p style={props.style} className={c.label}>
+    <p style={props.style} className={`${c.label} ${props.className}`}>
       {props.children}
     </p>
   );

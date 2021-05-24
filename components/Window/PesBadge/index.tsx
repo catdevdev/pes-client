@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPesScore } from '../../../redux/api/service';
 import { resolveLocation } from '../../../utils';
+import Frame from '../../UI/Frame';
+import Label from '../../UI/Label';
 import { ProgressBar } from '../../UI/ProgressBar';
 
 import c from './index.module.scss';
@@ -30,12 +32,12 @@ const PesBadgeComponent = ({ username }: Props) => {
   return (
     <>
       {pesScore && (
-        <div className={c.Container}>
-          <img src={resolveLocation(pesScore.badgeLocation)} className={c.image}></img>
-          <div className={c.title}>{pesScore.title}</div>
-          <div className={c.barWrapper}>
-            <ProgressBar percentage={pesScore.score}></ProgressBar>
-          </div>
+        <div className={c.container}>
+          <Frame style={{ background: '#fff' }} withBoxShadow>
+            <Label className={c.nickname}>🎉{username}🎉</Label>
+            <img src={resolveLocation(pesScore.badgeLocation)} className={c.image}></img>
+          </Frame>
+          <ProgressBar style={{ marginTop: 14 }} percentage={pesScore.score}></ProgressBar>
         </div>
       )}
     </>

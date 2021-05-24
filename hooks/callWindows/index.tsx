@@ -162,8 +162,8 @@ export const useCallWindow = () => {
       dispatch(
         createWindow<MessageUserI>({
           dimensions: {
-            width: 400,
-            height: 400,
+            width: 250,
+            height: 'auto',
           },
           title: {
             label: 'message-user',
