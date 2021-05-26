@@ -28,7 +28,7 @@ import { store } from '../../../redux/store';
 const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
   const [chatName, setChatName] = useState('');
   const [chatPassword, setChatPassword] = useState('');
-
+  const [isMultiMessage, setIsMultiMessage] = useState(false);
   const dispatch = useDispatch();
 
   const windows = useSelector((state: StoreState<ChatsCreateChatI>) => state.windowsManagement);
@@ -70,6 +70,18 @@ const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
             style={{ width: '100%' }}
           ></Input>
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 18 }}>
+          <Label style={{ marginRight: 4 }}>multi message :</Label>
+          <input
+            defaultChecked={isMultiMessage}
+            onChange={(e) => {
+              setIsMultiMessage(!isMultiMessage);
+            }}
+            style={{ width: 15, height: 15 }}
+            type="checkbox"
+          />
+        </div>
+
         <Button
           onClick={async () => {
             const window: Window<ChatsCreateChatI> = windows.find(({ id }) => id === props.id);
@@ -79,7 +91,8 @@ const ChatsCreateChatWindow = (props: Window<ChatsCreateChatI>) => {
                 props.id,
                 window.body.payload.chatName,
                 window.body.payload.chatPassword,
-                props.body.payload.relatedWindowId
+                props.body.payload.relatedWindowId,
+                isMultiMessage,
               ),
             );
           }}

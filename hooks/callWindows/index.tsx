@@ -78,7 +78,7 @@ export const useCallWindow = () => {
           },
           disableResize: true,
           title: {
-            label: '',
+            label: 'create own chat',
           },
           ...data,
           body: {

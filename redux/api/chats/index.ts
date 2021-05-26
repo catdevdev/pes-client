@@ -33,9 +33,17 @@ export const getAllChats = async (): Promise<AxiosResponse<ChatsModel>> => {
   return await axios.get<ChatsModel>(`chat/search`, API.getRequestConfig());
 };
 
-export const createChat = async (chatName: string, chatPassword: string) => {
+export const createChat = async (
+  chatName: string,
+  chatPassword: string,
+  isMultiMessage: boolean,
+) => {
   if (typeof window !== 'undefined') {
-    return await axios.post('chat/create', { chatName, chatPassword }, API.getRequestConfig());
+    return await axios.post(
+      'chat/create',
+      { chatName, chatPassword, isMultiMessage },
+      API.getRequestConfig(),
+    );
   }
 };
 

@@ -42,10 +42,11 @@ export const createChatWindow = (
   chatName: string,
   chatPassword: string,
   chatWindowId: string,
+  isMultiMessage: boolean,
 ) => async (dispatch) => {
   try {
     dispatch(setLoadingWindow(chatId, true));
-    await createChat(chatName, chatPassword);
+    await createChat(chatName, chatPassword, isMultiMessage);
     dispatch(fetchAllChats(chatWindowId));
 
     dispatch(setLoadingWindow(chatId, false));
