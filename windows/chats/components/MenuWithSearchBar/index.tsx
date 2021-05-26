@@ -34,6 +34,7 @@ import { store } from '../../../../redux/store';
 import { ChatSettingsI } from '../../../chat-settings/actions/types';
 import { resolveLocation } from '../../../../utils';
 import { ChatUserControllI } from '../../../chat-users-controll/actions/types';
+import { AlertWindowI } from '../../../alert/actions/types';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -86,11 +87,25 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                       buttonText: 'Add',
                       icon: 'information',
                       onButtonClick: async () => {
-                        await addMessage(
-                          Chat.chatId,
-                          store.getState().windowsManagement.find(({ id }) => id === windowInputId)
-                            .body.payload.data,
-                        );
+                        try {
+                          await addMessage(
+                            Chat.chatId,
+                            store
+                              .getState()
+                              .windowsManagement.find(({ id }) => id === windowInputId).body.payload
+                              .data,
+                          );
+                        } catch (err) {
+                          createWindow<AlertWindowI>({
+                            type: 'alert',
+                            payload: {
+                              alertText: err.response.data.resultMessage,
+                              icon: 'information',
+                              onButtonClick: () => {},
+                            },
+                          });
+                        }
+
                         dispatch(fetchChatById(windowId, Chat.chatId));
                         dispatch(deleteWindow(windowInputId));
                       },
