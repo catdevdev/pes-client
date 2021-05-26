@@ -31,4 +31,13 @@ export type Messages = Message[];
 export interface ChatDisplay {
   chatImageLocation: string;
   messages: Messages;
+  role: Roles;
 }
+
+export interface MemberWithAdminPrivilege {
+  username: string;
+  isAdmin: boolean;
+  memberId: string;
+}
+
+export type MembersWithAdminPrivilege = MemberWithAdminPrivilege[];

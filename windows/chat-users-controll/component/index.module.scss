@@ -1,0 +1,37 @@
+.headerOfTable {
+  padding: 2px 5px;
+
+  display: grid;
+  grid-template-columns: 35% 40% 25%;
+  font-family: MS Sans Serif Bold;
+  font-size: 16px;
+  color: #000000;
+}
+
+.rowOfTable {
+  display: grid;
+  grid-template-columns: 35% 40% 25%;
+  height: 22px;
+
+  font-size: 15px;
+  color: #000000;
+  align-items: center;
+  &:hover {
+    background: #1e90ff;
+    color: #fff;
+    .actionsCell {
+      display: block;
+    }
+  }
+  cursor: pointer;
+
+  .userCell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .roleCell {
+  }
+  .actionsCell {
+    display: none;
+  }
+}

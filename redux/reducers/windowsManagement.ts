@@ -247,6 +247,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 ...copyStateChatsWindowI[indexWindow].body.payload.pages.Chat,
                 messages: action.payload.chat.messages,
                 chatImageLocation: action.payload.chat.chatImageLocation,
+                role: action.payload.chat.role,
               },
             },
           },
