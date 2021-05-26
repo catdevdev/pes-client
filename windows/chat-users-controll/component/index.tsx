@@ -25,7 +25,6 @@ import {
   getMembersFromChatAdmin,
   kickUserFromChat,
   promoteToAdminInChat,
-  promoteUser,
   uploadImageChat,
 } from '../../../redux/api/chats';
 import { openChatsWindow } from '../../chats/actions';

@@ -97,7 +97,14 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             })}
           />
         )}
-        {Chat.isCurrentPage && <MessagesChat fontSize={Chat.fontSize} messages={Chat.messages} />}
+        {Chat.isCurrentPage && (
+          <MessagesChat
+            fontSize={Chat.fontSize}
+            messages={Chat.messages}
+            chatId={props.body.payload.pages.Chat.chatId}
+            windowId={props.id}
+          />
+        )}
       </div>
     </WindowComponent>
   );

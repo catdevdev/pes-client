@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from '../../../redux/api';
 import Textarea from '../../../components/UI/TextArea';
 import { changeDataInputWindow } from '../actions';
+import { StoreState } from '../../../redux/reducers';
 
 const Icon = ({ src }: { src: string }) => {
   return <img style={{ width: 50, height: 50 }} src={src} alt="icon"></img>;
@@ -30,6 +31,14 @@ const Icon = ({ src }: { src: string }) => {
 
 const AuthPesSystemWindow = (props: Window<InputDataI>) => {
   const dispatch = useDispatch();
+
+  const thisWindow: Window<InputDataI> = useSelector((state: StoreState) =>
+    state.windowsManagement.find(({ id }: Window<InputDataI>) => id === props.id),
+  );
+
+  useEffect(() => {
+    dispatch(changeDataInputWindow(props.id, props.body.payload.valueInput));
+  }, []);
 
   return (
     <WindowComponent {...props}>
@@ -42,13 +51,15 @@ const AuthPesSystemWindow = (props: Window<InputDataI>) => {
         </div>
         {props.body.payload.inputField === 'input' && (
           <Input
-            onBlur={(e) => dispatch(changeDataInputWindow(props.id, e.target.value))}
+            value={thisWindow.body.payload.data}
+            onChange={(e) => dispatch(changeDataInputWindow(props.id, e.target.value))}
             style={{ width: 200, margin: '0 auto' }}
           />
         )}
         {props.body.payload.inputField === 'textarea' && (
           <Textarea
-            onBlur={(e) => dispatch(changeDataInputWindow(props.id, e.target.value))}
+            value={thisWindow.body.payload.data}
+            onChange={(e) => dispatch(changeDataInputWindow(props.id, e.target.value))}
             style={{ width: 200, height: 55, margin: '0 auto' }}
           />
         )}

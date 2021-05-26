@@ -12,7 +12,8 @@ export interface InputDataI {
     icon: Icon;
     inputField: 'input' | 'textarea';
     onButtonClick: () => void;
-    data?: string
+    valueInput?: string;
+    data?: string;
   };
 }
 
