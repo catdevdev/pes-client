@@ -20,12 +20,15 @@ import { AlertWindowI } from '../actions/types';
 import { useSelector, useDispatch } from 'react-redux';
 /* axios */
 import axios from '../../../redux/api';
+import { deleteChatById } from '../../../redux/api/chats';
+import { deleteWindow } from '../../../redux/actions/windowsManagement';
 
 const Icon = ({ src }: { src: string }) => {
   return <img style={{ width: 50, height: 50 }} src={src} alt="icon"></img>;
 };
 
 const AuthPesSystemWindow = (props: Window<AlertWindowI>) => {
+  const dispatch = useDispatch();
   return (
     <WindowComponent {...props}>
       <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
@@ -35,7 +38,13 @@ const AuthPesSystemWindow = (props: Window<AlertWindowI>) => {
           <Icon src={`/images/icons/${props.body.payload.icon}.svg`} />
           <Label style={{ marginLeft: 30, fontSize: 14 }}>{props.body.payload.alertText}</Label>
         </div>
-        <Button onClick={props.body.payload.onButtonClick} style={{ margin: '0 auto 15px' }}>
+        <Button
+          onClick={() => {
+            props.body.payload.onButtonClick();
+            dispatch(deleteWindow(props.id));
+          }}
+          style={{ margin: '0 auto 15px' }}
+        >
           {props.body.payload.buttonText ? props.body.payload.buttonText : 'Ok'}
         </Button>
       </div>

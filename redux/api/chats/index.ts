@@ -1,7 +1,14 @@
 import { AxiosResponse } from 'axios';
 import axios, { API } from '../index';
 /* types */
-import { Chat, ChatDisplay, Chats, ChatsModel } from './types';
+import {
+  Chat,
+  ChatDisplay,
+  Chats,
+  ChatsModel,
+  MembersWithAdminPrivilege,
+  MemberWithAdminPrivilege,
+} from './types';
 
 export const getChatById = async (chatId: string) => {
   return await axios.get<ChatDisplay>(`chat/${chatId}`, API.getRequestConfig());
@@ -36,24 +43,30 @@ export const joinChat = async (chatId: string, password: string) => {
   return await axios.post(`chat/${chatId}/join`, { password }, API.getRequestConfig());
 };
 
-export const getMembersFromChatAdmin = async (chatId: string) => {
-  return await axios.get(`chat/${chatId}/admin/getMembers`, API.getRequestConfig());
-};
-
 export const getMembersFromChat = async (chatId: string) => {
   return await axios.get(`chat/${chatId}/getMembers`, API.getRequestConfig());
 };
 
-export const promoteAdminInChat = async (chatId: string, userId: string) => {
-  return await axios.post(`chat/${chatId}/admin/promote/${userId}`, API.getRequestConfig());
+export const getMembersFromChatAdmin = async (
+  chatId: string,
+): Promise<AxiosResponse<MembersWithAdminPrivilege>> => {
+  return await axios.get(`chat/${chatId}/admin/getMembers`, API.getRequestConfig());
 };
+
+export const promoteToAdminInChat = async (chatId: string, userId: string) => {
+  return await axios.post(`chat/${chatId}/admin/promote/${userId}`, {}, API.getRequestConfig());
+};
+
+export const kickUserFromChat = async (chatId: string, userId: string) => {
+  return await axios.post(`chat/${chatId}/admin/kick/${userId}`, {}, API.getRequestConfig());
+};
+
+// export const kickUserFromChat = async (chatId: string, userId: string) => {
+//   return await axios.post(`chat/${chatId}​/admin/kick/${userId}`, {}, API.getRequestConfig());
+// };
 
 export const leaveFromChat = async (chatId: string) => {
-  return await axios.post(`chat/${chatId}/leave`, API.getRequestConfig());
-};
-
-export const up = async (chatId: string) => {
-  return await axios.post(`chat/${chatId}/leave`, API.getRequestConfig());
+  return await axios.post(`chat/${chatId}/leave`, {}, API.getRequestConfig());
 };
 
 export const uploadImageChat = async (

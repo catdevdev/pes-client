@@ -14,6 +14,7 @@ import { windowsVariants } from '../../windows';
 import { ChatSettingsI } from '../../windows/chat-settings/actions/types';
 import { ProfileSettingsI } from '../../windows/profile-settings/actions/types';
 import { MessageUserI } from '../../windows/message-user/actions/types';
+import { ChatUserControllI } from '../../windows/chat-users-controll/actions/types';
 
 interface Props {
   windowType: 'createAddMessageWindow' | 'createChatsWindow' | 'auth-pes-system' | '';
@@ -31,6 +32,7 @@ export const useCallWindow = () => {
     | ChatsCreateChatI
     | InputDataI
     | ChatSettingsI
+    | ChatUserControllI
     | ProfileSettingsI;
 
   const hashCreateWindow = {
@@ -213,6 +215,27 @@ export const useCallWindow = () => {
           ...data,
           body: {
             type: 'chat-settings',
+            payload: {
+              ...data.payload,
+            },
+          },
+        }),
+      );
+    },
+    ['chat-users-controll']: (data) => {
+      dispatch(
+        createWindow<ChatUserControllI>({
+          dimensions: {
+            width: 340,
+            height: 'auto',
+          },
+          disableResize: true,
+          title: {
+            label: 'Users managment',
+          },
+          ...data,
+          body: {
+            type: 'chat-users-controll',
             payload: {
               ...data.payload,
             },

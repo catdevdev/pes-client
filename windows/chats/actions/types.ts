@@ -45,6 +45,7 @@ export interface ChatsWindowI {
           isLoading: boolean;
           members: { username: string; isAdmin: boolean }[];
         };
+        role: Roles;
         isCurrentPage?: boolean;
       };
       Chats?: {

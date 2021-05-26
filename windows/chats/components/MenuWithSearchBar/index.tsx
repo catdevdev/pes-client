@@ -33,6 +33,7 @@ import { addMessage } from '../../../../redux/api/messages';
 import { store } from '../../../../redux/store';
 import { ChatSettingsI } from '../../../chat-settings/actions/types';
 import { resolveLocation } from '../../../../utils';
+import { ChatUserControllI } from '../../../chat-users-controll/actions/types';
 
 // interface Props {
 //   enterOnClick: () => void;
@@ -111,17 +112,32 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                 }}
                 style={{ width: 25, height: 25 }}
               />
-              <Button
-                style={{ width: 25, height: 25, marginLeft: 4 }}
-                onClick={() => {
-                  createWindow<ChatSettingsI | Window>({
-                    type: 'chat-settings',
-                    payload: {
-                      relatedWindowId: windowId,
-                    },
-                  });
-                }}
-              />
+              {(Chat.role === 3 || Chat.role === 5) && (
+                <>
+                  <Button
+                    style={{ width: 25, height: 25, marginLeft: 4 }}
+                    onClick={() => {
+                      createWindow<ChatSettingsI | Window>({
+                        type: 'chat-settings',
+                        payload: {
+                          relatedWindowId: windowId,
+                        },
+                      });
+                    }}
+                  />
+                  <Button
+                    style={{ width: 25, height: 25 }}
+                    onClick={() => {
+                      createWindow<ChatUserControllI | Window>({
+                        type: 'chat-users-controll',
+                        payload: {
+                          relatedWindowId: windowId,
+                        },
+                      });
+                    }}
+                  />
+                </>
+              )}
               <Dropdown
                 isLoading={isUsersLoading}
                 menuItems={members.map(({ username, isAdmin }) => ({
