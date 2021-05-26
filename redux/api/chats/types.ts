@@ -20,7 +20,7 @@ export interface ChatsModel {
 }
 
 export type Message = {
-  messageId?: string;
+  messageId: string;
   username: string;
   message: string;
   isMine: boolean;
