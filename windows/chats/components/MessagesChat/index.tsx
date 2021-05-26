@@ -1,5 +1,5 @@
 /* imports */
-import { memo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import c from './index.module.scss';
 import { nanoid } from 'nanoid';
 import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dnd';
@@ -15,6 +15,15 @@ interface MessageProps {
   isOwn?: boolean;
   fontSize: number;
 }
+
+interface IconProps {
+  src: string;
+  style?: any;
+}
+
+const Icon = ({ src, style }: IconProps) => {
+  return <img style={{ width: 18, height: 18, ...style }} src={src} />;
+};
 
 const Message = ({ username, message, isOwn, fontSize }: MessageProps) => {
   const [isAppearUserBadge, setIsAppearUserBadge] = useState<boolean>(false);
@@ -36,9 +45,18 @@ const Message = ({ username, message, isOwn, fontSize }: MessageProps) => {
           <p style={{ color: '#000', fontSize }} className={c.message}>
             {message}
           </p>
+          <div className={c.functionContainer}>
+            <Icon src="/images/icons/notepad.png"></Icon>
+            <Icon style={{ marginLeft: 2 }} src="/images/icons/bin.png"></Icon>
+          </div>
         </div>
       ) : (
         <div className={c.ownMessageContainer}>
+          <div className={c.functionContainer}>
+            <Icon style={{ marginRight: 2 }} src="/images/icons/notepad.png"></Icon>
+            <Icon src="/images/icons/bin.png"></Icon>
+          </div>
+
           <p style={{ color: '#000', fontSize }} className={c.message}>
             {message}
           </p>

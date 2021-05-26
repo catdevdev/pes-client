@@ -24,6 +24,10 @@
   margin-top: 10px;
   display: flex;
 
+  &:hover .functionContainer {
+    display: block;
+  }
+
   // background: rgba(255, 0, 0, 0.281);
 
   .username {
@@ -45,6 +49,15 @@
     display: inline;
     color: #fff;
   }
+
+  .functionContainer {
+    display: none;
+    margin-left: 5px;
+
+    img {
+      cursor: pointer;
+    }
+  }
 }
 
 .ownMessageContainer {
@@ -55,6 +68,10 @@
   display: flex;
   justify-content: flex-end;
 
+  &:hover .functionContainer {
+    display: block;
+  }
+
   // background: rgba(255, 0, 0, 0.281);
 
   .username {
@@ -64,12 +81,19 @@
     font-size: 18px;
     white-space: nowrap;
     cursor: pointer;
-    
+
     &:hover {
       text-decoration: underline;
     }
   }
+  .functionContainer {
+    display: none;
+    margin-right: 5px;
 
+    img {
+      cursor: pointer;
+    }
+  }
   .message {
     overflow-wrap: anywhere;
     text-align: right;
