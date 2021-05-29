@@ -21,13 +21,15 @@ const PesBadgeComponent = ({ username }: Props) => {
   const [pesScore, setBadge] = useState<BadgeModel>(null);
 
   const fetchPesScore = async () => {
-    const response = await getPesScore(username);
-    setBadge(response);
+    if (username) {
+      const response = await getPesScore(username);
+      setBadge(response);
+    }
   };
 
   useEffect(() => {
     fetchPesScore();
-  }, []);
+  }, [username]);
 
   return (
     <>
