@@ -30,8 +30,9 @@ export class API {
     if (accessToken) {
       var expirationTime = Number(localStorage.getItem(expirationDateKey));
       var currentTime = Math.floor(Date.now() / 1000);
+
       if (currentTime && expirationTime) {
-        if (expirationTime - currentTime) {
+        if (expirationTime - currentTime > 0) {
           //accessToken have not expired
           return accessToken;
         } else {
