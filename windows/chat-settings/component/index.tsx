@@ -130,7 +130,7 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <Label style={{ marginRight: 4, width: 100, fontSize: 14 }}>name:</Label>
               <Input
-                value={123}
+                value={messageChat.body.payload.pages.Chat.chatName}
                 onChange={(e) => {
                   // setUsername(e.target.value);
                 }}
@@ -140,7 +140,8 @@ const ChatSettings = (props: Window<ChatSettingsI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 16 }}>
               <Label style={{ marginRight: 4, width: 100, fontSize: 14 }}>password:</Label>
               <Input
-                value={123}
+                placeholder={'click to change password'}
+                // value={}
                 onChange={(e) => {
                   // setUsername(e.target.value);
                 }}

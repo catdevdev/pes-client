@@ -47,6 +47,7 @@ export interface ChatsWindowI {
         };
         role: Roles;
         isCurrentPage?: boolean;
+        chatName: string;
       };
       Chats?: {
         chats?: Chats;
