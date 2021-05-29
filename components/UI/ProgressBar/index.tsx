@@ -12,10 +12,13 @@ interface Props extends React.InputHTMLAttributes<HTMLDivElement> {
 }
 
 export const ProgressBar = (props: Props) => {
+  
+  let percentage = `${props.percentage}%`;
+
   return (
     <div {...props} className={c.progressBar}>
       <Frame style={{ width: '100%', background: '#fff' }} withBoxShadow>
-        <div style={{ width: 50, background: '#0236F0' }}>12312</div>
+        <div style={{ width: percentage, background: '#0236F0' }}>{percentage}</div>
         {/* <Filler percentage={props.percentage} /> */}
       </Frame>
     </div>

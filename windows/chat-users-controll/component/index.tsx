@@ -96,7 +96,7 @@ const ChatUserControll = (props: Window<ChatUserControllI>) => {
                           createWindow<AlertWindowI>({
                             type: 'alert',
                             payload: {
-                              alertText: `Do you want raise ${username} to admin?`,
+                              alertText: `Do you want to raise ${username} to an admin?`,
                               icon: 'question',
                               onButtonClick: async () => {
                                 await promoteToAdminInChat(chatId, memberId);
