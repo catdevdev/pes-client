@@ -8,7 +8,7 @@ import { ProgressBar } from '../../UI/ProgressBar';
 import c from './index.module.scss';
 
 export interface BadgeModel {
-  score: number;
+  pesScore: number;
   badgeLocation: string;
   title: string;
 }
@@ -39,7 +39,7 @@ const PesBadgeComponent = ({ username }: Props) => {
             <Label className={c.nickname}>🎉{username}🎉</Label>
             <img src={resolveLocation(pesScore.badgeLocation)} className={c.image}></img>
           </Frame>
-          <ProgressBar style={{ marginTop: 14 }} percentage={pesScore.score}></ProgressBar>
+          <ProgressBar style={{ marginTop: 14 }} percentage={pesScore.pesScore}></ProgressBar>
         </div>
       )}
     </>
