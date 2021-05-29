@@ -27,11 +27,26 @@ import { deleteWindow } from '../../../redux/actions/windowsManagement';
 import { AuthPesSystemWindowI } from '../../auth-pes-system/actions/types';
 import { useCallWindow } from '../../../hooks/callWindows';
 import PesBadgeComponent from '../../../components/Window/PesBadge';
+import { getProfile } from '../../../redux/api/profile';
+import { Profile } from '../../../redux/api/profile/types';
 
 const ProfileSettings = (props: Window<ProfileSettingsI>) => {
   const dispatch = useDispatch();
 
   const createWindow = useCallWindow();
+
+  const [profile, setProfile] = useState<Profile>({ username: undefined });
+
+  const fetchProfile = async () => {
+    const res = await getProfile();
+    setProfile(res.data);
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  console.log(profile.username);
 
   return (
     <WindowComponent {...props}>
@@ -48,7 +63,7 @@ const ProfileSettings = (props: Window<ProfileSettingsI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <Label style={{ marginRight: 4, width: 100, fontSize: 14 }}>nickname:</Label>
               <Input
-                value={112323}
+                value={profile.username}
                 onChange={(e) => {
                   // setUsername(e.target.value);
                 }}
@@ -58,7 +73,8 @@ const ProfileSettings = (props: Window<ProfileSettingsI>) => {
             <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: 16 }}>
               <Label style={{ marginRight: 4, width: 100, fontSize: 14 }}>password:</Label>
               <Input
-                value={123}
+                placeholder="click to change password"
+                value={''}
                 onChange={(e) => {
                   // setUsername(e.target.value);
                 }}
@@ -71,13 +87,16 @@ const ProfileSettings = (props: Window<ProfileSettingsI>) => {
           </Fieldset>
           <Fieldset fieldset="PES-score">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* <PesBadgeComponent username={props.body.payload}  /> */}
-              {/* <Frame withBoxShadow style={{ width: 150, height: 150 }}>
+              <div style={{ width: '70%' }}>
+                <PesBadgeComponent username={profile.username} />
+                {/* <Frame withBoxShadow style={{ width: 150, height: 150 }}>
                 <img
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   src="https://i.pinimg.com/originals/63/e1/d8/63e1d8b597aba9e9226fa5cc277afc32.jpg"
                 />
+                
               </Frame> */}
+              </div>
             </div>
           </Fieldset>
           <Button
