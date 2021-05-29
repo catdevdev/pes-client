@@ -29,6 +29,7 @@ export type Message = {
 export type Messages = Message[];
 
 export interface ChatDisplay {
+  chatName: string
   chatImageLocation: string;
   messages: Messages;
   role: Roles;

@@ -248,6 +248,7 @@ export const windowsManagement = (state: Window[] = [], action: Action) => {
                 messages: action.payload.chat.messages,
                 chatImageLocation: action.payload.chat.chatImageLocation,
                 role: action.payload.chat.role,
+                chatName: action.payload.chat.chatName
               },
             },
           },
