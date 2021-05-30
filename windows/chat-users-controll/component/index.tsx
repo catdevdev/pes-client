@@ -106,6 +106,7 @@ const ChatUserControll = (props: Window<ChatUserControllI>) => {
                           });
                         }}
                         style={{ width: 20, height: 20 }}
+                        imageUrl="./images/icons/promote.ico"
                       ></Button>
                     )}
                     <Button
@@ -135,6 +136,7 @@ const ChatUserControll = (props: Window<ChatUserControllI>) => {
                         });
                       }}
                       style={{ width: 20, height: 20 }}
+                      imageUrl="./images/icons/user_4.ico"
                     ></Button>
                   </div>
                 </div>
