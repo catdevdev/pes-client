@@ -120,12 +120,14 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                   dispatch(setFontSizeWindow(windowId, Chat.fontSize - 4));
                 }}
                 style={{ width: 25, height: 25, marginLeft: 4 }}
+                imageUrl="./images/icons/font-decrease.ico"
               />
               <Button
                 onClick={() => {
                   dispatch(setFontSizeWindow(windowId, Chat.fontSize + 4));
                 }}
                 style={{ width: 25, height: 25 }}
+                imageUrl="./images/icons/font-increase.ico"
               />
               {(Chat.role === 3 || Chat.role === 5) && (
                 <>
@@ -139,6 +141,7 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                         },
                       });
                     }}
+                    imageUrl="./images/window_icons/settings.png"
                   />
                   <Button
                     style={{ width: 25, height: 25 }}
@@ -150,6 +153,7 @@ const MenuWithSearchBar = ({ windowId, isUsersLoading }: Props) => {
                         },
                       });
                     }}
+                    imageUrl="./images/icons/lupa.ico"
                   />
                 </>
               )}
