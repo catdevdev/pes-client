@@ -30,7 +30,7 @@ const Title = ({ titleText, onMinimize, onFullScreen, onClose, isActive, isLoadi
         <Button
           onClick={onClose}
           style={{ width: 18, height: 16 }}
-          imageUrl="./images/icons/user_4.ico"
+          // imageUrl="./images/icons/user_4.ico"
         ></Button>
       </div>
     </div>
