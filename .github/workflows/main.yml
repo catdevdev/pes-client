@@ -6,12 +6,12 @@ on:
       - master
 
 env:
-  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -33,12 +33,12 @@ jobs:
         uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
         with:
           message: |
             Docker container building...
-            Woof woof! 🐶
+            The horror dog begins to growl! 🐶
 
       - name: Check if Docker container is running
         run: |
@@ -52,20 +52,20 @@ jobs:
         uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
         with:
           message: |
             Docker container finished building...
-            Yippee! 🐶
+            But the horror dog is still growling... 🐶
 
       - name: Send message to Telegram group
         uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
         with:
           message: |
             Docker container deployed...
-            Woohoo! 🐶
+            The horror dog is now silent... for now... 🐶
