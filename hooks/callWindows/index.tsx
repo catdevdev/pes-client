@@ -122,7 +122,7 @@ export const useCallWindow = () => {
           },
           disableResize: true,
           title: {
-            label: 'Register new account in PES system 1',
+            label: 'Register new account in PES system test',
           },
           ...data,
           body: {
