@@ -6,43 +6,45 @@ on:
       - master
 
 env:
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Send message to Telegram group
-        uses: appleboy/telegram-action@master
-        if: always()
-        with:
-          token: ${{ env.TELEGRAM_BOT_TOKEN }}
-          to: ${{ env.TELEGRAM_GROUP_ID }}
-          message: |
-            Docker container building...
-            The horror dog begins to growl! 🐶
-
-      - name: Build Docker container
+      - name: Build Docker Container
         run: |
-          docker stop pes-client || true
-          docker rm pes-client || true
+          echo "🐶 Woof woof! Building the Docker container now... Hang tight, human!"
           docker build -t pes-client .
+          if [ $? -ne 0 ]; then
+            echo "💔 Uh oh, something went wrong while building the Docker container. :("
+            exit 1
+          fi
+          echo "🎉 Yay! Docker container was built successfully! Woof woof!"
 
-      - name: Run Docker container
+      - name: Run Docker Container
         run: |
-          docker run -d -p1997:1997 --name pes-client pes-client
+          echo "🐶 Woof woof! Running the Docker container now... Woof woof!"
+          docker run -p 1997:1997 pes-client
+          if [ $? -ne 0 ]; then
+            echo "💔 Uh oh, something went wrong while deploying the Docker container. :("
+            exit 1
+          fi
+          echo "🎉 Yay! Docker container was deployed successfully! Woof woof!"
 
       - name: Send message to Telegram group
-        uses: appleboy/telegram-action@master
         if: always()
+        uses: telegram-actions/telegram-notify@v1
         with:
-          token: ${{ env.TELEGRAM_BOT_TOKEN }}
-          to: ${{ env.TELEGRAM_GROUP_ID }}
+          bot-token: ${{ env.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ env.TELEGRAM_GROUP_ID }}
           message: |
-            Docker container has started... http://91.219.61.90:1997/
-            The horror dog begins to hide! 🐶
+            🐶 Woof woof! Update from GitHub Actions:
+            Docker container build and deployment process has finished!
+            Check the logs for details.
+            Woof woof!
