@@ -125,7 +125,7 @@ export const useCallWindow = () => {
           },
           disableResize: true,
           title: {
-            label: 'Register new account in PES system test',
+            label: 'Register new account in PES system',
           },
           ...data,
           body: {
