@@ -19,8 +19,8 @@ jobs:
 
       - name: Build Docker container
         run: |
-          docker stop pes-client || true
-          docker rmi pes-client || true
+          docker stop pes-client
+          docker rm pes-client
           docker build -t pes-client .
 
       - name: Run Docker container
