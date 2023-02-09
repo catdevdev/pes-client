@@ -6,12 +6,12 @@ on:
       - master
 
 env:
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -30,13 +30,13 @@ jobs:
           docker run -d --name pes-client -p 1997:1997 pes-client
 
       - name: Send message to Telegram group
-        uses: telegram-actions/telegram@v1
+        uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
         with:
-          args: |
+          message: |
             Docker container building...
             Woof woof! 🐶
 
@@ -49,23 +49,23 @@ jobs:
             exit 1
 
       - name: Send message to Telegram group
-        uses: telegram-actions/telegram@v1
+        uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
         with:
-          args: |
+          message: |
             Docker container finished building...
             Yippee! 🐶
 
       - name: Send message to Telegram group
-        uses: telegram-actions/telegram@v1
+        uses: appleboy/telegram-action@master
         if: always()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOKEN: ${{ env.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ env.TELEGRAM_CHAT_ID }}
         with:
-          args: |
+          message: |
             Docker container deployed...
             Woohoo! 🐶
