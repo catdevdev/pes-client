@@ -59,7 +59,7 @@ const DesktopArea = () => {
           {[
             {
               id: nanoid(),
-              name: 'auth',
+              name: 'auth_test',
               folderIcon: 'dog',
               onOpen: () => {
                 createWindow<AuthPesSystemWindowI>({ type: 'auth-pes-system' });
