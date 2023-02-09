@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d --name pes-client -p 1997:1997 pes-client
+          docker run -d -p1997:1997 pes-client
 
       - name: Send message to Telegram group
         uses: appleboy/telegram-action@master
