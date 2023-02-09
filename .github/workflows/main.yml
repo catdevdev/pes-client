@@ -17,6 +17,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Send message to Telegram group
+        uses: appleboy/telegram-action@master
+        if: always()
+        with:
+          token: ${{ env.TELEGRAM_BOT_TOKEN }}
+          to: ${{ env.TELEGRAM_GROUP_ID }}
+          message: |
+            Docker container building...
+            The horror dog begins to growl! 🐶
+
       - name: Build Docker container
         run: |
           docker stop pes-client || true
@@ -34,33 +44,5 @@ jobs:
           token: ${{ env.TELEGRAM_BOT_TOKEN }}
           to: ${{ env.TELEGRAM_GROUP_ID }}
           message: |
-            Docker container building...
-            The horror dog begins to growl! 🐶
-
-      - name: Check if Docker container is running
-        run: |
-          if docker ps | grep -q pes-client; then
-            echo "Docker container is running"
-          else
-            echo "Docker container is not running"
-            exit 1
-
-      - name: Send message to Telegram group
-        uses: appleboy/telegram-action@master
-        if: always()
-        with:
-          token: ${{ env.TELEGRAM_BOT_TOKEN }}
-          to: ${{ env.TELEGRAM_GROUP_ID }}
-          message: |
-            Docker container finished building...
-            But the horror dog is still growling... 🐶
-
-      - name: Send message to Telegram group
-        uses: appleboy/telegram-action@master
-        if: always()
-        with:
-          token: ${{ env.TELEGRAM_BOT_TOKEN }}
-          to: ${{ env.TELEGRAM_GROUP_ID }}
-          message: |
-            Docker container deployed...
-            The horror dog is now silent... for now... 🐶
+            Docker container has started... http://91.219.61.90:1997/
+            The horror dog begins to hide! 🐶
