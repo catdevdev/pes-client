@@ -1,0 +1,9 @@
+can you build github ci file
+that build docker container `docker build -t pes-client .`
+and run it with `docker run -p 1997:1997 pes-client`
+and build and run and rebuild and rerun it after every push on master
+and also send message to telegram group that
+1) container is building
+2) container finished building, otherwise container is failed building
+3) container is deployed, otherwise container is failed to deployed
+make funny messages about it with dog topic
