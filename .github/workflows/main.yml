@@ -1,0 +1,50 @@
+name: CI/CD for Docker Container
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker Container
+        run: |
+          echo "🐶 Woof woof! Building the Docker container now... Hang tight, human!"
+          docker build -t pes-client .
+          if [ $? -ne 0 ]; then
+            echo "💔 Uh oh, something went wrong while building the Docker container. :("
+            exit 1
+          fi
+          echo "🎉 Yay! Docker container was built successfully! Woof woof!"
+
+      - name: Run Docker Container
+        run: |
+          echo "🐶 Woof woof! Running the Docker container now... Woof woof!"
+          docker run -p 1997:1997 pes-client
+          if [ $? -ne 0 ]; then
+            echo "💔 Uh oh, something went wrong while deploying the Docker container. :("
+            exit 1
+          fi
+          echo "🎉 Yay! Docker container was deployed successfully! Woof woof!"
+
+      - name: Send message to Telegram group
+        if: always()
+        uses: telegram-actions/telegram-notify@v1
+        with:
+          bot-token: ${{ env.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ env.TELEGRAM_GROUP_ID }}
+          message: |
+            🐶 Woof woof! Update from GitHub Actions:
+            Docker container build and deployment process has finished!
+            Check the logs for details.
+            Woof woof!
