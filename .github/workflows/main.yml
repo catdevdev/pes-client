@@ -6,8 +6,8 @@ on:
       - master
 
 env:
-  TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
 
 jobs:
   build-and-deploy:
