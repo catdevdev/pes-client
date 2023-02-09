@@ -10,41 +10,62 @@ env:
   TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker Container
-        run: |
-          echo "🐶 Woof woof! Building the Docker container now... Hang tight, human!"
-          docker build -t pes-client .
-          if [ $? -ne 0 ]; then
-            echo "💔 Uh oh, something went wrong while building the Docker container. :("
-            exit 1
-          fi
-          echo "🎉 Yay! Docker container was built successfully! Woof woof!"
+      - name: Build Docker container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          tags: pes-client
 
-      - name: Run Docker Container
+      - name: Run Docker container
         run: |
-          echo "🐶 Woof woof! Running the Docker container now... Woof woof!"
-          docker run -p 1997:1997 pes-client
-          if [ $? -ne 0 ]; then
-            echo "💔 Uh oh, something went wrong while deploying the Docker container. :("
-            exit 1
-          fi
-          echo "🎉 Yay! Docker container was deployed successfully! Woof woof!"
+          docker stop pes-client || true
+          docker rm pes-client || true
+          docker run -d --name pes-client -p 1997:1997 pes-client
 
       - name: Send message to Telegram group
+        uses: telegram-actions/telegram@v1
         if: always()
-        uses: telegram-actions/telegram-notify@v1
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
         with:
-          bot-token: ${{ env.TELEGRAM_BOT_TOKEN }}
-          chat-id: ${{ env.TELEGRAM_GROUP_ID }}
-          message: |
-            🐶 Woof woof! Update from GitHub Actions:
-            Docker container build and deployment process has finished!
-            Check the logs for details.
-            Woof woof!
+          args: |
+            Docker container building...
+            Woof woof! 🐶
+
+      - name: Check if Docker container is running
+        run: |
+          if docker ps | grep -q pes-client; then
+            echo "Docker container is running"
+          else
+            echo "Docker container is not running"
+            exit 1
+
+      - name: Send message to Telegram group
+        uses: telegram-actions/telegram@v1
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+        with:
+          args: |
+            Docker container finished building...
+            Yippee! 🐶
+
+      - name: Send message to Telegram group
+        uses: telegram-actions/telegram@v1
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ env.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ env.TELEGRAM_GROUP_ID }}
+        with:
+          args: |
+            Docker container deployed...
+            Woohoo! 🐶
