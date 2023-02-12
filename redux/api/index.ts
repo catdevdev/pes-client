@@ -11,7 +11,7 @@ import {
   Tokens,
 } from './types';
 
-export const baseServerUrl = "http://134.249.99.75:5001";
+export const baseServerUrl = 'http://91.219.61.90:1234';
 export const baseURL = `${baseServerUrl}/api/v1/`;
 
 const accessTokenKey: string = 'access_token';
@@ -111,7 +111,7 @@ export class API {
     var request: RegisterRequest = {
       username: username,
       password: password,
-      pesKey: pesKey
+      pesKey: pesKey,
     };
 
     var requestConfig = request;
