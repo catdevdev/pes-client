@@ -2,6 +2,7 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
 /* UI Window */
+import { useSelector, useDispatch } from 'react-redux';
 import WindowComponent from '../../../components/Window';
 import Separator from '../../../components/Window/Separator';
 import MenuWithSearchBar from '../components/MenuWithSearchBar';
@@ -15,7 +16,6 @@ import Folder from '../../../components/UI/Folder';
 import { Window } from '../../../redux/actions/windowsManagement/types';
 import { ChatsWindowI } from '../actions/types';
 /* redux */
-import { useSelector, useDispatch } from 'react-redux';
 /* actions */
 import {
   fetchAllChats,
@@ -56,8 +56,8 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
 
   useEffect(() => {
     const element = scrolledAreaRef.current;
-    element.addEventListener('scroll', function (event) {
-      var element = event.target;
+    element.addEventListener('scroll', (event) => {
+      const element = event.target;
 
       if (
         element.scrollHeight - element.scrollTop === element.clientHeight &&
@@ -84,17 +84,15 @@ const ChatsWindow = (props: Window<ChatsWindowI>) => {
             loadingInfityScroll={loadingInfityScroll}
             liteVersion
             windowId={props.id}
-            folderFontColor={'#000'}
-            folders={Chats.chats.map(({ chatId, chatName, chatImageLocation, userCount }) => {
-              return {
-                id: chatId,
-                name: `${chatName} (${userCount})`,
-                imageUrl: resolveLocation(chatImageLocation),
-                onDoubleClick: () => {
-                  dispatch(openChatWindow(props.id, chatId));
-                },
-              };
-            })}
+            folderFontColor="#000"
+            folders={Chats.chats.map(({ chatId, chatName, chatImageLocation, userCount }) => ({
+              id: chatId,
+              name: `${chatName} (${userCount})`,
+              imageUrl: resolveLocation(chatImageLocation),
+              onClick: () => {
+                dispatch(openChatWindow(props.id, chatId));
+              },
+            }))}
           />
         )}
         {Chat.isCurrentPage && (

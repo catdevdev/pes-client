@@ -1,20 +1,20 @@
 /* imoprts */
-import c from './index.module.scss';
 import { GridContextProvider, GridDropZone, GridItem, swap, move } from 'react-grid-dnd';
+import { useSelector, useDispatch } from 'react-redux';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import c from './index.module.scss';
 /* UI */
 import Folder from '../../UI/Folder';
 import Frame from '../../UI/Frame';
 /* redux */
-import { useSelector, useDispatch } from 'react-redux';
 import { fetchChatsWithInfityScroll, openChatWindow } from '../../../windows/chats/actions';
-import React, { memo, useEffect, useRef, useState } from 'react';
 import Loading from '../../UI/Loading';
 
 export interface FolderI {
   id?: string;
   name: string;
   imageUrl?: string;
-  onDoubleClick: () => void;
+  onClick: () => void;
 }
 
 interface Props {
@@ -51,11 +51,11 @@ const FoldersArea = ({
         {!liteVersion && (
           <div style={{ width: 400, padding: 18 }}>
             <GridDropZone id="desktop_area" boxesPerRow={4} rowHeight={70}>
-              {folders.map(({ id, name, onDoubleClick }) => (
+              {folders.map(({ id, name, onClick }) => (
                 <GridItem key={id} style={{ width: 32 }}>
                   <Folder
                     key={id}
-                    onDoubleClick={onDoubleClick}
+                    onClick={onClick}
                     fontColor={folderFontColor}
                     folderName={name}
                     folderIcon="folder"
@@ -69,10 +69,10 @@ const FoldersArea = ({
           <div style={{ width: '100%', padding: 18 }}>
             <div className={c.folderAreaWrapper}>
               {folders.length === 0 && <>Loading...</>}
-              {folders.map(({ id, name, onDoubleClick, imageUrl }) => (
+              {folders.map(({ id, name, onClick, imageUrl }) => (
                 <Folder
                   key={id}
-                  onDoubleClick={onDoubleClick}
+                  onClick={onClick}
                   fontColor={folderFontColor}
                   folderName={name}
                   folderIcon="folder"
@@ -90,7 +90,7 @@ const FoldersArea = ({
                 height: 25,
               }}
             >
-              {loadingInfityScroll && <Loading style={{ width: 25, height: 25 }}></Loading>}
+              {loadingInfityScroll && <Loading style={{ width: 25, height: 25 }} />}
             </div>
           </div>
         )}

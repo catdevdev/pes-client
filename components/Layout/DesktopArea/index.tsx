@@ -1,15 +1,15 @@
 /* imports */
-import c from './index.module.scss';
 import { nanoid } from 'nanoid';
 import { GridContextProvider, GridDropZone, GridItem, swap } from 'react-grid-dnd';
+import { memo } from 'react';
+import { useSelector } from 'react-redux';
+import c from './index.module.scss';
 /* UI */
 import Folder from '../../UI/Folder';
 import { ChatsWindowI } from '../../../windows/chats/actions/types';
 import { useCallWindow } from '../../../hooks/callWindows';
-import { memo } from 'react';
 import { ProfileSettingsI } from '../../../windows/profile-settings/actions/types';
 import { AuthPesSystemWindowI } from '../../../windows/auth-pes-system/actions/types';
-import { useSelector } from 'react-redux';
 import { StoreState } from '../../../redux/reducers';
 
 const DesktopArea = () => {
@@ -49,7 +49,7 @@ const DesktopArea = () => {
               onOpen: () => void;
             }) => (
               <GridItem key={id} style={{ width: 32 }}>
-                <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
+                <Folder onClick={onOpen} folderIcon={folderIcon} folderName={name} />
               </GridItem>
             ),
           )}
@@ -78,7 +78,7 @@ const DesktopArea = () => {
               onOpen: () => void;
             }) => (
               <GridItem key={id} style={{ width: 32 }}>
-                <Folder onDoubleClick={onOpen} folderIcon={folderIcon} folderName={name} />
+                <Folder onClick={onOpen} folderIcon={folderIcon} folderName={name} />
               </GridItem>
             ),
           )}
